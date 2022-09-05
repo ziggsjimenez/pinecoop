@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Auth; 
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +14,13 @@ use Auth;
 |
 */
 
-Route::get('/register', function() {
-    return redirect('/login');
-});
+// Route::get('/register', function() {
+//     return redirect('/login');
+// });
 
-Route::post('/register', function() {
-    return redirect('/login');
-});
+// Route::post('/register', function() {
+//     return redirect('/login');
+// });
 
 Route::get('/', function () {
     return view('welcome');
