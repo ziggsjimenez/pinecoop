@@ -8,7 +8,7 @@ use Livewire\Component;
 class Employees extends Component
 {
 
-    public $employees,$selectedEmployee,$openAddModal=false,$Lastname; 
+    public $employees,$selectedEmployee,$openAddModal=false,$Lastname,$employee_id; 
 
     public function mount () {
         $this->employees = Employee::all();
