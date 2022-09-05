@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Livewire\Employeedetails;
+use App\Http\Livewire\Employees;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +27,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('employees',Employees::class)->name('employees');
+
+Route::get('employee/{employee_id}',Employeedetails::class)->name('employee');
 
 Route::middleware([
     'auth:sanctum',
