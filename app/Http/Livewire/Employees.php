@@ -4,22 +4,25 @@ namespace App\Http\Livewire;
 
 use App\Models\Employee;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Employees extends Component
 {
+    use WithPagination;
 
-    public $employees,$openAddModal=false,$employee_id; 
+    public $openAddModal=false,$employee_id,$searchToken; 
     public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability;    
 
-    public function mount () {
-        $this->employees = Employee::all();
+
+    public function mount(){
+        $this->searchToken = "";
     }
 
     public function render()
     {
 
-        $this->employees = Employee::all();
-        return view('livewire.employees');
+        return view('livewire.employees', ['employees' => Employee::where('lastname', 'LIKE', '%' . $this->searchToken . '%')->orWhere('firstname', 'LIKE', '%' . $this->searchToken . '%')->orderBy('lastname','ASC')->paginate(10),]);
+
     }
 
     public function showAddModal(){

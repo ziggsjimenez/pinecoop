@@ -2,7 +2,15 @@
 
     <div class="block bg-green-100 p-10">
 
-        Employees <button wire:click="showAddModal"class="bg-green-300 hover:bg-green-800 p-2 px-3 ml-5 rounded">Add</button>
+        <div class="mb-5">
+            <span class="uppercase tracking-wide text-gray-700 text-xl font-bold mb-2">EMPLOYEES</span>
+            <x-jet-button wire:click="showAddModal" class="pl-5">ADD</x-jet-button>
+        </div>
+        <br>
+
+        <input wire:model="searchToken"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            type="text" placeholder="Type here to search...">
 
         <br>
 
