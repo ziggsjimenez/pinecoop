@@ -1,19 +1,15 @@
-<x-jet-confirmation-modal wire:model="openAddModal">
+<x-jet-dialog-modal wire:model="openAddModal" maxWidth="7xl">
     <x-slot name="title">
         Employee 
     </x-slot>
 
     <x-slot name="content">
 
-        <label for="">Lastname</label>
+        <form wire:submit.prevent="saveContact">
+        @include('livewire.forms.employee')
+        </form>
 
-        <input type="text" wire:model="Lastname">
-
-        @error('Lastname')
-
-        <span class="text-red-600 font-bold">Please input lastname.</span> 
-            
-        @enderror
+        
         
     </x-slot>
 
@@ -22,8 +18,8 @@
             Nevermind
         </x-jet-secondary-button>
 
-        <x-jet-danger-button class="ml-2" wire:click="storeEmployee" wire:loading.attr="disabled">
+        <x-jet-button class="ml-2" wire:click="storeEmployee" wire:loading.attr="disabled">
             Submit
-        </x-jet-danger-button>
+        </x-jet-button>
     </x-slot>
 </x-jet-confirmation-modal>

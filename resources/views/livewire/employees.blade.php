@@ -2,7 +2,7 @@
 
     <div class="block bg-green-100 p-10">
 
-        Employees <button wire:click="showAddModal"class="bg-green-300 hover:bg-green-800 p-2">Add</button>
+        Employees <button wire:click="showAddModal"class="bg-green-300 hover:bg-green-800 p-2 px-3 ml-5 rounded">Add</button>
 
         <br>
 
@@ -48,13 +48,12 @@
 
     </table>
        
+    @include('livewire.modals.addemployeemodal')
 
+    
     </div>
 
-    Selected Employee: {{ $selectedEmployee }}
 
-
-
-    @include('livewire.modals.addemployeemodal')
+  
     
 </div>

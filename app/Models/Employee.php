@@ -10,11 +10,47 @@ class Employee extends Model
     use HasFactory;
 
 
-    protected $fillable = ['Lastname'];
+    protected $fillable = ['lastname',
+                            'firstname',
+                            'middlename',
+                            'extension',
+                            'birthdate',
+                            'civilstatus',
+                            'sex',
+                            'religion',
+                            'department',
+                            'position',
+                            'employmentdate',
+                            'phonenumber',
+                            'educationalattainment',
+                            'estimatedannualgross',
+                            'tin',
+                            'prahouseno',
+                            'prabuildingstreet',
+                            'prasubdivision',
+                            'prabarangay',
+                            'pramun',
+                            'praprov',
+                            'prazipcode',
+                            'peahouseno',
+                            'peabuildingstreet',
+                            'peasubdivision',
+                            'peabarangay',
+                            'peamun',
+                            'peaprov',
+                            'peazipcode',
+                            'pmailadd',
+                            'email',
+                            'fbaccount',
+                            'ispinecoopmem',
+                            'dateofmembership',
+                            'pwdid',
+                            'ispersonwithdisability',
+                            ];
 
     public function fullname(){
 
-       return  $this->Lastname.", ".$this->Firstname." ".$this->Middlename." ".$this->Extension;
+       return  $this->lastname.", ".$this->firstname." ".$this->middlename." ".$this->extension;
 
     }
 
