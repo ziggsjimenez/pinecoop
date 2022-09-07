@@ -1,7 +1,4 @@
 <div class="p-12">
-
-
-
     <div class="block bg-green-100 p-10">
 
         <div class="mb-5">
@@ -17,53 +14,43 @@
         <br>
 
         <table class="w-full">
+            <thead>
+                <tr>
+                    <th class="border p-1 border-black text-center">#</th>
+                    <th class="border p-1 border-black text-center">Name</th>
+                    <th class="border p-1 border-black text-center">Birthday</th>
+                    <th class="border p-1 border-black text-center">Sex</th>
+                    <th class="border p-1 border-black text-center">P. R. Address</th>
+                    <th class="border p-1 border-black text-center">P. E. Address</th>
+                    <th class="border p-1 border-black text-center">Action</th>
+                </tr>
+            </thead>
 
-           <thead>
+            <tbody>
+                @php
+                    $count = 1;
+                @endphp
+                @foreach ($employees as $employee)
+                    <tr>
+                        <td class="border p-1 border-black">{{ $count++ }}</td>
+                        <td class="border p-1 border-black">{{ $employee->fullname() }} </td>
+                        <td class="border p-1 border-black">{{ $employee->birthdate->format('F d, Y') }} </td>
+                        <td class="border p-1 border-black">{{ $employee->sex }} </td>
+                        <td class="border p-1 border-black">{{ $employee->praddress() }} </td>
+                        <td class="border p-1 border-black">{{ $employee->peaddress() }} </td>
+                        <td class="border p-1 border-black">
+                            <a href="{{ route('employee', ['employee_id' => $employee->id]) }}">
+                                <x-jet-button class="bg-green-800 p-2">View</x-jet-button>
+                            </a>
+                            <x-jet-button class="bg-orange-300 p-2" wire:click="edit({{ $employee->id }})">Edit
+                            </x-jet-button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-            <tr>
-                <th class="border p-1 text-center">Name</th>
-                <th class="border p-1 text-center">Address</th>
+        @include('livewire.modals.addemployeemodal')
 
-            </tr>
-            
-        </thead>   
-        
-        <tbody>
-
-        @foreach ( $employees as $employee)
-
-<tr>
-    <td class="border p-1">{{ $employee->fullname() }}  
-        
-        <a href="{{ route('employee',['employee_id'=>$employee->id]) }}">
-            <button class="bg-green-300 p-2">View</button>
-        </a>
-
-        <button class="bg-green-300 p-2" wire:click="edit({{ $employee->id }})">Edit</button>
-
-
-        
-
-        <button class="bg-green-300 p-2" wire:click="delete({{ $employee->id }})">Delete</button>
-    
-    
-    </td>
-    <td class="border p-1">{{ $employee->PEA_subdivision }}</td>
-</tr>
-        
-            
-        @endforeach
-
-    </tbody>
-
-    </table>
-       
-    @include('livewire.modals.addemployeemodal')
-
-    
     </div>
-
-
-   
-    
 </div>

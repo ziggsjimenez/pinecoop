@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('civilstatus');
             $table->text('sex');
             $table->text('religion');
-            $table->text('chapanumber')->default("");
+            $table->text('chapanumber')->nullable();
             $table->text('department');
             $table->text('position');
             $table->date('employmentdate');

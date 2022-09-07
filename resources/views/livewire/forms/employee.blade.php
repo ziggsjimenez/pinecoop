@@ -1,6 +1,6 @@
 <div>{{-- name --}}
 <div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="w-1/4 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="lastname">
             Lastname
         </label>
@@ -12,7 +12,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="w-1/4 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="firstname">
             Firstname
         </label>
@@ -24,7 +24,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="w-1/4 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="middlename">
             Middlename
         </label>
@@ -70,7 +70,7 @@
 {{-- birthdate --}}
 {{-- input --}}
 <div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="w-1/4 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="birthdate">
             Birthdate
         </label>
@@ -319,7 +319,7 @@
 <span class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">Permanent Residential Address</span> 
 
 <div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="prahouseno">
             House No.
         </label>
@@ -331,7 +331,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="wpx-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="prabuildingstreet">
             Building/Street
         </label>
@@ -343,7 +343,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="prasubdivision">
             Subdivision
         </label>
@@ -355,7 +355,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="prabarangay">
             Barangay
         </label>
@@ -367,7 +367,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pramun">
             Municipality
         </label>
@@ -379,7 +379,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="praprov">
             Province 
         </label>
@@ -391,7 +391,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="prazipcode">
             Zip Code
         </label>
@@ -413,8 +413,10 @@
 
 <span class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">Permanent Employment Address</span> 
 
+<input type="checkbox"> Same with residential address.
+
 <div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="peahouseno">
             House No.
         </label>
@@ -426,7 +428,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="peabuildingstreet">
             Building/Street
         </label>
@@ -438,7 +440,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="peasubdivision">
             Subdivision
         </label>
@@ -450,7 +452,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="peabarangay">
             Barangay
         </label>
@@ -462,7 +464,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="peamun">
             Municipality
         </label>
@@ -474,7 +476,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="peaprov">
             Province 
         </label>
@@ -486,7 +488,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="peazipcode">
             Zip Code
         </label>
@@ -501,7 +503,7 @@
 </div>
 
 <div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="pmailadd">
             Preferred Mailing Address
         </label>
@@ -519,7 +521,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
             Email Address
         </label>
@@ -531,7 +533,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="fbaccount">
             Facebook Account
         </label>
@@ -543,7 +545,7 @@
         @enderror
     </div>
 
-    <div class="w-1/3 px-3 mb-6 md:mb-0">
+    <div class="px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="ispinecoopmem">
             Pinecoop Member ?
         </label>
@@ -562,7 +564,7 @@
     </div>
 
 @if($ispinecoopmem)
-<div class="w-1/3 px-3 mb-6 md:mb-0">
+<div class="px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="dateofmembership">
         Date of Membership 
     </label>
@@ -575,7 +577,7 @@
 </div>
 @endif
 
-<div class="w-1/3 px-3 mb-6 md:mb-0">
+<div class="px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="ispersonwithdisability">
         Is person with disability?
     </label>
@@ -594,7 +596,7 @@
 </div>
 
 @if($ispersonwithdisability)
-<div class="w-1/3 px-3 mb-6 md:mb-0">
+<div class="px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pwdid">
         PWD Identification Number
     </label>
