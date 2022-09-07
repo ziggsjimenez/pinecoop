@@ -413,7 +413,7 @@
 
 <span class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">Permanent Employment Address</span> 
 
-<input type="checkbox"> Same with residential address.
+<input type="checkbox" wire:model="sameaddress" wire:click="sameAddress"> Same with residential address.
 
 <div class="flex flex-wrap -mx-3 mb-6">
     <div class="px-3 mb-6 md:mb-0">

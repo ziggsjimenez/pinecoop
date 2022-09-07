@@ -10,7 +10,7 @@ class Employees extends Component
 {
     use WithPagination;
 
-    public $openAddModal=false,$employee_id,$searchToken; 
+    public $openAddModal=false,$employee_id,$searchToken,$sameaddress; 
     public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber;    
 
 
@@ -211,5 +211,29 @@ class Employees extends Component
 
     public function delete($employee_id){
         Employee::find($employee_id)->delete();
+    }
+
+    public function sameAddress(){
+
+        if($this->sameaddress){
+            $this->peahouseno= $this->prahouseno;
+            $this->peabuildingstreet=$this->prabuildingstreet;
+            $this->peasubdivision=$this->prasubdivision;
+            $this->peabarangay= $this->prabarangay;
+            $this->peamun=$this->pramun;
+            $this->peaprov=$this->praprov;
+            $this->peazipcode=$this->prazipcode;
+        }
+        else {
+            $this->peahouseno="";
+            $this->peabuildingstreet="";
+            $this->peasubdivision="";
+            $this->peabarangay="";
+            $this->peamun="";
+            $this->peaprov="";
+            $this->peazipcode="";
+        }
+        
+        
     }
 }
