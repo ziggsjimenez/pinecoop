@@ -530,11 +530,11 @@
             Pinecoop Member ?
         </label>
         <div>
-        <input wire:model.defer="ispinecoopmem" name="ispinecoopmem"
+        <input wire:model="ispinecoopmem" name="ispinecoopmem"
             class="bg-gray-200 text-gray-700 border"
             type="radio" value="1"> Yes 
 
-            <input wire:model.defer="ispinecoopmem" name="ispinecoopmem"
+            <input wire:model="ispinecoopmem" name="ispinecoopmem"
             class="bg-gray-200 text-gray-700 border"
             type="radio" value="0"> No 
         </div>
@@ -543,6 +543,7 @@
         @enderror
     </div>
 
+@if($ispinecoopmem)
 <div class="w-1/3 px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="dateofmembership">
         Date of Membership 
@@ -554,17 +555,18 @@
         <p class="text-red-500 text-xs italic">Please fill out this field.</p>
     @enderror
 </div>
+@endif
 
 <div class="w-1/3 px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="ispersonwithdisability">
         Is person with disability?
     </label>
     <div>
-    <input wire:model.defer="ispersonwithdisability" name="ispersonwithdisability"
+    <input wire:model="ispersonwithdisability" name="ispersonwithdisability"
         class="bg-gray-200 text-gray-700 border"
         type="radio" value="1"> Yes 
 
-        <input wire:model.defer="ispersonwithdisability" name="ispersonwithdisability"
+        <input wire:model="ispersonwithdisability" name="ispersonwithdisability"
         class="bg-gray-200 text-gray-700 border"
         type="radio" value="0"> No 
     </div>
@@ -573,7 +575,7 @@
     @enderror
 </div>
 
-
+@if($ispersonwithdisability)
 <div class="w-1/3 px-3 mb-6 md:mb-0">
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="pwdid">
         PWD Identification Number
@@ -585,6 +587,7 @@
         <p class="text-red-500 text-xs italic">Please fill out this field.</p>
     @enderror
 </div>
+@endif
 
 
 </div>
