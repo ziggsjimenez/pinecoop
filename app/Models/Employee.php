@@ -46,6 +46,7 @@ class Employee extends Model
                             'dateofmembership',
                             'pwdid',
                             'ispersonwithdisability',
+                            'chapanumber',
                             ];
 
     public function fullname(){

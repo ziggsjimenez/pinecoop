@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('civilstatus');
             $table->text('sex');
             $table->text('religion');
+            $table->text('chapanumber')->default("");
             $table->text('department');
             $table->text('position');
             $table->date('employmentdate');
@@ -38,9 +39,9 @@ return new class extends Migration
             $table->text('pramun');
             $table->text('praprov');
             $table->text('prazipcode');
-            $table->text('peahouseno');
-            $table->text('peabuildingstreet');
-            $table->text('peasubdivision');
+            $table->text('peahouseno')->nullable();
+            $table->text('peabuildingstreet')->nullable();
+            $table->text('peasubdivision')->nullable();
             $table->text('peabarangay');
             $table->text('peamun');
             $table->text('peaprov');
@@ -49,8 +50,10 @@ return new class extends Migration
             $table->text('email')->nullable();
             $table->text('fbaccount')->nullable();
             $table->boolean('ispinecoopmem');
-            $table->date('dateofmembership');
+            $table->date('dateofmembership')->nullable();
             $table->text('pwdid')->nullable();
+            $table->boolean('deleted')->default(false);
+           
             $table->timestamps();
         });
     }

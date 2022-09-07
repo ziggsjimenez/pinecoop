@@ -11,7 +11,7 @@ class Employees extends Component
     use WithPagination;
 
     public $openAddModal=false,$employee_id,$searchToken; 
-    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability;    
+    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber;    
 
 
     public function mount(){
@@ -74,6 +74,7 @@ class Employees extends Component
         $this->dateofmembership="";
         $this->pwdid="";
         $this->ispersonwithdisability="";
+        $this->chapanumber="";
 
     }
 
@@ -156,6 +157,7 @@ class Employees extends Component
             'dateofmembership' => $this->dateofmembership,
             'pwdid' => $this->pwdid,
             'ispersonwithdisability' => $this->ispersonwithdisability,
+            'chapanumber' => $this->chapanumber,
 
         ]);
 
@@ -203,6 +205,7 @@ class Employees extends Component
         $this->dateofmembership=$employee->dateofmembership;
         $this->pwdid=$employee->pwdid;
         $this->ispersonwithdisability=$employee->ispersonwithdisability;
+        $this->chapanumber=$employee->chapanumber;
         $this->showAddModal();
     }
 
