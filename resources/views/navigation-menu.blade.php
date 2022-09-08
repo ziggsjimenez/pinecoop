@@ -24,6 +24,10 @@
                         {{ __('Loan Type') }}
                     </x-jet-nav-link>
 
+                    <x-jet-nav-link href="{{ route('accounttypes') }}" :active="request()->routeIs('accounttypes')">
+                        {{ __('Account Type') }}
+                    </x-jet-nav-link>
+
 
                 </div>
             </div>

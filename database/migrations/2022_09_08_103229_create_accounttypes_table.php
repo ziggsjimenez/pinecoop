@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('loantypes', function (Blueprint $table) {
+        Schema::create('accounttypes', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->double('interest', 11,4);
-            $table->integer('paymentterms');
-            $table->double('maxloanammount', 11,4);
-            $table->text('type');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loantypes');
+        Schema::dropIfExists('accounttypes');
     }
 };
