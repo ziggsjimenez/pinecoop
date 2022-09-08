@@ -20,6 +20,10 @@
                         {{ __('Employees') }}
                     </x-jet-nav-link>
 
+                    <x-jet-nav-link href="{{ route('loantypes') }}" :active="request()->routeIs('loantypes')">
+                        {{ __('Loan Type') }}
+                    </x-jet-nav-link>
+
 
                 </div>
             </div>
