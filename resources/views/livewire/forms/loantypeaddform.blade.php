@@ -1,5 +1,5 @@
-<div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-1/4 px-3 mb-6 md:mb-0">
+
+    <div class="w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
             Name
         </label>
@@ -9,7 +9,7 @@
         @enderror
     </div>
 
-    <div class="w-1/5 px-3 mb-6 md:mb-0">
+    <div class="w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="interest">
             Interest
         </label>
@@ -19,7 +19,7 @@
         @enderror
     </div>
 
-    <div class="w-1/5 px-3 mb-6 md:mb-0">
+    <div class="w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="paymentterms">
             Payment Terms
         </label>
@@ -29,7 +29,7 @@
         @enderror
     </div>
 
-    <div class="w-1/5 px-3 mb-6 md:mb-0">
+    <div class="w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="maxloanammount">
             Max Ammount Loan
         </label>
@@ -39,7 +39,7 @@
         @enderror
     </div>
 
-    <div class="w-1/5 px-3 mb-6 md:mb-0">
+    <div class="w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="type">
             type
         </label>
@@ -53,4 +53,3 @@
         <p class="text-red-500 text-xs italic">Please fill out this field.</p>
         @enderror
     </div>
-</div>

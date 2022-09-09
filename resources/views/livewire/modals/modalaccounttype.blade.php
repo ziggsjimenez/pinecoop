@@ -1,4 +1,4 @@
-<x-jet-dialog-modal wire:model="modalaccounttype" maxWidth="7xl">
+<x-jet-dialog-modal wire:model="modalaccounttype">
     <x-slot name="title">
         Add Account Type 
     </x-slot>

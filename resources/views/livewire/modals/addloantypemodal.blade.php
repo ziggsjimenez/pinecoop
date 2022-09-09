@@ -1,4 +1,4 @@
-<x-jet-dialog-modal wire:model="modaladdloantype" maxWidth="7xl">
+<x-jet-dialog-modal wire:model="modaladdloantype">
     <x-slot name="title">
         Add Loan Type 
     </x-slot>
