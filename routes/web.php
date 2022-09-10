@@ -4,6 +4,8 @@ use App\Http\Livewire\Accounttypes;
 use App\Http\Livewire\Employeedetails;
 use App\Http\Livewire\Employees;
 use App\Http\Livewire\Loantypes;
+use App\Http\Livewire\Memberdetails;
+use App\Http\Livewire\Members;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,11 +33,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('employees',Employees::class)->name('employees');
-Route::get('loantypes',Loantypes::class)->name('loantypes');
-Route::get('accounttypes',Accounttypes::class)->name('accounttypes');
 
-Route::get('employee/{employee_id}',Employeedetails::class)->name('employee');
 
 Route::middleware([
     'auth:sanctum',
@@ -45,4 +43,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+
+    Route::get('employees',Employees::class)->name('employees');
+    Route::get('loantypes',Loantypes::class)->name('loantypes');
+    Route::get('accounttypes',Accounttypes::class)->name('accounttypes');
+    Route::get('members',Members::class)->name('members');
+    Route::get('employee/{employee_id}',Employeedetails::class)->name('employee');
+    Route::get('member/{member_id}',Memberdetails::class)->name('member');
+
+
 });
