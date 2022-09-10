@@ -1,6 +1,6 @@
 <x-jet-dialog-modal wire:model="modaladdloantype">
     <x-slot name="title">
-        Add Loan Type 
+        Add loan type 
     </x-slot>
 
     <x-slot name="content">
@@ -13,7 +13,6 @@
         <x-jet-secondary-button wire:click="$toggle('modaladdloantype')" wire:loading.attr="disabled">
             Close
         </x-jet-secondary-button>
-
         <x-jet-button class="ml-2" wire:click="saveLoanTypes" wire:loading.attr="disabled">
             Submit
         </x-jet-button>
