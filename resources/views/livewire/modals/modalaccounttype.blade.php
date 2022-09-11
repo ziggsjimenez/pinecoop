@@ -1,6 +1,6 @@
 <x-jet-dialog-modal wire:model="modalaccounttype">
     <x-slot name="title">
-        Add Account Type 
+        Add account type 
     </x-slot>
 
     <x-slot name="content">
@@ -13,7 +13,6 @@
         <x-jet-secondary-button wire:click="$toggle('modalaccounttype')" wire:loading.attr="disabled">
             Close
         </x-jet-secondary-button>
-
         <x-jet-button class="ml-2" wire:click="saveAccountType" wire:loading.attr="disabled">
             Submit
         </x-jet-button>
