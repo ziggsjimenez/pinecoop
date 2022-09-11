@@ -1,42 +1,130 @@
-<div class="p-12">
+<div class="flex justify-center">
+    <div class="block p-6 w-full" style="margin: 2rem 2rem;">
+        <div class="justify-center font-bold text-2xl mb-4">{{ $EMPLOYEE->fullname() }} </div>
+        <ul class="flex flex-row  md:space-x-10 list-none border-b-0 pl-0" style="margin: 0rem;">
+            <li style="margin-left: 0px;">
+                <button @if($btnSelected=="Profile" ) class="rounded-t-lg bg-white px-6 py-2 cursor-pointer" @else class="cursor-pointer rounded-t-lg px-6 py-2" @endif wire:click="selectButton('Profile')">Profile</button>
+            </li>
+            <li style="margin-left: 0px;">
+                <button @if($btnSelected=="Accounts" ) class="rounded-t-lg bg-white px-6 py-2 cursor-pointer" @else class="cursor-pointer rounded-t-lg px-6 py-2" @endif wire:click="selectButton('Accounts')">Account</button>
+            </li>
+            <li style="margin-left: 0px;">
+                <button @if($btnSelected=="Loans" ) class="rounded-t-lg bg-white px-6 py-2 cursor-pointer" @else class="cursor-pointer rounded-t-lg px-6 py-2" @endif wire:click="selectButton('Loans')">Loan</button>
+            </li>
+        </ul>
+        <div>
+            <div class="block p-6 rounded-b-lg shadow-lg bg-white w-full" style="margin: 0rem;">
+                <!-- PROFILE -->
+                @if($btnSelected=="Profile")
+                <div>
+                    <h1 class="font-bold text-2xl justify-center">Profile</h1>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold p-2">Name: </td>
+                                <td class="font-bold pl-5 p-2">{{ $EMPLOYEE->fullname() }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @endif
 
 
 
-    <div class="justify-center font-bold text-2xl">{{ $employee->fullname() }} </div>
+
+                <!-- ACCOUNT -->
+                @if($btnSelected=="Accounts")
+                <div>
+                    <div class="flex items-center justify-between py-2 md:justify-start md:space-x-10">
+                        <div class="items-center justify-end md:flex md:flex-1 lg:w-0">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition pl-5" wire:click="showMemberAccountModal('add')" style="text-transform:none">
+                                <i class="fa-solid fa-plus"></i>&nbsp;Add Account
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pb-4" style="overflow: auto;">
+                        <table class="w-full text-left">
+                            <thead class="border-b bg-white">
+                                <tr>
+                                    <th class="px-2 py-1">#</th>
+                                    <th class="px-2 py-1">Account Type</th>
+                                    <th class="px-2 py-1">date_opened</th>
+                                    <th class="px-2 py-1">Action</th>
+                                </tr>
+                            </thead class="border-b">
+                            <tbody>
+                                @php
+                                $count = 1;
+                                @endphp
+                                @foreach ($ACCOUNT as $row)
+                                <tr class="transition duration-100 ease-in-out hover:bg-gray-100">
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $count++ }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->accounttype->name}}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->date_opened }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">
+                                        <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none" wire:click="">View Details</x-jet-button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @include('livewire.modals.addmemberaccountmodal')
+                @endif
 
 
-    <div>
-        <button @if($btnSelected=="Profile") class="bg-blue-800 rounded font-bold text-xl p-2" @else class="bg-blue-500 rounded font-bold text-xl p-2" @endif wire:click="selectButton(1)" rounded p-3>Profile</button>
 
-        <button @if($btnSelected=="Accounts") class="bg-blue-800 rounded font-bold text-xl p-2" @else class="bg-blue-500 rounded font-bold text-xl p-2" @endif wire:click="selectButton(2)" rounded p-3>Accounts</button>
-        
-        <button @if($btnSelected=="Loans") class="bg-blue-800 rounded font-bold text-xl p-2" @else class="bg-blue-500 rounded font-bold text-xl p-2" @endif wire:click="selectButton(3)" rounded p-3>Loans</button>
+
+
+                <!-- LOAN -->
+                @if($btnSelected=="Loans")
+                <div>
+                    <div class="flex items-center justify-between py-2 md:justify-start md:space-x-10">
+                        <div class="items-center justify-end md:flex md:flex-1 lg:w-0">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition pl-5" wire:click="showMemberLoanModal('add')" style="text-transform:none">
+                                <i class="fa-solid fa-plus"></i>&nbsp;Add Loan
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pb-4" style="overflow: auto;">
+                        <table class="w-full text-left">
+                            <thead class="border-b bg-white">
+                                <tr>
+                                    <th class="px-2 py-1">ID</th>
+                                    <th class="px-2 py-1">Date</th>
+                                    <th class="px-2 py-1">Type of Loan</th>
+                                    <th class="px-2 py-1">Loan Amount</th>
+                                    <th class="px-2 py-1">Interest</th>
+                                    <th class="px-2 py-1">Interest Type</th>
+                                    <th class="px-2 py-1">Payment Terms</th>
+                                    <th class="px-2 py-1">Action</th>
+                                </tr>
+                            </thead class="border-b">
+                            <tbody>
+                                @foreach ($MEMBERLOAN as $row)
+                                <tr class="transition duration-100 ease-in-out hover:bg-gray-100">
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->id }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->date_applied}}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->name}}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->loan_amount }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->type }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->no_of_terms .' Months'}}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">
+                                        <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none" wire:click="">View Details</x-jet-button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @include('livewire.modals.addmemberloanmodal')
+                @endif
+            </div>
+        </div>
     </div>
-
-    <div class="border border-top">
-
-        @if($btnSelected=="Profile")
-
-        <h1 class="font-bold text-2xl justify-center">Profile</h1>
-        <table>
-            <tbody>
-                <tr>
-                    <td class="font-bold p-2">Name: </td>
-                    <td class="font-bold pl-5 p-2">{{ $employee->fullname() }}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        @endif
-
-        @if($btnSelected=="Accounts")
-        <h1 class="font-bold text-2xl justify-center">Accounts</h1> <i class="fa-solid fa-square-plus fa-2xl"></i> ADD
-        @endif
-
-        @if($btnSelected=="Loans")
-        <h1 class="font-bold text-2xl justify-center">Loans</h1> <i class="fa-solid fa-square-plus fa-2xl"></i> ADD
-        @endif
-
-    </div>
-
 </div>

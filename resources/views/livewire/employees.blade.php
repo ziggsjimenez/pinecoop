@@ -36,7 +36,7 @@
                             <td class="px-2 py-1 whitespace-nowrap">{{ $employee->praddress() }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $employee->peaddress() }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">
-                                <a href="{{ route('employee', ['employee_id' => $employee->id]) }}">
+                                <a href="{{ route('member', ['member_id' => $employee->id]) }}">
                                     <x-jet-button class="bg-green-800 py-1" style="text-transform:none">View</x-jet-button>
                                 </a>
                                 <x-jet-button class="bg-orange-300 px-4 py-1" style="text-transform:none" wire:click="edit({{ $employee->id }})">Edit</x-jet-button>
