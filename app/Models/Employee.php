@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
@@ -63,6 +64,16 @@ class Employee extends Model
 
     public function peaddress(){
         return $this->peahouseno." ".$this->peabuildingstreet." ".$this->peasubdivision." ".$this->peabarangay." ".$this->peamun." ".$this->peaprov;       
+    }
+
+    public function loans(){
+
+            return $this->hasMany(Memberloan::class, 'member_id', 'id');
+        
+    }
+
+    public function accounts(){
+        return $this->hasMany(Account::class, 'member_id', 'id');
     }
 
 

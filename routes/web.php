@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Accountdetails;
 use App\Http\Livewire\Accounttypes;
 use App\Http\Livewire\Employeedetails;
 use App\Http\Livewire\Employees;
@@ -51,6 +52,7 @@ Route::middleware([
     Route::get('members',Members::class)->name('members');
     Route::get('employee/{employee_id}',Employeedetails::class)->name('employee');
     Route::get('member/{member_id}',Memberdetails::class)->name('member');
+    Route::get('account/{account_id}',Accountdetails::class)->name('account');
 
 
 });

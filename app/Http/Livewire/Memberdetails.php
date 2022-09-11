@@ -22,16 +22,17 @@ class Memberdetails extends Component
     public function mount()
     {
         $this->EMPLOYEE = Employee::find($this->member_id);
-        $this->ACCOUNT = Account::where('member_id', $this->member_id)->get();
-        $this->MEMBERLOAN = Memberloan::where('member_id', $this->member_id)->get();
+      
         $this->ACCOUNTTYPE = Accounttype::whereNotIn('id', DB::table('accounts')->select('accounttype_id')->where('member_id', $this->member_id))->get();
         $this->LOANTYPE = Loantype::all();
         $this->userid = Auth::id();
+        $this->member = Employee::find($this->member_id);
     }
     public function render()
     {
-        $this->ACCOUNT = Account::where('member_id', $this->member_id)->get();
-        $this->MEMBERLOAN = Memberloan::where('member_id', $this->member_id)->get();
+        // $this->ACCOUNT = Account::where('member_id', $this->member_id)->get();
+        // $this->MEMBERLOAN = Memberloan::where('member_id', $this->member_id)->get();
+        $this->member = Employee::find($this->member_id);
         return view('livewire.memberdetails');
     }
 

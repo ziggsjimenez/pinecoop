@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Memberloan extends Model
+class Loan extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'employee_id',
         'loantype_id',
@@ -24,4 +25,6 @@ class Memberloan extends Model
     {
         return $this->belongsTo(Loantype::class, 'loantype_id', 'id');
     }
+
+
 }

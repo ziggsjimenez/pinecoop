@@ -14,8 +14,28 @@ class Account extends Model
         'date_opened',
     ];
 
+
     public function accounttype()
     {
         return $this->belongsTo(Accounttype::class, 'accounttype_id', 'id');
+    }
+
+
+    
+    public function type()
+    {
+        return $this->belongsTo(Accounttype::class, 'accounttype_id', 'id');
+    }
+
+    public function member(){
+        return $this->belongsTo(Employee::class,'member_id','id');
+    }
+
+    public function transactions(){
+        return $this->hasMany('App\Models\Transaction');
+    }
+
+    public function balance(){
+        return $this->transactions->sum('amount');
     }
 }
