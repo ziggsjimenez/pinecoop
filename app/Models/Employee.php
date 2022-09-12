@@ -67,9 +67,7 @@ class Employee extends Model
     }
 
     public function loans(){
-
-            return $this->hasMany(Memberloan::class, 'member_id', 'id');
-        
+        return $this->hasMany(Memberloan::class, 'member_id', 'id');
     }
 
     public function accounts(){
