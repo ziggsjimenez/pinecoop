@@ -50,10 +50,11 @@
             <tr>
                 <td class="border p-1"></td>
                 <td class="border p-1"></td>
+                <td class="border p-1"></td>
                 <td class="border p-1 text-right font-bold">Php {{ number_format($loan->paymentschedules->sum('principal'),2,'.',',') }}</td>
                 <td class="border p-1 text-right font-bold">Php {{ number_format($loan->paymentschedules->sum('interest'),2,'.',',') }}</td>
                 <td class="border p-1 text-right font-bold">Php {{ number_format($loan->paymentschedules->sum('monthlyamort'),2,'.',',') }}</td>
-                <td class="border p-1"></td>
+
             </tr>
         </tbody>
     </table>
