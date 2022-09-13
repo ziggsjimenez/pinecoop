@@ -116,7 +116,7 @@
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->type }}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->no_of_terms .' Months'}}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">
-                                        <a href="{{ route('loans',['memberloan_id'=>$row->id]) }}">
+                                        <a href="{{ route('loan',['loan_id'=>$row->id]) }}">
                                         <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none" wire:click="">View Details</x-jet-button>
                                         </a>
                                     </td>

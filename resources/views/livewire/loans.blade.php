@@ -14,7 +14,7 @@
   <br>
 
  
- <x-jet-button> GENERATE PAYMENT SCHEDULE </x-jet-button>
+ <x-jet-button wire:click="generateSchedule"> GENERATE PAYMENT SCHEDULE </x-jet-button>
 
 
 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Account;
 use App\Models\Accounttype;
 use App\Models\Employee;
+use App\Models\Loan;
 use App\Models\Loantype;
 use App\Models\Memberloan;
 use Illuminate\Support\Facades\Auth;
@@ -74,8 +75,8 @@ class Memberdetails extends Component
             'loan_amount' => 'required',
         ]);
 
-        Memberloan::updateOrCreate(['id' => $this->memberloanid], [
-            'member_id' => $this->member_id,
+        Loan::updateOrCreate(['id' => $this->memberloanid], [
+            'employee_id' => $this->member_id,
             'loantype_id' => $this->loantype_id,
             'loan_amount' => $this->loan_amount,
             'interest' => $this->interest,
