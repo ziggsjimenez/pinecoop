@@ -4,6 +4,7 @@ use App\Http\Livewire\Accountdetails;
 use App\Http\Livewire\Accounttypes;
 use App\Http\Livewire\Employeedetails;
 use App\Http\Livewire\Employees;
+use App\Http\Livewire\Loans;
 use App\Http\Livewire\Loantypes;
 use App\Http\Livewire\Memberdetails;
 use App\Http\Livewire\Members;
@@ -53,6 +54,7 @@ Route::middleware([
     Route::get('employee/{employee_id}',Employeedetails::class)->name('employee');
     Route::get('member/{member_id}',Memberdetails::class)->name('member');
     Route::get('account/{account_id}',Accountdetails::class)->name('account');
+    Route::get('loans/{memberloan_id}',Loans::class)->name('loans');
 
 
 });

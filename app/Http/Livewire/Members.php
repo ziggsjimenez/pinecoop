@@ -14,4 +14,6 @@ class Members extends Component
     {
         return view('livewire.members',['members'=>Employee::where('ispinecoopmem',1)->where('lastname', 'LIKE', '%' . $this->searchToken . '%')->orWhere('firstname', 'LIKE', '%' . $this->searchToken . '%')->orderBy('lastname','ASC')->get()]);
     }
+
+    
 }

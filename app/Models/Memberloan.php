@@ -9,7 +9,7 @@ class Memberloan extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'employee_id',
+        'member_id',
         'loantype_id',
         'loan_amount',
         'interest',
@@ -23,5 +23,9 @@ class Memberloan extends Model
     public function loantype()
     {
         return $this->belongsTo(Loantype::class, 'loantype_id', 'id');
+    }
+
+    public function member(){
+        return $this->belongsTo(Employee::class, 'member_id', 'id');
     }
 }
