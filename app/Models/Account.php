@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     use HasFactory;
+    protected $dates = ['date_opened'];
     protected $fillable = [
         'accounttype_id',
         'member_id',

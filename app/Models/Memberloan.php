@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Memberloan extends Model
 {
     use HasFactory;
+    protected $dates = ['date_applied','date_approved'];
     protected $fillable = [
         'member_id',
         'loantype_id',
