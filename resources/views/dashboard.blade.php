@@ -13,7 +13,7 @@
                <ul>
                 <li>List of Overdue Accounts</li>
                 <li>Today's Birthday</li>
-                <li></li>
+                <li>Noyz Update</li>
                </ul>
             </div>
         </div>
