@@ -15,10 +15,12 @@ use Livewire\WithPagination\WithPagination;
 
 class Memberdetails extends Component
 {
-    public $member_id, $btnSelected = 'Profile',  $modalmemberaccount = false, $modalmemberloan = false;
+    public $employee_id, $btnSelected = 'Profile',  $modalmemberaccount = false, $modalmemberloan = false;
     public $EMPLOYEE, $ACCOUNT, $ACCOUNTTYPE, $MEMBERLOAN, $LOANTYPE, $userid; //models
     public $accounttype_id; //Account forms
     public $memberloanid,$loantype_id, $interest, $interesttype, $paymentterms, $loan_amount; //Loan forms
+
+    public $showConfirmChangeStatusModal = false; 
 
     public function mount()
     {
@@ -28,10 +30,10 @@ class Memberdetails extends Component
 
     public function render()
     {
-        $this->EMPLOYEE = Employee::find($this->member_id);
-        $this->ACCOUNT = Account::where('member_id', $this->member_id)->get();
-        $this->ACCOUNTTYPE = Accounttype::whereNotIn('id', DB::table('accounts')->select('accounttype_id')->where('member_id', $this->member_id))->get();
-        return view('livewire.memberdetails');
+        $this->EMPLOYEE = Employee::find($this->employee_id);
+        $this->ACCOUNT = Account::where('employee_id', $this->employee_id)->get();
+        $this->ACCOUNTTYPE = Accounttype::whereNotIn('id', DB::table('accounts')->select('accounttype_id')->where('employee_id', $this->employee_id))->get();
+        return view('livewire.memberdetails.memberdetails');
     }
 
     public function selectButton($btntype)
@@ -51,7 +53,7 @@ class Memberdetails extends Component
 
         Account::create([
             'accounttype_id' => $this->accounttype_id,
-            'member_id' => $this->member_id,
+            'employee_id' => $this->employee_id,
             'date_opened' => date('Y-m-d'),
         ]);
 
@@ -76,7 +78,7 @@ class Memberdetails extends Component
         ]);
 
         Loan::updateOrCreate(['id' => $this->memberloanid], [
-            'employee_id' => $this->member_id,
+            'employee_id' => $this->employee_id,
             'loantype_id' => $this->loantype_id,
             'loan_amount' => $this->loan_amount,
             'interest' => $this->interest,
@@ -114,4 +116,28 @@ class Memberdetails extends Component
             $this->paymentterms = '';
         }
     }
+
+
+    public function confirmChangeStatus($employee_id){
+        $this->showConfirmChangeStatusModal = true; 
+        $this->employee_id = $employee_id; 
+    }
+
+
+    public function changeStatus($employee_id){
+
+        $employee = Employee::find($employee_id);
+
+        if ($employee->status=="Active"){
+            $status = "Inactive";
+        }
+        else 
+            $status = "Active";
+
+            $employee->status=$status; 
+            $employee->save(); 
+            $this->showConfirmChangeStatusModal = false; 
+    }
+
+
 }

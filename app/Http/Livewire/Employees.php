@@ -11,7 +11,9 @@ class Employees extends Component
     use WithPagination;
 
     public $openAddModal=false,$employee_id,$searchToken,$sameaddress; 
-    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber;    
+    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber,$status;  
+    
+    public $showConfirmChangeStatusModal=false;
 
 
     public function mount(){
@@ -21,7 +23,7 @@ class Employees extends Component
     public function render()
     {
 
-        return view('livewire.employees', ['employees' => Employee::where('lastname', 'LIKE', '%' . $this->searchToken . '%')->orWhere('firstname', 'LIKE', '%' . $this->searchToken . '%')->orderBy('lastname','ASC')->paginate(10),]);
+        return view('livewire.employees.employees', ['employees' => Employee::where('lastname', 'LIKE', '%' . $this->searchToken . '%')->orWhere('firstname', 'LIKE', '%' . $this->searchToken . '%')->orderBy('lastname','ASC')->paginate(10),]);
 
     }
 
@@ -35,6 +37,28 @@ class Employees extends Component
     public function closeModal(){
         $this->openAddModal=false;
 
+    }
+    
+    public function confirmChangeStatus($employee_id){
+        $this->showConfirmChangeStatusModal = true; 
+        $this->employee_id = $employee_id; 
+    }
+
+
+    public function changeStatus($employee_id){
+
+        $employee = Employee::find($employee_id);
+
+        if ($employee->status=="Active"){
+            $status = "Inactive";
+        }
+        else 
+            $status = "Active";
+
+            $employee->status=$status; 
+            $employee->save(); 
+            $this->employee_id = "";
+            $this->showConfirmChangeStatusModal = false; 
     }
 
     public function resetInputFields(){
@@ -75,6 +99,7 @@ class Employees extends Component
         $this->pwdid="";
         $this->ispersonwithdisability="";
         $this->chapanumber="";
+        $this->status="";
 
     }
 
@@ -158,7 +183,7 @@ class Employees extends Component
             'pwdid' => $this->pwdid,
             'ispersonwithdisability' => $this->ispersonwithdisability,
             'chapanumber' => $this->chapanumber,
-
+            'status' => $this->status,
         ]);
 
         $this->closeModal();
@@ -206,6 +231,7 @@ class Employees extends Component
         $this->pwdid=$employee->pwdid;
         $this->ispersonwithdisability=$employee->ispersonwithdisability;
         $this->chapanumber=$employee->chapanumber;
+        $this->status=$employee->status;
         $this->showAddModal();
     }
 

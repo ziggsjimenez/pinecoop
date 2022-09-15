@@ -53,7 +53,7 @@ Route::middleware([
     Route::get('accounttypes',Accounttypes::class)->name('accounttypes');
     Route::get('members',Members::class)->name('members');
     Route::get('employee/{employee_id}',Employeedetails::class)->name('employee');
-    Route::get('member/{member_id}',Memberdetails::class)->name('member');
+    Route::get('member/{employee_id}',Memberdetails::class)->name('member');
     Route::get('account/{account_id}',Accountdetails::class)->name('account');
     Route::get('loans/{memberloan_id}',Loans::class)->name('loans');
     Route::get('loan/{loan_id}',Loandetails::class)->name('loan');

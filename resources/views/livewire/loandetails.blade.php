@@ -1,24 +1,33 @@
 <div class="p-12">
 
 
-    {{ $loan->employee->fullname() }}
+    <div class="block pb-5">
+        {!! $loan->employee->fullname() !!}
 
-    <br>
+        <br>
+        {{-- loan details  --}}
 
-    Loan Amount: Php {{ number_format($loan->loan_amount,2,'.',',') }} <br>
-    Loan Type: {{ $loan->loantype->name }} <br>
-    No. of Terms: {{ $loan->no_of_terms }} <br>
-    Interest: {{ $loan->interest*100 }} %<br>
-  
+        <div>
+            Loan Amount: Php {{ number_format($loan->loan_amount,2,'.',',') }} <br>
+            Loan Type: {{ $loan->loantype->name }} <br>
+            No. of Terms: {{ $loan->no_of_terms }} <br>
+            Interest: {{ $loan->interest*100 }} %<br>
+        </div>
+        <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}">
+            <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>
+        </a>
+        <x-jet-button class="bg-orange-400"><i class="fa-solid fa-pen-to-square fa-2x"></i> Edit</x-jet-button>
+        <x-jet-button class="bg-blue-400"><i class="fa-solid fa-thumbs-up fa-2x"></i>Approve</x-jet-button>
+    </div>
 
-  <br>
 
- 
+    {{-- payment schedule --}}
+
  <x-jet-button wire:click="generateSchedule"> GENERATE PAYMENT SCHEDULE </x-jet-button>
 
 
  <div>
-    <table>
+    <table class="text-xs">
         <thead>
             <tr>
                 <th class="border p-1">#</th>

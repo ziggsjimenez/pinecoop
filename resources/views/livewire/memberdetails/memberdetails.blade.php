@@ -1,6 +1,14 @@
 <div class="flex justify-center">
     <div class="block p-6 w-full" style="margin: 2rem 2rem;">
-        <div class="justify-center font-bold text-2xl mb-4">{{ $EMPLOYEE->fullname() }} </div>
+        <div class="justify-center font-bold text-2xl mb-4"> {!! $EMPLOYEE->fullname() !!} 
+        
+
+            <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})">Change Status</x-jet-button>
+
+           
+
+
+        </div>
         <ul class="flex flex-row  md:space-x-10 list-none border-b-0 pl-0" style="margin: 0rem;">
             <li style="margin-left: 0px;">
                 <button @if($btnSelected=="Profile" ) class="rounded-t-lg bg-white px-6 py-2 cursor-pointer" @else class="cursor-pointer rounded-t-lg px-6 py-2" @endif wire:click="selectButton('Profile')">Profile</button>
@@ -22,7 +30,7 @@
                         <tbody>
                             <tr>
                                 <td class="font-bold p-2">Name: </td>
-                                <td class="font-bold pl-5 p-2">{{ $EMPLOYEE->fullname() }}</td>
+                                <td class="font-bold pl-5 p-2">{!! $EMPLOYEE->fullname() !!}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -131,4 +139,5 @@
             </div>
         </div>
     </div>
+    @include('livewire.employees.modals.confirmChangeStatusModal')
 </div>

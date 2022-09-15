@@ -5,7 +5,7 @@
 
     <x-slot name="content">
         <form wire:submit.prevent="saveContact">
-        @include('livewire.forms.employee')
+        @include('livewire.employees.forms.employee')
         </form>
     </x-slot>
 

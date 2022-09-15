@@ -3,7 +3,7 @@
 
         <div class="mb-5">
             <span class="uppercase tracking-wide text-gray-700 text-xl font-bold mb-2">Members</span>
-            <x-jet-button wire:click="showAddModal" class="pl-5">ADD</x-jet-button>
+            {{-- <x-jet-button wire:click="showAddModal" class="pl-5">ADD</x-jet-button> --}}
         </div>
         <br>
 
@@ -33,13 +33,13 @@
                 @foreach ($members as $member)
                     <tr>
                         <td class="border p-1 border-black">{{ $count++ }}</td>
-                        <td class="border p-1 border-black">{{ $member->fullname() }} </td>
+                        <td class="border p-1 border-black">{!! $member->fullname() !!} </td>
                         <td class="border p-1 border-black">{{ $member->birthdate->format('F d, Y') }} </td>
                         <td class="border p-1 border-black">{{ $member->sex }} </td>
                         <td class="border p-1 border-black">{{ $member->praddress() }} </td>
                         <td class="border p-1 border-black">{{ $member->peaddress() }} </td>
                         <td class="border p-1 border-black">
-                            <a href="{{ route('member', ['member_id' => $member->id]) }}">
+                            <a href="{{ route('member', ['employee_id' => $member->id]) }}">
                                 <x-jet-button class="bg-green-800 p-2">View</x-jet-button>
                             </a>
                             <x-jet-button class="bg-orange-300 p-2" wire:click="edit({{ $member->id }})">Edit

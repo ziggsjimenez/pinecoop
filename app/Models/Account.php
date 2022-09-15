@@ -11,7 +11,7 @@ class Account extends Model
     protected $dates = ['date_opened'];
     protected $fillable = [
         'accounttype_id',
-        'member_id',
+        'employee_id',
         'date_opened',
     ];
 
@@ -28,8 +28,8 @@ class Account extends Model
         return $this->belongsTo(Accounttype::class, 'accounttype_id', 'id');
     }
 
-    public function member(){
-        return $this->belongsTo(Employee::class,'member_id','id');
+    public function employee(){
+        return $this->belongsTo('App\Models\Employee');
     }
 
     public function transactions(){

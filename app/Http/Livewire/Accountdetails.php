@@ -19,7 +19,7 @@ class Accountdetails extends Component
     public function render()
     {
         $this->account = Account::find($this->account_id);
-        return view('livewire.accountdetails');
+        return view('livewire.accountdetails.accountdetails');
     }
 
     public function showTransactionForm($type)

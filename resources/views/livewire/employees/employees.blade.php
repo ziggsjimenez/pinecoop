@@ -30,23 +30,25 @@
                         @foreach ($employees as $employee)
                         <tr class="{{$count %2 ==0? 'bg-gray-100':'bg-white'}} transition duration-100 ease-in-out hover:bg-gray-100">
                             <td class="px-2 py-1 whitespace-nowrap">{{ $count++ }}</td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $employee->fullname() }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">{!! $employee->fullname() !!} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $employee->birthdate->format('F d, Y') }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $employee->sex }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $employee->praddress() }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $employee->peaddress() }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">
-                                <a href="{{ route('member', ['member_id' => $employee->id]) }}">
+                                <a href="{{ route('member', ['employee_id' => $employee->id]) }}">
                                     <x-jet-button class="bg-green-800 py-1" style="text-transform:none">View</x-jet-button>
                                 </a>
                                 <x-jet-button class="bg-orange-300 px-4 py-1" style="text-transform:none" wire:click="edit({{ $employee->id }})">Edit</x-jet-button>
+                                <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $employee->id }})">Change Status</x-jet-button>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            @include('livewire.modals.addemployeemodal')
+            @include('livewire.employees.modals.addemployeemodal')
+            @include('livewire.employees.modals.confirmChangeStatusModal')
         </div>
     </div>
 </div>

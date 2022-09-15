@@ -46,7 +46,7 @@
     <select wire:model.defer="type" class="block appearance-none w-full bg-gray-100 border @error('type') border-red-500  @enderror text-gray-700 py-2 mb-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
         <option value="" selected>Select...</option>
         <option value="Fix">Fix</option>
-        <option value="Dynamic">Diminishing</option>
+        <option value="Diminishing">Diminishing</option>
     </select>
     @error('type')
     <p class="text-red-500 text-xs italic">Please fill out this field.</p>

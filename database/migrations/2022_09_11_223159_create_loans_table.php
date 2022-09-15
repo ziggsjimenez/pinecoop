@@ -17,13 +17,16 @@ return new class extends Migration
             $table->id();
             $table->integer('employee_id')->unsigned()->references('id')->on('employees')->onDelete('restrict');
             $table->integer('loantype_id')->unsigned()->references('id')->on('loantypes')->onDelete('restrict');
-            $table->double('loan_amount',20,4);
+            $table->double('amount',20,4);
             $table->double('interest',20,4);
-            $table->integer('no_of_terms');
-            $table->date('date_applied');
-            $table->date('date_approved');
-            $table->integer('loan_officer')->unsigned()->references('id')->on('employees')->onDelete('restrict');
+            $table->integer('terminmonths');
+            $table->double('maxloanamount',20,4);
+            $table->text('type');
+            $table->date('dateapplied');
+            $table->date('dateapproved');
+            $table->integer('loanofficer')->unsigned()->references('id')->on('employees')->onDelete('restrict');
             $table->text('status');
+            $table->boolean('isapproved');
             $table->timestamps();
         });
     }
