@@ -18,7 +18,7 @@ class Memberdetails extends Component
     public $employee_id, $btnSelected = 'Profile',  $modalmemberaccount = false, $modalmemberloan = false;
     public $EMPLOYEE, $ACCOUNT, $ACCOUNTTYPE, $MEMBERLOAN, $LOANTYPE, $userid; //models
     public $accounttype_id; //Account forms
-    public $memberloanid,$loantype_id, $interest, $interesttype, $paymentterms, $loan_amount,$maxloanamount; //Loan forms
+    public $memberloanid,$loantype_id, $interest, $interesttype, $paymentterms, $amount,$maxloanamount; //Loan forms
 
     public $showConfirmChangeStatusModal = false,$type; 
 
@@ -80,7 +80,7 @@ class Memberdetails extends Component
         Loan::updateOrCreate(['id' => $this->memberloanid], [
             'employee_id' => $this->employee_id,
             'loantype_id' => $this->loantype_id,
-            'amount' => $this->loan_amount,
+            'amount' => $this->amount,
             'interest' => $this->interest,
             'terminmonths' => $this->paymentterms,
             'maxloanamount' => $this->maxloanamount,

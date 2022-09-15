@@ -15,10 +15,18 @@
     </div>
     
 
-    Transactions - {{ $account->employee->isActive() }} --- {{ $account->accounttype->name }}
+    Transactions
     <x-jet-button wire:click="showTransactionForm('Deposit')">Deposit</x-jet-button>
    
     @if($account->employee->isActive() && $account->accounttype->name=="Savings")
+    <x-jet-button wire:click="showTransactionForm('Withdraw')">Withdraw</x-jet-button>
+    @endif
+
+    @if(!$account->employee->isActive() && $account->accounttype->name=="Capital Share")
+    <x-jet-button wire:click="showTransactionForm('Withdraw')">Withdraw</x-jet-button>
+    @endif
+
+    @if(!$account->employee->isActive() && $account->accounttype->name=="Savings")
     <x-jet-button wire:click="showTransactionForm('Withdraw')">Withdraw</x-jet-button>
     @endif
 

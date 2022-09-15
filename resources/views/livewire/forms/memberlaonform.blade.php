@@ -44,11 +44,11 @@
 </div>
 
 <div class="w-full px-3 mb-6 md:mb-3">
-    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold" for="loan_amount">
+    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold" for="amount">
         Loan Amount
     </label>
-    <input wire:model="loan_amount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('loan_amount') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
-    @error('loan_amount')
+    <input wire:model="amount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('amount') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+    @error('amount')
     <p class="text-red-500 text-xs italic">Please fill out this field.</p>
     @enderror
 </div>
