@@ -74,7 +74,7 @@ class Memberdetails extends Component
     {
         $this->validate([
             'loantype_id' => 'required',
-            'loanamount' => 'required',
+            'amount' => 'required',
         ]);
 
         Loan::updateOrCreate(['id' => $this->memberloanid], [
