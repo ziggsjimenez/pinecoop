@@ -18,9 +18,9 @@ class Memberdetails extends Component
     public $employee_id, $btnSelected = 'Profile',  $modalmemberaccount = false, $modalmemberloan = false;
     public $EMPLOYEE, $ACCOUNT, $ACCOUNTTYPE, $MEMBERLOAN, $LOANTYPE, $userid; //models
     public $accounttype_id; //Account forms
-    public $memberloanid,$loantype_id, $interest, $interesttype, $paymentterms, $loan_amount; //Loan forms
+    public $memberloanid,$loantype_id, $interest, $interesttype, $paymentterms, $loan_amount,$maxloanamount; //Loan forms
 
-    public $showConfirmChangeStatusModal = false; 
+    public $showConfirmChangeStatusModal = false,$type; 
 
     public function mount()
     {
@@ -74,19 +74,22 @@ class Memberdetails extends Component
     {
         $this->validate([
             'loantype_id' => 'required',
-            'loan_amount' => 'required',
+            'loanamount' => 'required',
         ]);
 
         Loan::updateOrCreate(['id' => $this->memberloanid], [
             'employee_id' => $this->employee_id,
             'loantype_id' => $this->loantype_id,
-            'loan_amount' => $this->loan_amount,
+            'amount' => $this->loan_amount,
             'interest' => $this->interest,
-            'no_of_terms' => $this->paymentterms,
-            'date_applied' => date('Y-m-d h:i:s'),
-            'date_approved' => date('Y-m-d h:i:s'),
-            'loan_officer' => $this->userid,
-            'status' => 'Okay',
+            'terminmonths' => $this->paymentterms,
+            'maxloanamount' => $this->maxloanamount,
+            'type' => $this->type,
+            'dateapplied' => date('Y-m-d h:i:s'),
+            'dateapproved' => date('Y-m-d h:i:s'),
+            'loanofficer' => $this->userid,
+            'status' => 'Pending',
+            'isapproved' => false,
         ]);
 
         $this->modalmemberloan = false;
@@ -96,12 +99,12 @@ class Memberdetails extends Component
     public function resetInputFields()
     {
         $this->loantype_id = '';
-        $this->loan_amount = '';
+        $this->amount = '';
         $this->interest = '';
         $this->paymentterms = '';
-        $this->date_applied = '';
-        $this->date_approved = '';
-        $this->loan_officer = '';
+        $this->dateapplied = '';
+        $this->dateapproved = '';
+        $this->loanofficer = '';
     }
 
     public function changeloantype(){
@@ -110,10 +113,14 @@ class Memberdetails extends Component
             $this->interest = $selectedloantype->interest;
             $this->interesttype = $selectedloantype->type;
             $this->paymentterms = $selectedloantype->paymentterms;
+            $this->maxloanamount = $selectedloantype->maxloanamount;
+            $this->type = $selectedloantype->type;
         }else{
             $this->interest = '';
             $this->interesttype = '';
             $this->paymentterms = '';
+            $this->maxloanamount = '';
+            $this->type = '';
         }
     }
 

@@ -8,9 +8,9 @@
         {{-- loan details  --}}
 
         <div>
-            Loan Amount: Php {{ number_format($loan->loan_amount,2,'.',',') }} <br>
+            Loan Amount: Php {{ number_format($loan->amount,2,'.',',') }} <br>
             Loan Type: {{ $loan->loantype->name }} <br>
-            No. of Terms: {{ $loan->no_of_terms }} <br>
+            No. of Terms: {{ $loan->terminmonths }} <br>
             Interest: {{ $loan->interest*100 }} %<br>
         </div>
         <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}">

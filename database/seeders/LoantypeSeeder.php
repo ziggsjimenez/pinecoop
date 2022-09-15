@@ -20,14 +20,14 @@ class LoantypeSeeder extends Seeder
                 'name' => 'Regular',
                 'interest' => .01,
                 'paymentterms' => 24,
-                'maxloanammount' => 50000,
+                'maxloanamount' => 50000,
                 'type' => 'Diminishing',
             ],
             [
                 'name' => 'Special',
                 'interest' => .01,
                 'paymentterms' => 12,
-                'maxloanammount' => 25000,
+                'maxloanamount' => 25000,
                 'type' => 'Diminishing',
             ],
         ]; 
@@ -37,7 +37,7 @@ class LoantypeSeeder extends Seeder
                 'name' => $loantype['name'],
                 'interest' => $loantype['interest'],
                 'paymentterms' =>$loantype['paymentterms'],
-                'maxloanammount' => $loantype['maxloanammount'],
+                'maxloanamount' => $loantype['maxloanamount'],
                 'type' => $loantype['type'],
             ]);
         }

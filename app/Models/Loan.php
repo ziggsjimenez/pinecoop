@@ -8,17 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Loan extends Model
 {
     use HasFactory;
-    protected $dates = ['date_applied','date_approved'];
+    protected $dates = ['dateapplied','dateapproved'];
     protected $fillable = [
         'employee_id',
         'loantype_id',
-        'loan_amount',
+        'amount',
         'interest',
-        'no_of_terms',
-        'date_applied',
-        'date_approved',
-        'loan_officer',
+        'terminmonths',
+        'maxloanamount',
+        'type',
+        'dateapplied',
+        'dateapproved',
+        'loanofficer',
         'status',
+        'isapproved',
     ];
 
     public function loantype()

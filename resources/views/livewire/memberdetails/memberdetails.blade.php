@@ -117,12 +117,12 @@
                                 @foreach ($EMPLOYEE->loans as $row)
                                 <tr class="transition duration-100 ease-in-out hover:bg-gray-100">
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->id }}</td>
-                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->date_applied->format('F d, Y')}}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->dateapplied->format('F d, Y')}}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->name}}</td>
-                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->loan_amount }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->amount }}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->type }}</td>
-                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->no_of_terms .' Months'}}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->terminmonths .' Months'}}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">
                                         <a href="{{ route('loan',['loan_id'=>$row->id]) }}">
                                         <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none" wire:click="">View Details</x-jet-button>

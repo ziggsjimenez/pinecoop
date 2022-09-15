@@ -37,13 +37,13 @@ class Loandetails extends Component
 
         $this->resetPaymentSchedule();
 
-        $monthly = $this->loan->loan_amount/$this->loan->no_of_terms;  
-        $balance = $this->loan->loan_amount;
+        $monthly = $this->loan->amount/$this->loan->terminmonths;  
+        $balance = $this->loan->amount;
 
-        $paymentdate = $this->loan->date_approved;
+        $paymentdate = $this->loan->dateapproved;
 
 
-        for ($x = 0; $x < $this->loan->no_of_terms; $x++) {
+        for ($x = 0; $x < $this->loan->terminmonths; $x++) {
 
             $interestamount = $balance*$this->loan->interest;
             $paymentschedule = new Paymentschedule;

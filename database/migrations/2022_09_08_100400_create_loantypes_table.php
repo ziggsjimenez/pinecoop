@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('name');
             $table->double('interest', 20,4);
             $table->integer('paymentterms');
-            $table->double('maxloanammount', 20,4);
+            $table->double('maxloanamount', 20,4);
             $table->text('type');
             $table->timestamps();
         });
