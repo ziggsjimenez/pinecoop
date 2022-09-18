@@ -13,7 +13,7 @@ class Loantype extends Model
         'name',
         'interest',
         'paymentterms',
-        'maxloanammount',
+        'maxloanamount',
         'type',
     ];
 }

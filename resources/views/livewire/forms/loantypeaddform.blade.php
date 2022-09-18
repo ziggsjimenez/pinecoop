@@ -29,11 +29,11 @@
 </div>
 
 <div class="w-full px-3 mb-6 md:mb-0">
-    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="maxloanammount">
+    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="maxloanamount">
         Max Ammount Loan
     </label>
-    <input wire:model="maxloanammount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('maxloanammount') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
-    @error('maxloanammount')
+    <input wire:model="maxloanamount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('maxloanamount') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+    @error('maxloanamount')
     <p class="text-red-500 text-xs italic">Please fill out this field.</p>
     @enderror
 </div>
