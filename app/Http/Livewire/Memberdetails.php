@@ -135,15 +135,28 @@ class Memberdetails extends Component
 
         $employee = Employee::find($employee_id);
 
-        if ($employee->status=="Active"){
-            $status = "Inactive";
-        }
-        else 
-            $status = "Active";
 
-            $employee->status=$status; 
-            $employee->save(); 
+        if(!$employee->hasPendingLoans()){
+
+            if ($employee->status=="Active"){
+                $status = "Inactive";
+            }
+            else 
+                $status = "Active";
+    
+                $employee->status=$status; 
+                $employee->save(); 
+                $this->showConfirmChangeStatusModal = false; 
+
+        }
+
+        else {
+            session()->flash('message', 'Could not set change status: Pending loans detected.');
+            session()->flash('messagetype', 'warning');
             $this->showConfirmChangeStatusModal = false; 
+        }
+
+       
     }
 
 

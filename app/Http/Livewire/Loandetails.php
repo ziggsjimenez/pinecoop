@@ -10,7 +10,7 @@ use Livewire\Component;
 class Loandetails extends Component
 {
 
-    public $loan_id; 
+    public $loan_id,$showApproveLoanModal=false; 
 
     public function mount(){
 
@@ -24,7 +24,7 @@ class Loandetails extends Component
     {
 
         $this->loan = Loan::find($this->loan_id);
-        return view('livewire.loandetails');
+        return view('livewire.loandetails.index');
     
     }
 
@@ -40,25 +40,62 @@ class Loandetails extends Component
         $monthly = $this->loan->amount/$this->loan->terminmonths;  
         $balance = $this->loan->amount;
 
-        $paymentdate = $this->loan->dateapproved;
+
+        // date for end of the month
+        $paymentdate2=date('Y-m-t', strtotime($this->loan->dateapproved));
+        // date for adding 30 days
+        $paymentdate=date('Y-m-d', strtotime($this->loan->dateapproved));
+
+        $currentday = date('d');
+        $endofmonth = date('t');
+        $diff= intval($endofmonth)-intval($currentday);
+        $firstmonthinterest = (($this->loan->amount*$this->loan->interest)/30)*$diff;
 
 
         for ($x = 0; $x < $this->loan->terminmonths; $x++) {
 
-            $interestamount = $balance*$this->loan->interest;
+            if($x==0){
+                $interestamount = $firstmonthinterest;
+            }
+            else{
+                $interestamount = $balance*$this->loan->interest;
+            }
+
+            
             $paymentschedule = new Paymentschedule;
             $paymentschedule->loan_id = $this->loan->id;
-            $paymentschedule->paymentdate = $paymentdate;
+
+            $paymentschedule->paymentdate = $paymentdate2;
             $paymentschedule->principal = $monthly;
             $paymentschedule->interest = $interestamount;
             $paymentschedule->monthlyamort = $interestamount + $monthly;
             $paymentschedule->balance = $balance;
             $paymentschedule->save();
 
-            date_add($paymentdate,date_interval_create_from_date_string("30 days"));
+            // add 30 days to month
+            $paymentdate = date("Y-m-d", strtotime ( '+1 month' , strtotime ( $paymentdate ) )) ;
+            // get end of the month
+            $paymentdate2 = date("Y-m-t", strtotime ($paymentdate )) ;
+          
             $balance -= $monthly; 
 
           }
+
+    }
+
+    public function openApproveLoanModal(){
+
+        $this->showApproveLoanModal = true; 
+
+    }
+
+    public function approveLoan(){
+
+        $loan = Loan::find($this->loan_id);
+
+        $loan->status = "Approved"; 
+        $loan->save(); 
+        $this->showApproveLoanModal = false; 
 
     }
 

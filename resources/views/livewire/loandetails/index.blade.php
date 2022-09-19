@@ -2,22 +2,34 @@
 
 
     <div class="block pb-5">
-        {!! $loan->employee->fullname() !!}
-
+        
+        <div class="font-bold text-xl">
+            {!! $loan->employee->fullname() !!}
+        </div>
         <br>
         {{-- loan details  --}}
 
-        <div>
-            Loan Amount: Php {{ number_format($loan->amount,2,'.',',') }} <br>
-            Loan Type: {{ $loan->loantype->name }} <br>
-            No. of Terms: {{ $loan->terminmonths }} <br>
-            Interest: {{ $loan->interest*100 }} %<br>
+        <div class="rounded-md bg-blue-200 p-5 mb-10">
+
+            <table>
+                <tr>
+                    <td class="px-5">Loan Amount: Php {{ number_format($loan->amount,2,'.',',') }} </td>
+                    <td class="px-5">Loan Type: {{ $loan->loantype->name }} </td>
+                    <td class="px-5">No. of Terms: {{ $loan->terminmonths }}</td>
+                    <td class="px-5">Interest: {{ $loan->interest*100 }} %</td>
+                    <td class="px-5">Status: {{ $loan->status }} </td>
+                </tr>
+            </table>
+
         </div>
+
         <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}">
             <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>
         </a>
+
         <x-jet-button class="bg-orange-400"><i class="fa-solid fa-pen-to-square fa-2x"></i> Edit</x-jet-button>
-        <x-jet-button class="bg-blue-400"><i class="fa-solid fa-thumbs-up fa-2x"></i>Approve</x-jet-button>
+
+        <x-jet-button wire:click="openApproveLoanModal" class="bg-blue-400"><i class="fa-solid fa-thumbs-up fa-2x"></i>Approve</x-jet-button>
     </div>
 
 
@@ -54,7 +66,11 @@
                     <td class="border p-1 text-right">Php {{ number_format($sked->principal,2,'.',',') }}</td>
                     <td class="border p-1 text-right">Php {{ number_format($sked->interest,2,'.',',') }}</td>
                     <td class="border p-1 text-right">Php {{ number_format($sked->monthlyamort,2,'.',',') }}</td>
-                    <td> <x-jet-button>Pay</x-jet-button> </td>
+                    <td class="border p-1 text-right">
+
+                        <x-jet-button>Paid</x-jet-button>
+                        <x-jet-button>Cash Payment</x-jet-button>
+                    </td>
 
                 </tr>
             @endforeach
@@ -65,11 +81,14 @@
                 <td class="border p-1 text-right font-bold">Php {{ number_format($loan->paymentschedules->sum('principal'),2,'.',',') }}</td>
                 <td class="border p-1 text-right font-bold">Php {{ number_format($loan->paymentschedules->sum('interest'),2,'.',',') }}</td>
                 <td class="border p-1 text-right font-bold">Php {{ number_format($loan->paymentschedules->sum('monthlyamort'),2,'.',',') }}</td>
+                <td></td>
 
             </tr>
         </tbody>
     </table>
  </div>
+
+ @include('livewire.loandetails.modals.approveLoanModal')
 
 
 </div>
