@@ -32,7 +32,7 @@
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->name }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->paymentterms }} </td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxloanammount }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxloanamount }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->type }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">
                                 <x-jet-button class="bg-orange-300 px-4 py-1" style="text-transform:none" wire:click="editLoanType({{ $row->id }})">Edit</x-jet-button>

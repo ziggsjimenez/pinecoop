@@ -10,7 +10,7 @@ class Loantypes extends Component
 {
     use withPagination;
     public $loantypes, $loantypid, $modaladdloantype = false;
-    public $name, $interest, $paymentterms, $maxloanammount, $type;
+    public $name, $interest, $paymentterms, $maxloanamount, $type;
 
     public function mount()
     {
@@ -35,7 +35,7 @@ class Loantypes extends Component
             'name' => 'required',
             'interest' => 'required',
             'paymentterms' => 'required',
-            'maxloanammount' => 'required',
+            'maxloanamount' => 'required',
             'type' => 'required',
         ]);
 
@@ -43,7 +43,7 @@ class Loantypes extends Component
             'name' => $this->name,
             'interest' => $this->interest,
             'paymentterms' => $this->paymentterms,
-            'maxloanammount' => $this->maxloanammount,
+            'maxloanamount' => $this->maxloanamount,
             'type' => $this->type,
         ]);
 
@@ -58,7 +58,7 @@ class Loantypes extends Component
         $this->name = $loantypes->name;
         $this->interest = $loantypes->interest;
         $this->paymentterms = $loantypes->paymentterms;
-        $this->maxloanammount = $loantypes->maxloanammount;
+        $this->maxloanamount = $loantypes->maxloanamount;
         $this->type = $loantypes->type;
 
         $this->showAddEditModal('edit');

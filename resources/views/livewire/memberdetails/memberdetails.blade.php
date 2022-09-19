@@ -2,11 +2,15 @@
 
     <div class="block p-6 w-full" style="margin: 2rem 2rem;">
         <div class="justify-center font-bold text-2xl mb-4"> {!! $EMPLOYEE->fullname() !!} 
+<<<<<<< HEAD
 
             @include('livewire.includes.messages')
     
             <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})">Change Status</x-jet-button>
 
+=======
+            <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})">Change Status</x-jet-button>
+>>>>>>> dbf598741976067ed748d5701ad1131476f80535
         </div>
         <ul class="flex flex-row  md:space-x-10 list-none border-b-0 pl-0" style="margin: 0rem;">
             <li style="margin-left: 0px;">
@@ -119,8 +123,13 @@
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->id }}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->dateapplied->format('F d, Y')}}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->name}}</td>
+<<<<<<< HEAD
                                     <td class="px-2 py-1 whitespace-nowrap">Php {{ number_format($row->amount,2,'.',',') }}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }}</td>
+=======
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->amount }}</td>
+                                    <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest*100 }}%</td>
+>>>>>>> dbf598741976067ed748d5701ad1131476f80535
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->type }}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->terminmonths .' Months'}}</td>
                                     <td class="px-2 py-1 whitespace-nowrap">{{ $row->status }}</td>
