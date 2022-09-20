@@ -12,15 +12,9 @@ use Livewire\Component;
 class Loandetails extends Component
 {
 
-<<<<<<< HEAD
     public $loan_id,$showApproveLoanModal=false; 
 
-    public function mount(){
-=======
-    public $LOANTYPE;
-    public $loan_id, $modaleditemployeeloan = false,$userid,$approveConfirmationModal = false;
-    public $loan, $loantype_id, $interest, $type, $terminmonths, $amount, $maxloanamount; //Loan forms
->>>>>>> dbf598741976067ed748d5701ad1131476f80535
+    
 
     public function mount()
     {
@@ -39,12 +33,9 @@ class Loandetails extends Component
     public function render()
     {
         $this->loan = Loan::find($this->loan_id);
-<<<<<<< HEAD
+
         return view('livewire.loandetails.index');
     
-=======
-        return view('livewire.loandetails.loandetails');
->>>>>>> dbf598741976067ed748d5701ad1131476f80535
     }
 
     public function resetPaymentSchedule()
@@ -74,7 +65,6 @@ class Loandetails extends Component
 
         for ($x = 0; $x < $this->loan->terminmonths; $x++) {
 
-<<<<<<< HEAD
             if($x==0){
                 $interestamount = $firstmonthinterest;
             }
@@ -83,9 +73,7 @@ class Loandetails extends Component
             }
 
             
-=======
-            $interestamount = $balance * $this->loan->interest;
->>>>>>> dbf598741976067ed748d5701ad1131476f80535
+            // $interestamount = $balance * $this->loan->interest;
             $paymentschedule = new Paymentschedule;
             $paymentschedule->loan_id = $this->loan->id;
 
@@ -96,7 +84,6 @@ class Loandetails extends Component
             $paymentschedule->balance = $balance;
             $paymentschedule->save();
 
-<<<<<<< HEAD
             // add 30 days to month
             $paymentdate = date("Y-m-d", strtotime ( '+1 month' , strtotime ( $paymentdate ) )) ;
             // get end of the month
@@ -124,11 +111,7 @@ class Loandetails extends Component
 
     }
 
-=======
-            date_add($paymentdate, date_interval_create_from_date_string("30 days"));
-            $balance -= $monthly;
-        }
-    }
+
 
 
     public function showEditEmployeeLoanModal()
@@ -181,5 +164,4 @@ class Loandetails extends Component
 
         session()->flash('message', 'Member loan approved successfully.');
     }
->>>>>>> dbf598741976067ed748d5701ad1131476f80535
 }
