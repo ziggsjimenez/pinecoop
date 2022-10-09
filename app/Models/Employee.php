@@ -94,4 +94,19 @@ class Employee extends Model
 
     }
 
+    public function hasPendingLoans(){
+
+        $haspendingloans = false; 
+
+        foreach($this->loans as $loan){
+            if($loan->status=="Pending")
+            {
+            $haspendingloans = true; 
+            break;
+            }
+        }
+
+        return $haspendingloans;
+    }
+
 }
