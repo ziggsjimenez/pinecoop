@@ -6,15 +6,20 @@ use App\Models\Employee;
 use App\Models\Loan;
 use App\Models\Loantype;
 use App\Models\Paymentschedule;
+use App\Models\AccountType;
+use App\Models\Account;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class Loandetails extends Component
 {
 
     public $LOANTYPE;
-    public $loan_id, $modaleditemployeeloan = false,$userid,$approveConfirmationModal = false;
+    public $loan_id, $modaleditemployeeloan = false,$userid,$approveConfirmationModal = false, $paidPaymentConfirmationModal = false, $cashpaymentmodal = false, $paymentschedule, $arr_paymentsched = array(), $selectedindex;
     public $loan, $loantype_id, $interest, $type, $terminmonths, $amount, $maxloanamount; //Loan forms
+    public $selectedRowMonthAmor;
 
     public function mount()
     {
@@ -22,6 +27,7 @@ class Loandetails extends Component
         $this->LOANTYPE = Loantype::all();
         $this->userid = Auth::id();
         $this->loan = Loan::find($this->loan_id);
+        $this->paymentschedule = Paymentschedule::all();
 
         $this->interest = $this->loan->interest;
         $this->type = $this->loan->type;
@@ -32,6 +38,7 @@ class Loandetails extends Component
 
     public function render()
     {
+        $this->arr_paymentsched = array();
         $this->loan = Loan::find($this->loan_id);
         return view('livewire.loandetails.loandetails');
     }
@@ -118,6 +125,113 @@ class Loandetails extends Component
         $this->loan->save();
         $this->approveConfirmationModal = false;
 
-        session()->flash('message', 'Member loan approved successfully.');
+        session()->flash('message', 'Member loan approved successfully..');
+    }
+
+    function checkpaymentdata($paymentdate,$principal,$interestamount,$monthlyamort,$balance){
+        array_push($this->arr_paymentsched, [
+            'paymentdate' => $paymentdate,
+            'principal' =>$principal,
+            'interestamount' =>$interestamount,
+            'monthlyamort' =>$monthlyamort,
+            'balance' =>$balance,
+        ]) ;
+
+        $temp = Paymentschedule::where([
+                    'loan_id' => $this->loan_id,
+                    'paymentdate' => $paymentdate,
+                    'principal' => $principal,
+                    'interest' => $interestamount,
+                    'monthlyamort' => $monthlyamort,
+                    'balance' => $balance,
+            ])->count();
+        return $temp ;
+    }
+
+    // FOR PAID ACTION
+    function showPaidPaymentConfirmation($index){
+        $this->selectedindex = $index;
+        $this->paidPaymentConfirmationModal = true;
+    }
+
+    function paidAction(){
+        $index = $this->selectedindex;
+
+        $paymentschedule = new Paymentschedule;
+        $paymentschedule->loan_id = $this->loan->id;
+        $paymentschedule->paymentdate = $this->arr_paymentsched[$index]['paymentdate'];
+        $paymentschedule->principal = $this->arr_paymentsched[$index]['principal'];
+        $paymentschedule->interest = $this->arr_paymentsched[$index]['interestamount'];
+        $paymentschedule->monthlyamort = $this->arr_paymentsched[$index]['monthlyamort'];
+        $paymentschedule->balance = $this->arr_paymentsched[$index]['balance'];
+        $paymentschedule->save();
+        session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with <b>Paid</b> action.');
+        $this->paidPaymentConfirmationModal = false;
+    }
+
+
+
+    // FOR CASH PAYMENT ACTION
+    function showCashPaymentConfirmation($index){
+        $this->selectedRowMonthAmor = $this->arr_paymentsched[$index]['monthlyamort'];
+        $this->selectedindex = $index;
+        $this->cashpaymentmodal = true;
+    }
+
+    function cashPaymentAction(){
+        $index = $this->selectedindex;
+
+        $this->validate([
+            'selectedRowMonthAmor' => 'required|numeric|min:'. $this->arr_paymentsched[$index]['monthlyamort'],
+        ]);
+
+        $accounttype = AccountType::where('name',"LIKE", '%capital shares%');
+        if($accounttype->count() == 0){
+            session()->flash('message', 'No <b>Capital Shares</b> account type has been setup.');
+            session()->flash('message-type', 'danger');
+            $this->cashpaymentmodal = false;
+            return;
+        }
+       
+        $account = DB::table('accounts')
+                ->join('accounttypes','accounts.id', '=', 'accounttypes.id')
+                ->where('employee_id', $this->loan->employee_id)
+                ->where('accounttypes.name', 'LIKE', '%capital shares%');
+        if($account->count() == 0){
+            session()->flash('message', 'No <b>Capital Shares</b> account has been added to this employee.');
+            session()->flash('message-type', 'danger');
+            $this->cashpaymentmodal = false;
+            return;
+        }
+    
+
+        $paymentschedule = new Paymentschedule;
+        $paymentschedule->loan_id = $this->loan->id;
+        $paymentschedule->paymentdate = $this->arr_paymentsched[$index]['paymentdate'];
+        $paymentschedule->principal = $this->arr_paymentsched[$index]['principal'];
+        $paymentschedule->interest = $this->arr_paymentsched[$index]['interestamount'];
+        $paymentschedule->monthlyamort = $this->arr_paymentsched[$index]['monthlyamort'];
+        $paymentschedule->balance = $this->arr_paymentsched[$index]['balance'];
+        $paymentschedule->save();
+
+
+
+        $tempstr = '';
+        if($this->selectedRowMonthAmor > $this->arr_paymentsched[$index]['monthlyamort']){
+            $remaining =  $this->selectedRowMonthAmor - $this->arr_paymentsched[$index]['monthlyamort'];
+            $tempstr = '<br>The remaining <b>Php '.number_format($remaining,2,'.',',').'</b> has been automatically added to <b>Capital Shares.</b>';
+
+            $transaction = new Transaction();
+            $transaction->transaction_reference_number = '2022-TJOUWERWER-009';
+            $transaction->amount = $remaining;
+            $transaction->dateoftransaction = date('Y-m-d');
+            $transaction->account_id =  $account->first()->id;
+            $transaction->user_id = $this->userid;
+            $transaction->save();
+        }   
+
+        session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with total amount of <b>Php '.number_format($this->selectedRowMonthAmor,2,'.',',').'</b> with <b>Cash Payment</b> action.'. $tempstr);
+      
+        $this->cashpaymentmodal = false;
     }
 }
