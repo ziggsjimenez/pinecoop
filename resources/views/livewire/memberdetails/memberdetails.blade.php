@@ -3,9 +3,10 @@
     <div class="block p-6 w-full" style="margin: 2rem 2rem;">
         <div class="justify-center font-bold text-2xl mb-4"> {!! $EMPLOYEE->fullname() !!} 
 
+            <button wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})" type="button" class="inline-block px-6 py-1 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Change Status</button>
             @include('livewire.includes.messages')
     
-            <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})">Change Status</x-jet-button>
+            {{-- <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})">Change Status</x-jet-button> --}}
 
         </div>
         <ul class="flex flex-row  md:space-x-10 list-none border-b-0 pl-0" style="margin: 0rem;">

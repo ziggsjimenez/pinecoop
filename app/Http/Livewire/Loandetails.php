@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
+use function Termwind\render;
+
 class Loandetails extends Component
 {
 
@@ -23,7 +25,6 @@ class Loandetails extends Component
 
     public function mount()
     {
-        $this->loantype_id = $this->loan_id;
         $this->LOANTYPE = Loantype::all();
         $this->userid = Auth::id();
         $this->loan = Loan::find($this->loan_id);
@@ -33,6 +34,7 @@ class Loandetails extends Component
         $this->type = $this->loan->type;
         $this->terminmonths = $this->loan->terminmonths;
         $this->amount = $this->loan->amount;
+        $this->loantype_id = $this->loan->loantype_id;
     }
 
 
@@ -97,29 +99,20 @@ class Loandetails extends Component
             $paymentdate2 = date("Y-m-t", strtotime ($paymentdate )) ;
           
             $balance -= $monthly; 
-
           }
-
     }
 
     public function openApproveLoanModal(){
-
         $this->showApproveLoanModal = true; 
-
     }
 
     public function approveLoan(){
-
         $loan = Loan::find($this->loan_id);
 
         $loan->status = "Approved"; 
         $loan->save(); 
         $this->showApproveLoanModal = false; 
-
     }
-
-
-
 
     public function showEditEmployeeLoanModal()
     {
@@ -170,17 +163,10 @@ class Loandetails extends Component
         $this->approveConfirmationModal = false;
 
         session()->flash('message', 'Member loan approved successfully..');
+        $this->render();
     }
 
     function checkpaymentdata($paymentdate,$principal,$interestamount,$monthlyamort,$balance){
-        array_push($this->arr_paymentsched, [
-            'paymentdate' => $paymentdate,
-            'principal' =>$principal,
-            'interestamount' =>$interestamount,
-            'monthlyamort' =>$monthlyamort,
-            'balance' =>$balance,
-        ]) ;
-
         $temp = Paymentschedule::where([
                     'loan_id' => $this->loan_id,
                     'paymentdate' => $paymentdate,
@@ -188,7 +174,7 @@ class Loandetails extends Component
                     'interest' => $interestamount,
                     'monthlyamort' => $monthlyamort,
                     'balance' => $balance,
-            ])->count();
+            ]);
         return $temp ;
     }
 

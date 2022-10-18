@@ -152,7 +152,7 @@ class Memberdetails extends Component
 
         else {
             session()->flash('message', 'Could not set change status: Pending loans detected.');
-            session()->flash('messagetype', 'warning');
+            session()->flash('message-type', 'danger');
             $this->showConfirmChangeStatusModal = false; 
         }
 

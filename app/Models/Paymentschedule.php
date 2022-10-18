@@ -9,7 +9,7 @@ class Paymentschedule extends Model
 {
     use HasFactory;
 
-    protected $dates = ['paymentdate',];
+    protected $dates = ['paymentdate','dateapproved'];
 
     public function loan(){
 
