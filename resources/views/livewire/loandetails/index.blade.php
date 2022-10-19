@@ -184,7 +184,7 @@
                                         @endif
                                     </td>
                                     <td class="border p-1 py-0 text-right">
-                                        {{ $chck->get()->pluck('created_at')->first() != ''? date_format(date_create($chck->get()->pluck('created_at')->first()),'F d, Y h:i A'): '' }}
+                                        {{ $chck->get()->pluck('created_at')->first() != ''? date_format(date_create($chck->get()->pluck('created_at')->first()),'m-d-Y h:i A'): '' }}
                                     </td>
                                     <td class="border p-1 text-center">
                                         @if ($chck->count() == 0 && date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] && !$displaypaidbtn)

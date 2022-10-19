@@ -264,4 +264,7 @@ class Loandetails extends Component
       
         $this->cashpaymentmodal = false;
     }
+
+    public function hideToast(){
+    } 
 }
