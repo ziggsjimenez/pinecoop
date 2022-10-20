@@ -12,7 +12,9 @@
 
         {{-- Fontawesome --}}
 
-        <script src="https://kit.fontawesome.com/a52d931034.js" crossorigin="anonymous"></script>
+        <link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet">
+        <link href="{{ asset('fontawesome/css/brands.css') }}" rel="stylesheet">
+        <link href="{{ asset('fontawesome/css/solid.css') }}" rel="stylesheet">
         
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

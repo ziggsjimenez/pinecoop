@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 
 class Employee extends Model
 {
@@ -105,5 +106,13 @@ class Employee extends Model
         }
 
         return $haspendingloans;
+    }
+
+    public function monthsInService(){
+
+        $now = Carbon::parse(date('Y-m-d'));
+  
+        return  $now->diffInMonths($this->employmentdate);
+        
     }
 }

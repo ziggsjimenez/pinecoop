@@ -16,10 +16,9 @@
                         {{ __('DASHBOARD') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('members') }}" :active="request()->routeIs('members')">
-                        {{ __('MEMBERS') }}
+                    <x-jet-nav-link href="{{ route('employees') }}" :active="request()->routeIs('employees')">
+                        {{ __('Employees') }}
                     </x-jet-nav-link>
-
 
                     <div class="hidden sm:flex sm:items-center sm:ml-6 justify-right">
                 
@@ -42,11 +41,6 @@
                                 </x-slot>
         
                                 <x-slot name="content">
-
-
-                                    <x-jet-dropdown-link  href="{{ route('employees') }}">
-                                        {{ __('Employees') }}
-                                    </x-jet-nav-link>
 
                                     <x-jet-dropdown-link href="{{ route('loantypes') }}">
                                         {{ __('Loan Type') }}

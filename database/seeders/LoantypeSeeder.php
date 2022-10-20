@@ -19,15 +19,19 @@ class LoantypeSeeder extends Seeder
             [
                 'name' => 'Regular',
                 'interest' => .01,
-                'paymentterms' => 24,
+                'minpaymentterms' => 12,
+                'maxpaymentterms' => 24,
+                'minloanamount' => 10000,
                 'maxloanamount' => 50000,
                 'type' => 'Diminishing',
             ],
             [
                 'name' => 'Special',
                 'interest' => .01,
-                'paymentterms' => 12,
-                'maxloanamount' => 25000,
+                'minpaymentterms' => 12,
+                'maxpaymentterms' => 24,
+                'minloanamount' => 10000,
+                'maxloanamount' => 50000,
                 'type' => 'Diminishing',
             ],
         ]; 
@@ -36,7 +40,9 @@ class LoantypeSeeder extends Seeder
             DB::table('loantypes')->insert([
                 'name' => $loantype['name'],
                 'interest' => $loantype['interest'],
-                'paymentterms' =>$loantype['paymentterms'],
+                'minpaymentterms' =>$loantype['minpaymentterms'],
+                'maxpaymentterms' =>$loantype['maxpaymentterms'],
+                'minloanamount' => $loantype['minloanamount'],
                 'maxloanamount' => $loantype['maxloanamount'],
                 'type' => $loantype['type'],
             ]);

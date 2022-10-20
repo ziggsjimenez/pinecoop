@@ -12,6 +12,7 @@
             Loan Type: {{ $loan->loantype->name }} <br>
             No. of Terms: {{ $loan->terminmonths }} <br>
             Interest: {{ $loan->interest * 100 }}%<br>
+            No. of years: {{ $loan->employee->monthsInService() }}<br>
         </div>
         <a href="{{ route('member', ['employee_id' => $loan->employee->id]) }}">
             <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>
@@ -191,8 +192,10 @@
                                             <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none"
                                                 wire:click="showPaidPaymentConfirmation({{ $i }})">Paid
                                             </x-jet-button>
-                                            <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none"
-                                                wire:click="showCashPaymentConfirmation({{ $i }})">Cash
+                                            <x-jet-button class="bg-indigo-700 px-5 py-1" style="text-transform:none"
+                                                wire:click="showCashPaymentConfirmation({{ $i }})">
+                                                
+                                                <i class="fa-solid fa-money-bill-1 fa-3x"></i>  Cash
                                                 Payment</x-jet-button>
                                             @php
                                                 $displaypaidbtn = true;

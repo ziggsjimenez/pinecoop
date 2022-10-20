@@ -16,7 +16,9 @@
                             <th class="px-2 py-1">#</th>
                             <th class="px-2 py-1">Name</th>
                             <th class="px-2 py-1">Interest</th>
-                            <th class="px-2 py-1">Payment Terms</th>
+                            <th class="px-2 py-1">Min. Payment Terms</th>
+                            <th class="px-2 py-1">Max. Payment Terms</th>
+                            <th class="px-2 py-1">Min Loan Ammount</th>
                             <th class="px-2 py-1">Max Loan Ammount</th>
                             <th class="px-2 py-1">Type</th>
                             <th class="px-2 py-1">Action</th>
@@ -31,7 +33,9 @@
                             <td class="px-2 py-1 whitespace-nowrap">{{ $count++ }}</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->name }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }} </td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->paymentterms }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->minpaymentterms }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxpaymentterms }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->minloanamount }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxloanamount }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->type }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">

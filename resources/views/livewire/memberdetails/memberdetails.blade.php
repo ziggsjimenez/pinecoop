@@ -1,6 +1,11 @@
 <div class="flex justify-center">
 
     <div class="block p-6 w-full" style="margin: 2rem 2rem;">
+
+
+        {{  $EMPLOYEE->loans->sum('amount') }}
+
+
         <div class="justify-center font-bold text-2xl mb-4"> {!! $EMPLOYEE->fullname() !!} 
 
             <button wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})" type="button" class="inline-block px-6 py-1 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Change Status</button>

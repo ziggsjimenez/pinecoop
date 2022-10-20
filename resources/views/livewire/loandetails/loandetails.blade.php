@@ -87,7 +87,10 @@
                         <td class="border p-1 text-right">
                             @if($chck == 0 && !$displaypaidbtn)
                             <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none" wire:click="showPaidPaymentConfirmation({{$x}})">Paid</x-jet-button>
-                            <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none" wire:click="showCashPaymentConfirmation({{$x}})">Cash Payment</x-jet-button>
+                            <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none" wire:click="showCashPaymentConfirmation({{$x}})">
+                            
+                                
+                            </x-jet-button>
 
                             @php
                             $displaypaidbtn = true;

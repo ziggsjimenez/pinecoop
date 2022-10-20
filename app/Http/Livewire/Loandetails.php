@@ -40,6 +40,8 @@ class Loandetails extends Component
 
     public function render()
     {
+        $this->loan = Loan::find($this->loan_id);
+
         $this->arr_paymentsched = array();
         $this->loan = Loan::find($this->loan_id);
 
