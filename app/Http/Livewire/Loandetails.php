@@ -18,9 +18,10 @@ use function Termwind\render;
 class Loandetails extends Component
 {
 
-    public $LOANTYPE;
+    public $LOANTYPE, $EMPLOYEE;
     public $loan_id, $modaleditemployeeloan = false,$userid,$approveConfirmationModal = false, $paidPaymentConfirmationModal = false, $cashpaymentmodal = false, $paymentschedule, $arr_paymentsched = array(), $selectedindex;
-    public $loan, $loantype_id, $interest, $type, $terminmonths, $amount, $maxloanamount; //Loan forms
+    public $loan, $loantype_id, $interest, $type, $terminmonths, $amount; //Loan forms
+    public $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $paymentterms;
     public $selectedRowMonthAmor;
 
     public function mount()
@@ -29,10 +30,16 @@ class Loandetails extends Component
         $this->userid = Auth::id();
         $this->loan = Loan::find($this->loan_id);
         $this->paymentschedule = Paymentschedule::all();
+        $this->LOANTYPE2 = Loantype::find($this->loan->loantype_id);
+        $this->EMPLOYEE = Employee::find( $this->loan->employee_id);
 
         $this->interest = $this->loan->interest;
         $this->type = $this->loan->type;
         $this->terminmonths = $this->loan->terminmonths;
+        $this->minpaymentterms = $this->LOANTYPE2->minpaymentterms;
+        $this->maxpaymentterms = $this->LOANTYPE2->maxpaymentterms;
+        $this->minloanamount = $this->LOANTYPE2->minloanamount;
+        $this->maxloanamount = $this->LOANTYPE2->maxloanamount;
         $this->amount = $this->loan->amount;
         $this->loantype_id = $this->loan->loantype_id;
     }
@@ -68,14 +75,22 @@ class Loandetails extends Component
     public function changeloantype()
     {
         if ($this->loantype_id != '') {
-            $selectedloantype = Loantype::find($this->loantype_id);
-            $this->interest = $selectedloantype->interest;
-            $this->type = $selectedloantype->type;
-            $this->terminmonths = $selectedloantype->paymentterms;
+            $this->selectedloantype = Loantype::find($this->loantype_id);
+            $this->interest = $this->selectedloantype->interest;
+            $this->minpaymentterms = $this->selectedloantype->minpaymentterms;
+            $this->maxpaymentterms = $this->selectedloantype->maxpaymentterms;
+            $this->minloanamount = $this->selectedloantype->minloanamount;
+            $this->maxloanamount = $this->selectedloantype->maxloanamount;
+            $this->terminmonths = $this->selectedloantype->paymentterms;
+            $this->type = $this->selectedloantype->type;
         } else {
             $this->interest = '';
-            $this->type = '';
+            $this->minpaymentterms = '';
+            $this->maxpaymentterms = '';
+            $this->minloanamount = '';
+            $this->maxloanamount = '';
             $this->terminmonths = '';
+            $this->type = '';
         }
     }
 
@@ -83,8 +98,19 @@ class Loandetails extends Component
     {
         $this->validate([
             'loantype_id' => 'required',
-            'amount' => 'required',
+            'terminmonths' => 'required|numeric|min:'. $this->minpaymentterms.'|max:'.$this->maxpaymentterms,
+            'amount' => 'required|numeric|min:'. $this->minloanamount.'|max:'.$this->maxloanamount,
         ]);
+
+        $totalActiveLoanAmmount = $this->EMPLOYEE->loans->where('status', 'Approved')->where("loantype_id",$this->loantype_id)->sum('amount');
+
+     
+        
+        if($totalActiveLoanAmmount+$this->amount >  $this->maxloanamount){
+            session()->flash('message', 'The maximum amount loan for this loan type is <b>Php '.$this->maxloanamount.'</b>. Employee current allowable loan amount is <b>Php'.($this->maxloanamount-$totalActiveLoanAmmount).'</b>');
+            session()->flash('message-type', 'danger');
+            return;
+        }
 
         $this->loan->loantype_id = $this->loantype_id;
         $this->loan->amount = $this->amount;
@@ -95,7 +121,7 @@ class Loandetails extends Component
         $this->loan->save();
         $this->modaleditemployeeloan = false;
 
-        $this->generateSchedule();
+        // $this->generateSchedule();
     }
 
     public function showApproveConfirmationModal(){

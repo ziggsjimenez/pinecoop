@@ -37,9 +37,9 @@
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold" for="terminmonths">
         Payment Terms
     </label>
-    <input wire:model="terminmonths" value="{{$terminmonths}}" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('terminmonths') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" readonly>
+    <input wire:model="terminmonths" value="{{$terminmonths}}" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('terminmonths') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number">
     @error('terminmonths')
-    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+    <p class="text-red-500 text-xs italic">{{$message}}</p>
     @enderror
 </div>
 
@@ -49,6 +49,6 @@
     </label>
     <input wire:model="amount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('amount') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
     @error('amount')
-    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+    <p class="text-red-500 text-xs italic">{{$message}}</p>
     @enderror
 </div>
