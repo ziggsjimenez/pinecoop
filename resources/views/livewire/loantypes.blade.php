@@ -16,6 +16,7 @@
                             <th class="px-2 py-1">#</th>
                             <th class="px-2 py-1">Name</th>
                             <th class="px-2 py-1">Interest</th>
+                            <th class="px-2 py-1">Min Length of Service</th>
                             <th class="px-2 py-1">Min. Payment Terms</th>
                             <th class="px-2 py-1">Max. Payment Terms</th>
                             <th class="px-2 py-1">Min Loan Ammount</th>
@@ -31,10 +32,11 @@
                         @foreach ($loantypes as $row)
                         <tr class="{{$count %2 ==0? 'bg-gray-100':'bg-white'}} transition duration-100 ease-in-out hover:bg-gray-100">
                             <td class="px-2 py-1 whitespace-nowrap">{{ $count++ }}</td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->name }} </td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }} </td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->minpaymentterms }} </td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxpaymentterms }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->name }}</td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }}</td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->minlengthofservice }} Months</td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->minpaymentterms }} Months</td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxpaymentterms }} Months</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->minloanamount }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxloanamount }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->type }} </td>

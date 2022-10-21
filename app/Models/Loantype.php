@@ -12,8 +12,11 @@ class Loantype extends Model
     protected $fillable = [
         'name',
         'interest',
-        'paymentterms',
+        'minpaymentterms',
+        'maxpaymentterms',
+        'minloanamount',
         'maxloanamount',
+        'minlengthofservice',
         'type',
     ];
 }

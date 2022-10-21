@@ -1,4 +1,4 @@
-<div class="w-full px-3 mb-6 md:mb-0">
+<div class="w-full px-3 mb-4">
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
         Name
     </label>
@@ -8,34 +8,70 @@
     @enderror
 </div>
 
-<div class="w-full px-3 mb-6 md:mb-0">
-    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="interest">
+<div class="flex flex-wrap mb-2">
+    <div class="w-1/2 px-3 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="interest">
         Interest
-    </label>
-    <input wire:model="interest" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('interest') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
-    @error('interest')
-    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-    @enderror
+        </label>
+        <input wire:model="interest" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('interest') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('interest')
+        <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        @enderror
+    </div>
+    
+    <div class="w-1/2 px-3 md:mb-0">
+        <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="minlengthofservice">
+            MIN LENGTH OF SERVICE (months)
+        </label>
+        <input wire:model="minlengthofservice" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('minlengthofservice') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('minlengthofservice')
+        <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        @enderror
+    </div>
 </div>
 
-<div class="w-full px-3 mb-6 md:mb-0">
-    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="paymentterms">
-        Payment Terms
-    </label>
-    <input wire:model="paymentterms" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('paymentterms') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
-    @error('paymentterms')
-    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-    @enderror
+<div class="flex flex-wrap mb-2">
+    <div class="w-1/2 px-3 md:mb-0">
+        <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="minpaymentterms">
+            MIN PAYMENT TERMS (months)
+        </label>
+        <input wire:model="minpaymentterms" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('minpaymentterms') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('minpaymentterms')
+        <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        @enderror
+    </div>
+    
+    <div class="w-1/2 px-3 md:mb-0">
+        <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="maxpaymentterms">
+            MAX PAYMENT TERMS  (months)
+        </label>
+        <input wire:model="maxpaymentterms" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('maxpaymentterms') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('maxpaymentterms')
+        <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        @enderror
+    </div>
 </div>
 
-<div class="w-full px-3 mb-6 md:mb-0">
-    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="maxloanamount">
-        Max Ammount Loan
-    </label>
-    <input wire:model="maxloanamount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('maxloanamount') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
-    @error('maxloanamount')
-    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-    @enderror
+<div class="flex flex-wrap  mb-2">
+    <div class="w-1/2 px-3 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="minloanamount">
+            Min Loan Ammount 
+        </label>
+        <input wire:model="minloanamount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('minloanamount') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('minloanamount')
+        <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        @enderror
+    </div>
+    
+    <div class="w-1/2 px-3 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="maxloanamount">
+            Max Loan Ammount
+        </label>
+        <input wire:model="maxloanamount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('maxloanamount') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('maxloanamount')
+        <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        @enderror
+    </div>
 </div>
 
 <div class="w-full px-3 mb-6 md:mb-0">

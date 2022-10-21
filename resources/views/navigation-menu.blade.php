@@ -17,7 +17,7 @@
                     </x-jet-nav-link>
 
                     <x-jet-nav-link href="{{ route('employees') }}" :active="request()->routeIs('employees')">
-                        {{ __('Employees') }}
+                        {{ __('EMPLOYEES') }}
                     </x-jet-nav-link>
 
                     <div class="hidden sm:flex sm:items-center sm:ml-6 justify-right">

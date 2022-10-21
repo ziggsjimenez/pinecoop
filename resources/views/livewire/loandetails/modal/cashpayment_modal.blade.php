@@ -9,7 +9,7 @@
         </label>
         <input wire:model="selectedRowMonthAmor" class="appearance-none block w-full bg-gray-100 text-gray-700 border   rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
         @error('selectedRowMonthAmor')
-        <p class="text-red-500 text-xs italic">Amount must greater than {{$this->arr_paymentsched[$this->selectedindex]['monthlyamort']}}</p>
+        <p class="text-red-500 text-xs italic">Amount must greater than {{ $this->arr_paymentsched[$this->selectedindex]['monthlyamort']}}</p>
         @enderror
     </x-slot>
 

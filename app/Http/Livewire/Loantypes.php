@@ -10,7 +10,7 @@ class Loantypes extends Component
 {
     use withPagination;
     public $loantypes, $loantypid, $modaladdloantype = false;
-    public $name, $interest, $paymentterms, $maxloanamount, $type;
+    public $name, $interest, $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $minlengthofservice, $type;
 
     public function mount()
     {
@@ -34,16 +34,22 @@ class Loantypes extends Component
         $this->validate([
             'name' => 'required',
             'interest' => 'required',
-            'paymentterms' => 'required',
+            'minpaymentterms' => 'required',
+            'maxpaymentterms' => 'required',
+            'minloanamount' => 'required',
             'maxloanamount' => 'required',
+            'minlengthofservice' => 'required',
             'type' => 'required',
         ]);
 
         Loantype::updateOrCreate(['id' => $this->loantypid], [
             'name' => $this->name,
             'interest' => $this->interest,
-            'paymentterms' => $this->paymentterms,
+            'minpaymentterms' => $this->minpaymentterms,
+            'maxpaymentterms' => $this->maxpaymentterms,
+            'minloanamount' => $this->minloanamount,
             'maxloanamount' => $this->maxloanamount,
+            'minlengthofservice' => $this->minlengthofservice,
             'type' => $this->type,
         ]);
 

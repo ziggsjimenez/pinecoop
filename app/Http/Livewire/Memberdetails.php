@@ -17,10 +17,9 @@ class Memberdetails extends Component
 {
     public $employee_id, $btnSelected = 'Profile',  $modalmemberaccount = false, $modalmemberloan = false;
     public $EMPLOYEE, $ACCOUNT, $ACCOUNTTYPE, $MEMBERLOAN, $LOANTYPE, $userid; //models
-    public $accounttype_id; //Account forms
-    public $memberloanid,$loantype_id, $interest, $interesttype, $paymentterms, $amount,$maxloanamount; //Loan forms
-
-    public $showConfirmChangeStatusModal = false,$type; 
+    public $accounttype_id, $selectedloantype; //Account forms
+    public $memberloanid, $loantype_id, $interest, $type, $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $paymentterms, $amount; //Loan forms
+    public $showConfirmChangeStatusModal = false;
 
     public function mount()
     {
@@ -42,11 +41,13 @@ class Memberdetails extends Component
     }
 
     //-------------ACCOUNT TAB---------------
-    public function showMemberAccountModal($type){
+    public function showMemberAccountModal($type)
+    {
         $this->modalmemberaccount = true;
     }
 
-    public function saveMemberAccount(){
+    public function saveMemberAccount()
+    {
         $this->validate([
             'accounttype_id' => 'required',
         ]);
@@ -66,7 +67,7 @@ class Memberdetails extends Component
     //-------------LOAN TAB---------------
     public function showMemberLoanModal($type)
     {
-        $this->memberloanid = $type == 'add'? null: $this->memberloanid;
+        $this->memberloanid = $type == 'add' ? null : $this->memberloanid;
         $this->modalmemberloan = true;
     }
 
@@ -74,8 +75,19 @@ class Memberdetails extends Component
     {
         $this->validate([
             'loantype_id' => 'required',
-            'amount' => 'required',
+            'paymentterms' => 'required|numeric|min:'. $this->minpaymentterms.'|max:'.$this->maxpaymentterms,
+            'amount' => 'required|numeric|min:'. $this->minloanamount.'|max:'.$this->maxloanamount,
         ]);
+
+        $totalActiveLoanAmmount = $this->EMPLOYEE->loans->where('status', 'Approved')->where("loantype_id",$this->loantype_id)->sum('amount');
+
+     
+        
+        if($totalActiveLoanAmmount+$this->amount >  $this->maxloanamount){
+            session()->flash('message', 'The maximum amount loan for this loan type is <b>Php '.$this->maxloanamount.'</b>. Employee current allowable loan amount is <b>Php'.($this->maxloanamount-$totalActiveLoanAmmount).'</b>');
+            session()->flash('message-type', 'danger');
+            return;
+        }
 
         Loan::updateOrCreate(['id' => $this->memberloanid], [
             'employee_id' => $this->employee_id,
@@ -100,64 +112,55 @@ class Memberdetails extends Component
     {
         $this->loantype_id = '';
         $this->amount = '';
-        $this->interest = '';
         $this->paymentterms = '';
-        $this->dateapplied = '';
-        $this->dateapproved = '';
-        $this->loanofficer = '';
+        $this->interest = '';
+        $this->type = '';
     }
 
-    public function changeloantype(){
-        if($this->loantype_id != ''){
-            $selectedloantype = Loantype::find($this->loantype_id);
-            $this->interest = $selectedloantype->interest;
-            $this->interesttype = $selectedloantype->type;
-            $this->paymentterms = $selectedloantype->paymentterms;
-            $this->maxloanamount = $selectedloantype->maxloanamount;
-            $this->type = $selectedloantype->type;
-        }else{
+    public function changeloantype()
+    {
+        if ($this->loantype_id != '') {
+            $this->selectedloantype = Loantype::find($this->loantype_id);
+            $this->interest = $this->selectedloantype->interest;
+            $this->minpaymentterms = $this->selectedloantype->minpaymentterms;
+            $this->maxpaymentterms = $this->selectedloantype->maxpaymentterms;
+            $this->minloanamount = $this->selectedloantype->minloanamount;
+            $this->maxloanamount = $this->selectedloantype->maxloanamount;
+            $this->type = $this->selectedloantype->type;
+        } else {
             $this->interest = '';
-            $this->interesttype = '';
-            $this->paymentterms = '';
+            $this->minpaymentterms = '';
+            $this->maxpaymentterms = '';
+            $this->minloanamount = '';
             $this->maxloanamount = '';
             $this->type = '';
         }
     }
 
 
-    public function confirmChangeStatus($employee_id){
-        $this->showConfirmChangeStatusModal = true; 
-        $this->employee_id = $employee_id; 
+    public function confirmChangeStatus($employee_id)
+    {
+        $this->showConfirmChangeStatusModal = true;
+        $this->employee_id = $employee_id;
     }
 
 
-    public function changeStatus($employee_id){
-
+    public function changeStatus($employee_id)
+    {
         $employee = Employee::find($employee_id);
-
-
-        if(!$employee->hasPendingLoans()){
-
-            if ($employee->status=="Active"){
+        if (!$employee->hasPendingLoans()) {
+            if ($employee->status == "Active") {
                 $status = "Inactive";
-            }
-            else 
+            } else
                 $status = "Active";
-    
-                $employee->status=$status; 
-                $employee->save(); 
-                $this->showConfirmChangeStatusModal = false; 
 
-        }
-
-        else {
+            $employee->status = $status;
+            $employee->save();
+            $this->showConfirmChangeStatusModal = false;
+        } else {
             session()->flash('message', 'Could not set change status: Pending loans detected.');
             session()->flash('message-type', 'danger');
-            $this->showConfirmChangeStatusModal = false; 
+            $this->showConfirmChangeStatusModal = false;
         }
-
-       
     }
-
-
 }

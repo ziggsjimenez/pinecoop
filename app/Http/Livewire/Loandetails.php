@@ -46,62 +46,6 @@ class Loandetails extends Component
         $this->loan = Loan::find($this->loan_id);
 
         return view('livewire.loandetails.index');
-    
-    }
-
-    public function resetPaymentSchedule()
-    {
-        Paymentschedule::where('loan_id', $this->loan->id)->delete();
-    }
-
-    public function generateSchedule()
-    {
-
-        $this->resetPaymentSchedule();
-
-        $monthly = $this->loan->amount / $this->loan->terminmonths;
-        $balance = $this->loan->amount;
-
-
-        // date for end of the month
-        $paymentdate2=date('Y-m-t', strtotime($this->loan->dateapproved));
-        // date for adding 30 days
-        $paymentdate=date('Y-m-d', strtotime($this->loan->dateapproved));
-
-        $currentday = date('d');
-        $endofmonth = date('t');
-        $diff= intval($endofmonth)-intval($currentday);
-        $firstmonthinterest = (($this->loan->amount*$this->loan->interest)/30)*$diff;
-
-
-        for ($x = 0; $x < $this->loan->terminmonths; $x++) {
-
-            if($x==0){
-                $interestamount = $firstmonthinterest;
-            }
-            else{
-                $interestamount = $balance*$this->loan->interest;
-            }
-
-            
-            // $interestamount = $balance * $this->loan->interest;
-            $paymentschedule = new Paymentschedule;
-            $paymentschedule->loan_id = $this->loan->id;
-
-            $paymentschedule->paymentdate = $paymentdate2;
-            $paymentschedule->principal = $monthly;
-            $paymentschedule->interest = $interestamount;
-            $paymentschedule->monthlyamort = $interestamount + $monthly;
-            $paymentschedule->balance = $balance;
-            $paymentschedule->save();
-
-            // add 30 days to month
-            $paymentdate = date("Y-m-d", strtotime ( '+1 month' , strtotime ( $paymentdate ) )) ;
-            // get end of the month
-            $paymentdate2 = date("Y-m-t", strtotime ($paymentdate )) ;
-          
-            $balance -= $monthly; 
-          }
     }
 
     public function openApproveLoanModal(){
@@ -198,6 +142,20 @@ class Loandetails extends Component
         $paymentschedule->balance = $this->arr_paymentsched[$index]['balance'];
         $paymentschedule->save();
         session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with <b>Paid</b> action.');
+
+
+        $lastIndex = count($this->arr_paymentsched)-1;
+        $chck = $this->checkpaymentdata(
+            $this->arr_paymentsched[$lastIndex]['paymentdate'],
+            number_format($this->arr_paymentsched[$lastIndex]['principal'], '2','.',''),
+            number_format($this->arr_paymentsched[$lastIndex]['interestamount'], '2','.',''),
+            number_format($this->arr_paymentsched[$lastIndex]['monthlyamort'], '2','.',''),
+            number_format($this->arr_paymentsched[$lastIndex]['balance'], '2','.','')
+        );
+        if($chck->count() > 0){
+            $this->loan->status = 'Closed';
+            $this->loan->save();
+        }
         $this->paidPaymentConfirmationModal = false;
     }
 
@@ -205,7 +163,7 @@ class Loandetails extends Component
 
     // FOR CASH PAYMENT ACTION
     function showCashPaymentConfirmation($index){
-        $this->selectedRowMonthAmor = $this->arr_paymentsched[$index]['monthlyamort'];
+        $this->selectedRowMonthAmor = number_format($this->arr_paymentsched[$index]['monthlyamort'], '2', '.', '');
         $this->selectedindex = $index;
         $this->cashpaymentmodal = true;
     }
@@ -214,7 +172,7 @@ class Loandetails extends Component
         $index = $this->selectedindex;
 
         $this->validate([
-            'selectedRowMonthAmor' => 'required|numeric|min:'. $this->arr_paymentsched[$index]['monthlyamort'],
+            'selectedRowMonthAmor' => 'required|numeric|min:'. number_format($this->arr_paymentsched[$index]['monthlyamort'], '2', '.', ''),
         ]);
 
         $accounttype = AccountType::where('name',"LIKE", '%capital shares%');

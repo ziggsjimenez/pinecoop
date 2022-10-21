@@ -156,6 +156,10 @@
                                             $this->arr_paymentsched[$i + 1]['interestamount'] = $this->arr_paymentsched[$i + 1]['balance'] * $this->loan->interest; // nextmonth interest = nextmonth balance * interest rate
                                             $this->arr_paymentsched[$i + 1]['monthlyamort'] = $this->arr_paymentsched[$i + 1]['principal'] + $this->arr_paymentsched[$i + 1]['interestamount']; // nextmonth amortization = nextmonth principal (monthly)  + nextmonth nga interest
                                         }
+
+                                        if($i+1 == count($this->arr_paymentsched)){
+                                            $displaypaidbtn = false;
+                                        }
                                     @endphp
                                 @endif
                                 <tr>
@@ -188,14 +192,14 @@
                                         {{ $chck->get()->pluck('created_at')->first() != ''? date_format(date_create($chck->get()->pluck('created_at')->first()),'m-d-Y h:i A'): '' }}
                                     </td>
                                     <td class="border p-1 text-center">
-                                        @if ($chck->count() == 0 && date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] && !$displaypaidbtn)
+                                        @if ($chck->count() == 0 && (date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] || ($i+1 == count($this->arr_paymentsched))) && !$displaypaidbtn)
                                             <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none"
-                                                wire:click="showPaidPaymentConfirmation({{ $i }})">Paid
+                                                wire:click="showPaidPaymentConfirmation({{ $i }})"><i class="fa-solid fa-check mr-2"></i> Paid
                                             </x-jet-button>
                                             <x-jet-button class="bg-indigo-700 px-5 py-1" style="text-transform:none"
                                                 wire:click="showCashPaymentConfirmation({{ $i }})">
                                                 
-                                                <i class="fa-solid fa-money-bill-1 fa-3x"></i>  Cash
+                                                <i class="fa-solid fa-peso-sign mr-2"></i>Cash
                                                 Payment</x-jet-button>
                                             @php
                                                 $displaypaidbtn = true;
