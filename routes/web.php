@@ -61,12 +61,6 @@ Route::middleware([
 
     // pdf controller 
 
-    // print
-    Route::get('printSOA/{loan_id}',Loandetails::class)->name('loan');
-
-
-
-
     Route::controller(PDFController::class)->group(function () {
         Route::get('/printPaymentSchedule/{loan_id}', 'printPaymentSchedule')->name('printPaymentSchedule');
     });
