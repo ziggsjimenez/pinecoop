@@ -15,7 +15,7 @@ class PDFController extends Controller
 
         $pdf = Pdf::loadView('pdf.printPaymentSchedule',['loan'=>$loan] );
 
-        return $pdf->download('invoice.pdf');
+        return $pdf->download($loan->employee->fullname2().'_ps.pdf');
 
         // return view ('pdf.printSOA',['loan'=>$loan] );
 
