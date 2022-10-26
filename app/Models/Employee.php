@@ -64,6 +64,11 @@ class Employee extends Model
         return  $this->lastname . ", " . $this->firstname . " " . $this->middlename . " " . $this->extension . "  " . $badge;
     }
 
+    public function fullname2()
+    {
+        return  $this->lastname . ", " . $this->firstname . " " . $this->middlename . " " . $this->extension;
+    }
+
     public function praddress()
     {
         return $this->prahouseno . " " . $this->prabuildingstreet . " " . $this->prasubdivision . " " . $this->prabarangay . " " . $this->pramun . " " . $this->praprov;

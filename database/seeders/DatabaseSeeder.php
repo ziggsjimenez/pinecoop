@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             EmployeeSeeder::class,
             AccountType::class,
-            LoantypeSeeder::class,
+            // LoantypeSeeder::class,
         ]);
     }
 }

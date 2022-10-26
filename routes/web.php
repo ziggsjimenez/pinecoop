@@ -10,6 +10,7 @@ use App\Http\Livewire\Loantypes;
 use App\Http\Livewire\Memberdetails;
 use App\Http\Livewire\Members;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PDFController;
 
 
 /*
@@ -57,6 +58,18 @@ Route::middleware([
     Route::get('account/{account_id}',Accountdetails::class)->name('account');
     Route::get('loans/{memberloan_id}',Loans::class)->name('loans');
     Route::get('loan/{loan_id}',Loandetails::class)->name('loan');
+
+    // pdf controller 
+
+    // print
+    Route::get('printSOA/{loan_id}',Loandetails::class)->name('loan');
+
+
+
+
+    Route::controller(PDFController::class)->group(function () {
+        Route::get('/printPaymentSchedule/{loan_id}', 'printPaymentSchedule')->name('printPaymentSchedule');
+    });
 
 
 });

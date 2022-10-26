@@ -113,6 +113,12 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <button class="bg-blue-300 hover:bg-blue-500 rounded px-1 mt-3">
+                   <a target="_blank" href="{{ route('printPaymentSchedule',['loan_id'=>$loan->id]) }}"> Print Payment Schedule</a>
+                </button>
+
+
             </div>
             {{-- THIS WILL BE AVAILBE IF APPROVED --}}
             @if ($loan->isapproved == true)
@@ -233,6 +239,7 @@
                 </div>
             @endif
         </div>
+
     </div>
     @include('livewire.loandetails.modal.edit_employeeloan')
     @include('livewire.loandetails.modal.approveconfirmation_modal')
