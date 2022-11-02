@@ -1,8 +1,8 @@
 <div class="p-12">
 
-    @include('livewire.includes.messages')
+
     <div class="block pb-5">
-        {!! $loan->employee->fullname() !!}
+        {!! $loan->employee->fullname2() !!}
 
         <br>
         {{-- loan details  --}}
@@ -53,25 +53,25 @@
                             $totalinterest = 0;
                             $totalmonthlyamortization = 0;
                             
-                            $monthly = $this->loan->amount / $this->loan->terminmonths;
-                            $balance = $this->loan->amount;
-                            $paymentdate = $this->loan->dateapproved;
+                            $monthly = $loan->amount / $loan->terminmonths;
+                            $balance = $loan->amount;
+                            $paymentdate = $loan->dateapproved;
                             $displaypaidbtn = false;
                         @endphp
 
-                        @for ($x = 0; $x < $this->loan->terminmonths; $x++)
+                        @for ($x = 0; $x < $loan->terminmonths; $x++)
                             @php
                                 if ($x == 0) {
                                     $noOfRemainingDays = date_diff($paymentdate, date_create($paymentdate->format('Y-m-t')))->format('%a');
                                 
-                                    $interestamount = (($balance * $this->loan->interest) / 30) * $noOfRemainingDays;
+                                    $interestamount = (($balance * $loan->interest) / 30) * $noOfRemainingDays;
                                     $monthlyamort = $interestamount + $monthly;
                                 } else {
-                                    $interestamount = $balance * $this->loan->interest;
+                                    $interestamount = $balance * $loan->interest;
                                     $monthlyamort = $interestamount + $monthly;
                                 }
                                 
-                                array_push($this->arr_paymentsched, [
+                                array_push($arr_paymentsched, [
                                     'paymentdate' => $paymentdate->format('Y-m-t'),
                                     'principal' => $monthly,
                                     'interestamount' => $interestamount,
@@ -163,21 +163,21 @@
                             @endphp
 
 
-                            @for ($i = 0; $i < count($this->arr_paymentsched); $i++)
+                            @for ($i = 0; $i < count($arr_paymentsched); $i++)
                                 @php
-                                    $chck = $this->checkpaymentdata(date_format(date_create($this->arr_paymentsched[$i]['paymentdate']), 'Y-m-d'), number_format($this->arr_paymentsched[$i]['principal'], 2, '.', ''), number_format($this->arr_paymentsched[$i]['interestamount'], 2, '.', ''), number_format($this->arr_paymentsched[$i]['monthlyamort'], 2, '.', ''), number_format($this->arr_paymentsched[$i]['balance'], 2, '.', ''));
+                                    $chck = $loan->checkpaymentdata(date_format(date_create($arr_paymentsched[$i]['paymentdate']), 'Y-m-d'), number_format($arr_paymentsched[$i]['principal'], 2, '.', ''), number_format($arr_paymentsched[$i]['interestamount'], 2, '.', ''), number_format($arr_paymentsched[$i]['monthlyamort'], 2, '.', ''), number_format($arr_paymentsched[$i]['balance'], 2, '.', ''));
                                 @endphp
                                 {{-- CHECK IF NAG OVERDUE/NILAPAS NABA SA CURRENT NGA DATE --}} {{-- IF WALA NAG BAYAD --}}
-                                @if (date('Y-m-d') > $this->arr_paymentsched[$i]['paymentdate'] && $chck->count() == 0)
+                                @if (date('Y-m-d') > $arr_paymentsched[$i]['paymentdate'] && $chck->count() == 0)
                                     @php
-                                        if (isset($this->arr_paymentsched[$i + 1])) {
-                                            $this->arr_paymentsched[$i + 1]['balance'] = $this->arr_paymentsched[$i]['balance'] + $this->arr_paymentsched[$i]['monthlyamort']; // nextmonth balance = curr balance + curr monthly amortization
-                                            $this->arr_paymentsched[$i + 1]['principal'] = $this->arr_paymentsched[$i]['monthlyamort'] + $this->arr_paymentsched[$i + 1]['principal']; // current month + sa nextmonth
-                                            $this->arr_paymentsched[$i + 1]['interestamount'] = $this->arr_paymentsched[$i + 1]['balance'] * $this->loan->interest; // nextmonth interest = nextmonth balance * interest rate
-                                            $this->arr_paymentsched[$i + 1]['monthlyamort'] = $this->arr_paymentsched[$i + 1]['principal'] + $this->arr_paymentsched[$i + 1]['interestamount']; // nextmonth amortization = nextmonth principal (monthly)  + nextmonth nga interest
+                                        if (isset($arr_paymentsched[$i + 1])) {
+                                            $arr_paymentsched[$i + 1]['balance'] = $arr_paymentsched[$i]['balance'] + $arr_paymentsched[$i]['monthlyamort']; // nextmonth balance = curr balance + curr monthly amortization
+                                            $arr_paymentsched[$i + 1]['principal'] = $arr_paymentsched[$i]['monthlyamort'] + $arr_paymentsched[$i + 1]['principal']; // current month + sa nextmonth
+                                            $arr_paymentsched[$i + 1]['interestamount'] = $arr_paymentsched[$i + 1]['balance'] * $loan->interest; // nextmonth interest = nextmonth balance * interest rate
+                                            $arr_paymentsched[$i + 1]['monthlyamort'] = $arr_paymentsched[$i + 1]['principal'] + $arr_paymentsched[$i + 1]['interestamount']; // nextmonth amortization = nextmonth principal (monthly)  + nextmonth nga interest
                                         }
 
-                                        if($i+1 == count($this->arr_paymentsched)){
+                                        if($i+1 == count($arr_paymentsched)){
                                             $displaypaidbtn = false;
                                         }
                                     @endphp
@@ -185,25 +185,25 @@
                                 <tr>
                                     <td class="border p-1 py-0">{{ $count++ }}</td>
                                     <td class="border p-1 py-0">
-                                        {{ date_format(date_create($this->arr_paymentsched[$i]['paymentdate']), ' m-d-Y') }}
+                                        {{ date_format(date_create($arr_paymentsched[$i]['paymentdate']), ' m-d-Y') }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">Php
-                                        {{ number_format($this->arr_paymentsched[$i]['balance'], 2, '.', ',') }}
+                                        {{ number_format($arr_paymentsched[$i]['balance'], 2, '.', ',') }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">Php
-                                        {{ number_format($this->arr_paymentsched[$i]['principal'], 2, '.', ',') }}
+                                        {{ number_format($arr_paymentsched[$i]['principal'], 2, '.', ',') }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">Php
-                                        {{ number_format($this->arr_paymentsched[$i]['interestamount'], 2, '.', ',') }}
+                                        {{ number_format($arr_paymentsched[$i]['interestamount'], 2, '.', ',') }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">Php
-                                        {{ number_format($this->arr_paymentsched[$i]['monthlyamort'], 2, '.', ',') }}
+                                        {{ number_format($arr_paymentsched[$i]['monthlyamort'], 2, '.', ',') }}
                                     </td>
                                     <td class="border p-1 py-0 text-center">
                                         @if ($chck->count() == 1)
                                             <span
                                                 class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">Paid</span>
-                                        @elseif(date('Y-m-d') > $this->arr_paymentsched[$i]['paymentdate'] && $chck->count() == 0)
+                                        @elseif(date('Y-m-d') > $arr_paymentsched[$i]['paymentdate'] && $chck->count() == 0)
                                             <span
                                                 class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">Unpaid</span>
                                         @endif
@@ -212,7 +212,7 @@
                                         {{ $chck->get()->pluck('created_at')->first() != ''? date_format(date_create($chck->get()->pluck('created_at')->first()),'m-d-Y h:i A'): '' }}
                                     </td>
                                     <td class="border p-1 text-center">
-                                        @if ($chck->count() == 0 && (date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] || ($i+1 == count($this->arr_paymentsched))) && !$displaypaidbtn)
+                                        @if ($chck->count() == 0 && (date('Y-m-d') <= $arr_paymentsched[$i]['paymentdate'] || ($i+1 == count($arr_paymentsched))) && !$displaypaidbtn)
                                             <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none"
                                                 wire:click="showPaidPaymentConfirmation({{ $i }})"><i class="fa-solid fa-check mr-2"></i> Paid
                                             </x-jet-button>
@@ -228,9 +228,9 @@
                                     </td>
                                 </tr>
                                 @php
-                                    $totalprincipal += $this->arr_paymentsched[$i]['principal'];
-                                    $totalinterest += $this->arr_paymentsched[$i]['interestamount'];
-                                    $totalmonthlyamortization += $this->arr_paymentsched[$i]['monthlyamort'];
+                                    $totalprincipal += $arr_paymentsched[$i]['principal'];
+                                    $totalinterest += $arr_paymentsched[$i]['interestamount'];
+                                    $totalmonthlyamortization += $arr_paymentsched[$i]['monthlyamort'];
                                     $index++;
                                 @endphp
                             @endfor
@@ -255,8 +255,5 @@
         </div>
 
     </div>
-    @include('livewire.loandetails.modal.edit_employeeloan')
-    @include('livewire.loandetails.modal.approveconfirmation_modal')
-    @include('livewire.loandetails.modal.paid_confirmation_modal')
-    @include('livewire.loandetails.modal.cashpayment_modal')
+
 </div>

@@ -1,6 +1,5 @@
 <div class="p-12">
 
-    @include('livewire.includes.messages')
     <div class="block pb-5">
         {!! $loan->employee->fullname() !!}
 
@@ -255,8 +254,5 @@
         </div>
 
     </div>
-    @include('livewire.loandetails.modal.edit_employeeloan')
-    @include('livewire.loandetails.modal.approveconfirmation_modal')
-    @include('livewire.loandetails.modal.paid_confirmation_modal')
-    @include('livewire.loandetails.modal.cashpayment_modal')
+
 </div>

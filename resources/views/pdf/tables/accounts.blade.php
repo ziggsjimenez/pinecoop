@@ -5,7 +5,7 @@
             <th class="border p-1">Ref #</th>
             <th class="border p-1">Amount</th>
             <th class="border p-1">Date of Transaction</th>
-            
+            <th class="border p-1">User</th>
         </tr>
     </thead>
 
@@ -22,10 +22,9 @@
             <td class="border p-1">{{ $transaction->transaction_reference_number }}</td>
             <td class="border p-1">{{ number_format($transaction->amount,2,'.',',')}}</td>
             <td class="border p-1">{{ $transaction->dateoftransaction->format('F d, Y')}}</td>
-           
+            <td class="border p-1">{{ $transaction->user->name }}</td>
         </tr>
         @endforeach
     </tbody>
 </table>
 
-<a href="{{ route('printAccount',['account_id'=>$account->id]) }}"> <button class="bg-blue-400 rounded px-3 font-bold text-sm">Print</button></a>

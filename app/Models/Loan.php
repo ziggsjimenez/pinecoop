@@ -37,5 +37,17 @@ class Loan extends Model
         return $this->hasMany('App\Models\Paymentschedule');
     }
 
+    public function checkpaymentdata($paymentdate,$principal,$interestamount,$monthlyamort,$balance){
+        $temp = Paymentschedule::where([
+                    'loan_id' => $this->loan_id,
+                    'paymentdate' => $paymentdate,
+                    'principal' => $principal,
+                    'interest' => $interestamount,
+                    'monthlyamort' => $monthlyamort,
+                    'balance' => $balance,
+            ]);
+        return $temp ;
+    }
+
 
 }

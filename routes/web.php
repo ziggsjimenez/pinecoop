@@ -11,7 +11,7 @@ use App\Http\Livewire\Memberdetails;
 use App\Http\Livewire\Members;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
-
+use App\Http\Livewire\Printpayments;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,11 +58,14 @@ Route::middleware([
     Route::get('account/{account_id}',Accountdetails::class)->name('account');
     Route::get('loans/{memberloan_id}',Loans::class)->name('loans');
     Route::get('loan/{loan_id}',Loandetails::class)->name('loan');
+    // Route::get('printpayments/{loan_id}',Printpayments::class)->name('printpayments');
 
     // pdf controller 
 
     Route::controller(PDFController::class)->group(function () {
         Route::get('/printPaymentSchedule/{loan_id}', 'printPaymentSchedule')->name('printPaymentSchedule');
+        Route::get('/printAccount/{account_id}', 'printAccount')->name('printAccount');
+        Route::get('/printPayments/{loan_id}', 'printPayments')->name('printpayments');
     });
 
 
