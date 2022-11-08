@@ -52,7 +52,7 @@ class Employee extends Model
         'chapanumber',
     ];
 
-    protected $dates = ['birthdate'];
+    protected $dates = ['birthdate', 'dateofmembership'];
 
     public function fullname()
     {

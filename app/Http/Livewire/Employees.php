@@ -109,7 +109,7 @@ class Employees extends Component
         $this->validate([
             'lastname'=>'required',
             'firstname'=>'required',
-            'middlename'=>'required',
+            // 'middlename'=>'required',
             // 'extension'=>'required',
             'birthdate'=>'required',
             'civilstatus'=>'required',
@@ -183,7 +183,8 @@ class Employees extends Component
             'pwdid' => $this->pwdid,
             'ispersonwithdisability' => $this->ispersonwithdisability,
             'chapanumber' => $this->chapanumber,
-            'status' => $this->status,
+            'status' => 'Inactive',
+            // 'status' => 'Active',
         ]);
 
         $this->closeModal();

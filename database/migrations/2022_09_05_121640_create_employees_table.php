@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('lastname');
             $table->text('firstname');
-            $table->text('middlename');
+            $table->text('middlename')->nullable();
             $table->text('extension')->nullable();
             $table->date('birthdate');
             $table->text('civilstatus');
@@ -53,7 +53,7 @@ return new class extends Migration
             $table->date('dateofmembership')->nullable();
             $table->text('pwdid')->nullable();
             $table->boolean('deleted')->default(false);
-            $table->text('status')->nullable();;
+            $table->text('status')->nullable()->default('Active');;
            
             $table->timestamps();
         });

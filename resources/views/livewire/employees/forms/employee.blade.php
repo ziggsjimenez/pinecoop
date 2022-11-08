@@ -2,7 +2,7 @@
     <div class="flex flex-wrap mx-3 mb-2">
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="lastname">
-                Lastname
+                <span class="text-red-500">*</span> Lastname
             </label>
             <input wire:model="lastname" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('lastname') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('lastname')
@@ -12,7 +12,7 @@
 
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="firstname">
-                Firstname
+                <span class="text-red-500">*</span> Firstname
             </label>
             <input wire:model.defer="firstname" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('firstname') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('firstname')
@@ -60,7 +60,7 @@
     <div class="flex flex-wrap mx-3 mb-2">
         <div class="w-1/5 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="birthdate">
-                Birthdate
+                <span class="text-red-500">*</span> Birthdate
             </label>
             <input wire:model.defer="birthdate" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('birthdate') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="date" placeholder="Type here...">
             @error('birthdate')
@@ -72,7 +72,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="civilstatus">
-                Civil Status
+                <span class="text-red-500">*</span> Civil Status
             </label>
             <div class="relative">
 
@@ -98,7 +98,7 @@
         {{-- sex --}}
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="sex">
-                Sex
+                <span class="text-red-500">*</span> Sex
             </label>
             <div class="relative">
 
@@ -115,20 +115,19 @@
             </div>
 
             @error('sex')
-            <p class="text-red-500 text-xs italic">Please select civil status.</p>
+            <p class="text-red-500 text-xs italic">Please sex gender.</p>
             @enderror
         </div>
         {{-- religion --}}
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="religion">
-                Religion
+                <span class="text-red-500">*</span> Religion
             </label>
             <div class="relative">
                 <select wire:model.defer="religion" class="block appearance-none w-full bg-gray-100 border border-gray-600 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                     <option value="" selected>Select...</option>
-                    <option value="Roman Catholic">Roman Catholic</option>
-                    <option value="Bapthist">Bapthist</option>
                     <option value="Christian">Christian</option>
+                    <option value="Non Christian">Non Christian</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -159,13 +158,17 @@
         {{-- department --}}
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="department">
-                Department
+                <span class="text-red-500">*</span> Department
             </label>
             <div class="relative">
                 <select wire:model.defer="department" class="block appearance-none w-full bg-gray-100 border border-gray-600 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                     <option value="" selected>Select...</option>
-                    <option value="Spray">Spray</option>
-                    <option value="Plantation">Plantation</option>
+                    <option value="Bugo">Bugo</option>
+                    <option value="Camp Phillips">Camp Phillips</option>
+                    <option value="Camp JMC">Camp JMC</option>
+                    <option value="Camp LFL">Camp LFL</option>
+                    <option value="Camp 14">Camp 14</option>
+                    <option value="South Bukidnon">South Bukidnon</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -174,15 +177,22 @@
                 </div>
             </div>
             @error('department')
-            <p class="text-red-500 text-xs italic">Please select civil status.</p>
+            <p class="text-red-500 text-xs italic">Please department.</p>
             @enderror
         </div>
         {{-- position --}}
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="position">
-                Position
+                <span class="text-red-500">*</span> Position
             </label>
-            <input wire:model.defer="position" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('position') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
+
+            <select wire:model.defer="position" class="block appearance-none w-full bg-gray-100 border border-gray-600 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                <option value="" selected>Select...</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Manager">Manager</option>
+                <option value="Senior Manager">Senior Manager</option>
+            </select>
+            <!-- <input wire:model.defer="position" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('position') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here..."> -->
             @error('position')
             <p class="text-red-500 text-xs italic">Please fill out this field.</p>
             @enderror
@@ -190,7 +200,7 @@
         {{-- employmentdate --}}
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="employmentdate">
-                Employment Date
+                <span class="text-red-500">*</span> Regularization Date
             </label>
             <input wire:model.defer="employmentdate" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('employmentdate') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="date" placeholder="Type here...">
             @error('employmentdate')
@@ -198,12 +208,12 @@
             @enderror
         </div>
     </div>
-    
+
     <div class="flex flex-wrap mx-3 mb-2">
         {{--phonenumber --}}
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="phonenumber">
-                Phone Number
+                <span class="text-red-500">*</span> Phone Number
             </label>
             <input wire:model.defer="phonenumber" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('phonenumber') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
             @error('phonenumber')
@@ -213,7 +223,7 @@
         {{--educationalattainment --}}
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="educationalattainment">
-                Educational Attainment
+                <span class="text-red-500">*</span> Educational Attainment
             </label>
             <div class="relative">
                 <select wire:model.defer="educationalattainment" class="block appearance-none w-full bg-gray-100 border border-gray-600 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
@@ -237,7 +247,7 @@
         {{--estimatedannualgross --}}
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="estimatedannualgross">
-                Estimated Annual Gross
+                <span class="text-red-500">*</span> Estimated Annual Gross
             </label>
             <input wire:model.defer="estimatedannualgross" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('estimatedannualgross') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
             @error('estimatedannualgross')
@@ -255,14 +265,14 @@
             @enderror
         </div>
     </div>
-    
+
     {{-- Permanent Residential Address --}}
 
     <span class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-1">Permanent Residential Address</span>
     <div class="flex flex-wrap mx-3 mb-2">
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="prahouseno">
-                House No.
+                <span class="text-red-500">*</span> House No.
             </label>
             <input wire:model.defer="prahouseno" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('prahouseno') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('prahouseno')
@@ -272,7 +282,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="prabuildingstreet">
-                Building/Street
+                <span class="text-red-500">*</span> Building/Street
             </label>
             <input wire:model.defer="prabuildingstreet" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('prabuildingstreet') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('prabuildingstreet')
@@ -282,7 +292,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="prasubdivision">
-                Subdivision
+                <span class="text-red-500">*</span> Subdivision
             </label>
             <input wire:model.defer="prasubdivision" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('prasubdivision') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('prasubdivision')
@@ -292,7 +302,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="prabarangay">
-                Barangay
+                <span class="text-red-500">*</span> Barangay
             </label>
             <input wire:model.defer="prabarangay" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('prabarangay') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('prabarangay')
@@ -302,7 +312,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="pramun">
-                Municipality
+                <span class="text-red-500">*</span> Municipality
             </label>
             <input wire:model.defer="pramun" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('pramun') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('pramun')
@@ -312,7 +322,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="praprov">
-                Province
+                <span class="text-red-500">*</span> Province
             </label>
             <input wire:model.defer="praprov" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('praprov') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('praprov')
@@ -322,7 +332,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="prazipcode">
-                Zip Code
+                <span class="text-red-500">*</span> Zip Code
             </label>
             <input wire:model.defer="prazipcode" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('prazipcode') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('prazipcode')
@@ -367,7 +377,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="peabarangay">
-                Barangay
+                <span class="text-red-500">*</span> Barangay
             </label>
             <input wire:model.defer="peabarangay" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('peabarangay') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('peabarangay')
@@ -377,7 +387,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="peamun">
-                Municipality
+                <span class="text-red-500">*</span> Municipality
             </label>
             <input wire:model.defer="peamun" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('peamun') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('peamun')
@@ -387,7 +397,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="peaprov">
-                Province
+                <span class="text-red-500">*</span> Province
             </label>
             <input wire:model.defer="peaprov" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('peaprov') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('peaprov')
@@ -397,7 +407,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="peazipcode">
-                Zip Code
+                <span class="text-red-500">*</span> Zip Code
             </label>
             <input wire:model.defer="peazipcode" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('peazipcode') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('peazipcode')
@@ -410,7 +420,7 @@
     <div class="flex flex-wrap mx-3 mb-2">
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-1" for="pmailadd">
-                Preferred Mailing Address
+                <span class="text-red-500">*</span> Preferred Mailing Address
             </label>
             <div>
                 <input wire:model.defer="pmailadd" name="pmailadd" class="bg-gray-100 text-gray-700 border" type="radio" value="Residential"> Residential
@@ -424,7 +434,7 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="email">
-                Email Address
+                <span class="text-red-500">*</span> Email Address
             </label>
             <input wire:model.defer="email" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('email') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('email')
@@ -449,7 +459,7 @@
             <div>
                 <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="1"> Yes
 
-                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="0"> No
+                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="0"> Regular
             </div>
             @error('ispinecoopmem')
             <p class="text-red-500 text-xs italic">Please select.</p>
@@ -485,7 +495,7 @@
         @if($ispersonwithdisability)
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="pwdid">
-                PWD Identification Number
+                <span class="text-red-500">*</span> PWD Identification Number
             </label>
             <input wire:model.defer="pwdid" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('pwdid') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Type here...">
             @error('pwdid')
