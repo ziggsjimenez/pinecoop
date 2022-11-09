@@ -53,7 +53,7 @@
                                                 class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Change Status</button>
 
                                                 <button type="button" wire:click="openAddProfilePhotoModal({{ $employee->id }})"
-                                                    class="rounded-r inline-block px-4 py-1.5 bg-purple-600 text-white font-medium text-xs leading-tight hover:bg-purple-700 focus:bg-purple-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Upload Photo {{ $employee->id }}</button>
+                                                    class="rounded-r inline-block px-4 py-1.5 bg-purple-600 text-white font-medium text-xs leading-tight hover:bg-purple-700 focus:bg-purple-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Upload Photo</button>
                                         </div>
                                     </div>
 

@@ -147,7 +147,7 @@ class Employees extends Component
             // 'dateofmembership'=>'required',
             // 'pwdid'=>'required',
             'ispersonwithdisability'=>'required',  
-            'photo'=>'mimes:jpg,png,jpeg',          
+       
         ]);
 
         Employee::updateOrCreate(['id' => $this->employee_id], [
@@ -188,7 +188,7 @@ class Employees extends Component
             'pwdid' => $this->pwdid,
             'ispersonwithdisability' => $this->ispersonwithdisability,
             'chapanumber' => $this->chapanumber,
-            'status' => 'Inactive',
+            // 'status' => 'Inactive',
             // 'status' => 'Active',
         ]);
 
