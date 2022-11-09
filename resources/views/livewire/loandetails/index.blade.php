@@ -17,6 +17,10 @@
         <a href="{{ route('member', ['employee_id' => $loan->employee->id]) }}">
             <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>
         </a>
+        @if (  ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated'))
+            <x-jet-button wire:click="showTerminateConfirmation();" class="bg-red-900">Terminate Account </x-jet-button>
+        @endif
+
         @if ($loan->isapproved == false)
             <x-jet-button class="bg-orange-400" wire:click="showEditEmployeeLoanModal"><i
                     class="fa-solid fa-pen-to-square fa-2x"></i> Edit</x-jet-button>
@@ -148,7 +152,9 @@
                                 <th class="border p-1">Monthly Amortization</th>
                                 <th class="border p-1">Status</th>
                                 <th class="border p-1">Date Paid</th>
+                                @if (  ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated'))
                                 <th class="border p-1">Action</th>
+                                @endif
 
                             </tr>
                         </thead>
@@ -211,21 +217,24 @@
                                     <td class="border p-1 py-0 text-right">
                                         {{ $chck->get()->pluck('created_at')->first() != ''? date_format(date_create($chck->get()->pluck('created_at')->first()),'m-d-Y h:i A'): '' }}
                                     </td>
-                                    <td class="border p-1 text-center">
-                                        @if ($chck->count() == 0 && (date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] || ($i+1 == count($this->arr_paymentsched))) && !$displaypaidbtn)
-                                            <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none"
-                                                wire:click="showPaidPaymentConfirmation({{ $i }})"><i class="fa-solid fa-check mr-2"></i> Paid
-                                            </x-jet-button>
-                                            <x-jet-button class="bg-indigo-700 px-5 py-1" style="text-transform:none"
-                                                wire:click="showCashPaymentConfirmation({{ $i }})">
-                                                
-                                                <i class="fa-solid fa-peso-sign mr-2"></i>Cash
-                                                Payment</x-jet-button>
-                                            @php
-                                                $displaypaidbtn = true;
-                                            @endphp
-                                        @endif
-                                    </td>
+                                    @if (  ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated'))
+                                        <td class="border p-1 text-center">
+                                            @if ($chck->count() == 0 && (date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] || ($i+1 == count($this->arr_paymentsched))) && !$displaypaidbtn &&  ($this->loan->status != 'Closed' &&  $this->loan->status != 'Terminated'))
+                                                <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none"
+                                                    wire:click="showPaidPaymentConfirmation({{ $i }})"><i class="fa-solid fa-check mr-2"></i> Paid
+                                                </x-jet-button>
+                                                <x-jet-button class="bg-indigo-700 px-5 py-1" style="text-transform:none"
+                                                    wire:click="showCashPaymentConfirmation({{ $i }})">
+                                                    
+                                                    <i class="fa-solid fa-peso-sign mr-2"></i>Cash
+                                                    Payment</x-jet-button>
+                                                @php
+                                                    $displaypaidbtn = true;
+                                                @endphp
+                                            @endif
+                                        </td>
+                                    @endif
+
                                 </tr>
                                 @php
                                     $totalprincipal += $this->arr_paymentsched[$i]['principal'];
@@ -257,6 +266,7 @@
     </div>
     @include('livewire.loandetails.modal.edit_employeeloan')
     @include('livewire.loandetails.modal.approveconfirmation_modal')
+    @include('livewire.loandetails.modal.terminateconfirmation_modal')
     @include('livewire.loandetails.modal.paid_confirmation_modal')
     @include('livewire.loandetails.modal.cashpayment_modal')
 </div>

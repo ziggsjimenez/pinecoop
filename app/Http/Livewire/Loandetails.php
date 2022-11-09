@@ -19,7 +19,7 @@ class Loandetails extends Component
 {
 
     public $LOANTYPE, $EMPLOYEE;
-    public $loan_id, $modaleditemployeeloan = false,$userid,$approveConfirmationModal = false, $paidPaymentConfirmationModal = false, $cashpaymentmodal = false, $paymentschedule, $arr_paymentsched = array(), $selectedindex;
+    public $loan_id, $modaleditemployeeloan = false,$userid,$approveConfirmationModal = false, $paidPaymentConfirmationModal = false, $terminateConfirmationModal = false, $cashpaymentmodal = false, $paymentschedule, $arr_paymentsched = array(), $selectedindex;
     public $loan, $loantype_id, $interest, $type, $terminmonths, $amount; //Loan forms
     public $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $paymentterms;
     public $selectedRowMonthAmor;
@@ -150,6 +150,10 @@ class Loandetails extends Component
         return $temp ;
     }
 
+    // FOR TERMINATE ACTION
+    function showTerminateConfirmation(){
+        $this->terminateConfirmationModal = true;
+    }
     // FOR PAID ACTION
     function showPaidPaymentConfirmation($index){
         $this->selectedindex = $index;
@@ -249,6 +253,12 @@ class Loandetails extends Component
         session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with total amount of <b>Php '.number_format($this->selectedRowMonthAmor,2,'.',',').'</b> with <b>Cash Payment</b> action.'. $tempstr);
       
         $this->cashpaymentmodal = false;
+    }
+
+    public function terminateLoanAccount(){
+        $this->loan->status = 'Terminated';
+        $this->loan->save();
+        $this->terminateConfirmationModal = false;
     }
 
     public function hideToast(){
