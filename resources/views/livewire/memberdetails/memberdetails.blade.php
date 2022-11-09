@@ -1,11 +1,41 @@
 <div class="flex justify-center">
     <div class="block p-6 w-full" style="margin: 2rem 2rem;">
-        <div class="justify-center font-bold text-2xl mb-4"> {!! $EMPLOYEE->fullname() !!} 
 
-            <button wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})" type="button" class="inline-block px-6 py-1 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Change Status</button>
-            @include('livewire.includes.messages')
-    
-            {{-- <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})">Change Status</x-jet-button> --}}
+
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <span class="font-bold text-2xl">
+                {!! $EMPLOYEE->fullname() !!}
+            </span>
+                <button wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})" type="button" class="px-6 py-1 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Change Status</button>
+                <hr>
+                {{-- back button  --}}
+                <a href="{{ route('employees') }}">
+                <button class="rounded px-5 py-2 text-sm bg-blue-400 hover:bg-blue-500 font-bold"><i class="fa-regular fa-circle-left"></i> Back</button>
+                </a>
+
+                @include('livewire.includes.messages')
+            </div>
+            <!-- ... -->
+            <div>
+                <img class="border rounded-full" src="{{ asset('storage/profilephotos/'.$EMPLOYEE->profilephoto) }}" alt="Profile Photo" width="150px"></div>
+          </div>
+
+
+        <div class="flex font-bold text-2xl mb-4">  
+
+            <div>
+               
+        
+                {{-- <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none" wire:click="confirmChangeStatus({{ $EMPLOYEE->id }})">Change Status</x-jet-button> --}}
+            </div>
+
+          
+            <div class="flex">
+               
+            </div>
+           
 
         </div>
         <ul class="flex flex-row  md:space-x-10 list-none border-b-0 pl-0" style="margin: 0rem;">

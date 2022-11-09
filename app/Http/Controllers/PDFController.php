@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+
 use App\Models\Loan;
+
 use App\Models\Paymentschedule;
+
 use Illuminate\Http\Request;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class PDFController extends Controller
@@ -36,7 +40,6 @@ class PDFController extends Controller
     }
 
     public function printPayments($loan_id){
-
 
         $arr_paymentsched = array();
         $loan = Loan::find($loan_id);

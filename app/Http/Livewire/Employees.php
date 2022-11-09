@@ -5,13 +5,16 @@ namespace App\Http\Livewire;
 use App\Models\Employee;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Employees extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     public $openAddModal=false,$employee_id,$searchToken,$sameaddress; 
-    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber,$status;  
+    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber,$status,$photo,$showAddProfilePhotoModal=false,$selectedemployee;  
     
     public $showConfirmChangeStatusModal=false;
 
@@ -100,6 +103,7 @@ class Employees extends Component
         $this->ispersonwithdisability="";
         $this->chapanumber="";
         $this->status="";
+        $this->photo="";
 
     }
 
@@ -142,7 +146,8 @@ class Employees extends Component
             'ispinecoopmem'=>'required',
             // 'dateofmembership'=>'required',
             // 'pwdid'=>'required',
-            'ispersonwithdisability'=>'required',            
+            'ispersonwithdisability'=>'required',  
+            'photo'=>'mimes:jpg,png,jpeg',          
         ]);
 
         Employee::updateOrCreate(['id' => $this->employee_id], [
@@ -187,8 +192,42 @@ class Employees extends Component
             // 'status' => 'Active',
         ]);
 
+
+
         $this->closeModal();
         $this->resetInputFields();
+
+    }
+
+    public function openAddProfilePhotoModal($employee_id){
+        $employee = Employee::where('id','=',$employee_id)->first();
+        $this->selectedemployee = $employee;
+        $this->employee_id = $this->selectedemployee->id;
+        $this->showAddProfilePhotoModal=true;
+    }
+
+    public function storeProfilePhoto($employee_id){
+        $this->validate([
+            'photo' => 'required|mimes:jpg,jpeg,gif,png',
+        ]);
+
+        $employee=Employee::find($employee_id);
+
+        if($employee->profilephoto!=NULL){
+
+            $filename = $employee->profilephoto;
+    
+            Storage::delete('public/profilephotos/' . $filename);
+
+        }
+ 
+        $filename = date('YMD') . $this->photo->getClientOriginalName();
+        $this->photo->storeAs('public/profilephotos', $filename);
+        $employee->profilephoto = $filename; 
+        $employee->save(); 
+        $this->employee_id = '';
+        $this->selectedemployee='';
+        $this->showAddProfilePhotoModal=false;
 
     }
 

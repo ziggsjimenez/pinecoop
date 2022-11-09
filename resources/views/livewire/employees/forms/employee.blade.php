@@ -1,4 +1,6 @@
 <div>{{-- name --}}
+
+
     <div class="flex flex-wrap mx-3 mb-2">
         <div class="w-1/4 px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="lastname">
@@ -118,6 +120,8 @@
             <p class="text-red-500 text-xs italic">Please sex gender.</p>
             @enderror
         </div>
+
+
         {{-- religion --}}
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="religion">
@@ -141,6 +145,9 @@
             @enderror
         </div>
     </div>
+
+
+
 
     {{-- third --}}
     <div class="flex flex-wrap mx-3 mb-2">

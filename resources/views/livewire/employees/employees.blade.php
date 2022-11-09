@@ -22,7 +22,6 @@
                             <th class="px-2 py-1">Birthday</th>
                             <th class="px-2 py-1">Sex</th>
                             <th class="px-2 py-1">P. R. Address</th>
-                            <th class="px-2 py-1">P. E. Address</th>
                             <th class="px-2 py-1 text-center">Action</th>
                         </tr>
                     </thead class="border-b">
@@ -39,7 +38,6 @@
                                 </td>
                                 <td class="px-2 py-1 whitespace-nowrap">{{ $employee->sex }} </td>
                                 <td class="px-2 py-1 whitespace-nowrap">{{ $employee->praddress() }} </td>
-                                <td class="px-2 py-1 whitespace-nowrap">{{ $employee->peaddress() }} </td>
                                 <td class="px-2 py-1 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
                                         <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg"
@@ -50,26 +48,29 @@
                                             </a>
                                             <button type="button" wire:click="edit({{ $employee->id }})"
                                                 class="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring-0 active:bg-yellow-600 transition duration-150 ease-in-out">Edit</button>
+
                                             <button type="button" wire:click="confirmChangeStatus({{ $employee->id }})"
-                                                class="rounded-r inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Change Status</button>
+                                                class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Change Status</button>
+
+                                                <button type="button" wire:click="openAddProfilePhotoModal({{ $employee->id }})"
+                                                    class="rounded-r inline-block px-4 py-1.5 bg-purple-600 text-white font-medium text-xs leading-tight hover:bg-purple-700 focus:bg-purple-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Upload Photo {{ $employee->id }}</button>
                                         </div>
                                     </div>
-                                    {{-- <a href="{{ route('member', ['employee_id' => $employee->id]) }}">
-                                        <x-jet-button class="bg-green-800 py-1" style="text-transform:none">View
-                                        </x-jet-button>
-                                    </a>
-                                    <x-jet-button class="bg-orange-300 px-4 py-1" style="text-transform:none"
-                                        wire:click="edit({{ $employee->id }})">Edit</x-jet-button>
-                                    <x-jet-button class="bg-red-300 px-4 py-1" style="text-transform:none"
-                                        wire:click="confirmChangeStatus({{ $employee->id }})">Change Status
-                                    </x-jet-button> --}}
+
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+
+            @if($showAddProfilePhotoModal)
+            @include('livewire.employees.modals.addprofilephoto')
+            @endif
+
             @include('livewire.employees.modals.addemployeemodal')
+            
+            
             @include('livewire.employees.modals.confirmChangeStatusModal')
         </div>
     </div>
