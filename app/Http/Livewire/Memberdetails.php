@@ -19,7 +19,7 @@ class Memberdetails extends Component
     public $EMPLOYEE, $ACCOUNT, $ACCOUNTTYPE, $MEMBERLOAN, $LOANTYPE, $userid; //models
     public $accounttype_id, $selectedloantype; //Account forms
     public $memberloanid, $loantype_id, $interest, $type, $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $paymentterms, $amount; //Loan forms
-    public $showConfirmChangeStatusModal = false;
+    public $showConfirmChangeStatusModal = false, $accountxx;
 
     public function mount()
     {
@@ -32,6 +32,7 @@ class Memberdetails extends Component
         $this->EMPLOYEE = Employee::find($this->employee_id);
         $this->ACCOUNT = Account::where('employee_id', $this->employee_id)->get();
         $this->ACCOUNTTYPE = Accounttype::whereNotIn('id', DB::table('accounts')->select('accounttype_id')->where('employee_id', $this->employee_id))->get();
+
         return view('livewire.memberdetails.memberdetails');
     }
 
@@ -75,16 +76,16 @@ class Memberdetails extends Component
     {
         $this->validate([
             'loantype_id' => 'required',
-            'paymentterms' => 'required|numeric|min:'. $this->minpaymentterms.'|max:'.$this->maxpaymentterms,
-            'amount' => 'required|numeric|min:'. $this->minloanamount.'|max:'.$this->maxloanamount,
+            'paymentterms' => 'required|numeric|min:' . $this->minpaymentterms . '|max:' . $this->maxpaymentterms,
+            'amount' => 'required|numeric|min:' . $this->minloanamount . '|max:' . $this->maxloanamount,
         ]);
 
-        $totalActiveLoanAmmount = $this->EMPLOYEE->loans->where('status', 'Approved')->where("loantype_id",$this->loantype_id)->sum('amount');
+        $totalActiveLoanAmmount = $this->EMPLOYEE->loans->where('status', 'Approved')->where("loantype_id", $this->loantype_id)->sum('amount');
 
-     
-        
-        if($totalActiveLoanAmmount+$this->amount >  $this->maxloanamount){
-            session()->flash('message', 'The maximum amount loan for this loan type is <b>Php '.$this->maxloanamount.'</b>. Employee current allowable loan amount is <b>Php'.($this->maxloanamount-$totalActiveLoanAmmount).'</b>');
+
+
+        if ($totalActiveLoanAmmount + $this->amount >  $this->maxloanamount) {
+            session()->flash('message', 'The maximum amount loan for this loan type is <b>Php ' . $this->maxloanamount . '</b>. Employee current allowable loan amount is <b>Php' . ($this->maxloanamount - $totalActiveLoanAmmount) . '</b>');
             session()->flash('message-type', 'danger');
             return;
         }

@@ -53,7 +53,7 @@ class Employee extends Model
         'profilephoto',
     ];
 
-    protected $dates = ['birthdate', 'dateofmembership'];
+    protected $dates = ['birthdate', 'dateofmembership','employmentdate','dateofmembership'];
 
     public function fullname()
     {

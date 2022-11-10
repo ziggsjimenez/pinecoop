@@ -22,6 +22,8 @@
                             <th class="px-2 py-1">Birthday</th>
                             <th class="px-2 py-1">Sex</th>
                             <th class="px-2 py-1">P. R. Address</th>
+                            <th class="px-2 py-1">Employement Date</th>
+                            <th class="px-2 py-1">Membership Span</th>
                             <th class="px-2 py-1 text-center">Action</th>
                         </tr>
                     </thead class="border-b">
@@ -30,6 +32,15 @@
                             $count = 1;
                         @endphp
                         @foreach ($employees as $employee)
+                            @php
+                                $datetime1 = new DateTime($employee->dateofmembership);
+                                $datetime2 = new DateTime(date('Y-m-d h:i:s'));
+                                
+                                $interval = $datetime1->diff($datetime2);
+                                $diffInDays = $interval->d != 0 ? ($interval->d > 1 ?  $interval->d.' Days' : $interval->d.' Day') : '';
+                                $diffInMonths = $interval->m != 0 ? ($interval->m > 1 ?  $interval->m.' Months' : $interval->m.' Month') : '';
+                                $diffInYears = $interval->y != 0 ? ($interval->y > 1 ?  $interval->y.' Years' : $interval->y.' Year') : '';
+                            @endphp
                             <tr
                                 class="{{ $count % 2 == 0 ? 'bg-gray-100' : 'bg-white' }} transition duration-100 ease-in-out hover:bg-gray-100">
                                 <td class="px-2 py-1 whitespace-nowrap">{{ $count++ }}</td>
@@ -38,6 +49,11 @@
                                 </td>
                                 <td class="px-2 py-1 whitespace-nowrap">{{ $employee->sex }} </td>
                                 <td class="px-2 py-1 whitespace-nowrap">{{ $employee->praddress() }} </td>
+                                <td class="px-2 py-1 whitespace-nowrap">
+                                    {{ $employee->dateofmembership->format('F d, Y') }}</td>
+                                <td class="px-2 py-1 whitespace-nowrap">
+                                    {{ $diffInYears . ' ' . $diffInMonths . ' ' . $diffInDays }}
+                                </td>
                                 <td class="px-2 py-1 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
                                         <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg"
@@ -50,10 +66,13 @@
                                                 class="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring-0 active:bg-yellow-600 transition duration-150 ease-in-out">Edit</button>
 
                                             <button type="button" wire:click="confirmChangeStatus({{ $employee->id }})"
-                                                class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Change Status</button>
+                                                class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Change
+                                                Status</button>
 
-                                                <button type="button" wire:click="openAddProfilePhotoModal({{ $employee->id }})"
-                                                    class="rounded-r inline-block px-4 py-1.5 bg-purple-600 text-white font-medium text-xs leading-tight hover:bg-purple-700 focus:bg-purple-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Upload Photo</button>
+                                            <button type="button"
+                                                wire:click="openAddProfilePhotoModal({{ $employee->id }})"
+                                                class="rounded-r inline-block px-4 py-1.5 bg-purple-600 text-white font-medium text-xs leading-tight hover:bg-purple-700 focus:bg-purple-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Upload
+                                                Photo</button>
                                         </div>
                                     </div>
 
@@ -64,13 +83,13 @@
                 </table>
             </div>
 
-            @if($showAddProfilePhotoModal)
-            @include('livewire.employees.modals.addprofilephoto')
+            @if ($showAddProfilePhotoModal)
+                @include('livewire.employees.modals.addprofilephoto')
             @endif
 
             @include('livewire.employees.modals.addemployeemodal')
-            
-            
+
+
             @include('livewire.employees.modals.confirmChangeStatusModal')
         </div>
     </div>
