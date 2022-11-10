@@ -21,7 +21,7 @@
     
     <div class="w-1/2 px-3 md:mb-0">
         <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="minlengthofservice">
-            MIN LENGTH OF SERVICE (months)
+            MIN EMPLOYMENT DATE (months)
         </label>
         <input wire:model="minlengthofservice" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('minlengthofservice') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
         @error('minlengthofservice')

@@ -17,23 +17,28 @@
         <a href="{{ route('member', ['employee_id' => $loan->employee->id]) }}">
             <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>
         </a>
-        @if (  ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated'))
-            <x-jet-button wire:click="showTerminateConfirmation();" class="bg-red-900">Terminate Account </x-jet-button>
-        @endif
+
 
         @if ($loan->isapproved == false)
+
             <x-jet-button class="bg-orange-400" wire:click="showEditEmployeeLoanModal"><i
                     class="fa-solid fa-pen-to-square fa-2x"></i> Edit</x-jet-button>
             <x-jet-button class="bg-blue-400" wire:click="showApproveConfirmationModal"><i
                     class="fa-solid fa-thumbs-up fa-2x"></i>Approve</x-jet-button>
+        @else
+            @if ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated')
+                <x-jet-button wire:click="showTerminateConfirmation();" class="bg-red-900">Terminate Account
+                </x-jet-button>
+            @endif
         @endif
     </div>
 
-    <div class="block font-bold text-xl">Payment Schedule</div> 
+    <div class="block font-bold text-xl">Payment Schedule</div>
 
     <button class="bg-blue-300 hover:bg-blue-500 rounded px-1 mt-3">
-        <a target="_blank" href="{{ route('printPaymentSchedule',['loan_id'=>$loan->id]) }}">  <i class="fa-solid fa-print"></i> Print </a>
-     </button>
+        <a target="_blank" href="{{ route('printPaymentSchedule', ['loan_id' => $loan->id]) }}"> <i
+                class="fa-solid fa-print"></i> Print </a>
+    </button>
 
     {{-- payment schedule --}}
     <div>
@@ -123,7 +128,7 @@
                     </tbody>
                 </table>
 
-            
+
 
 
             </div>
@@ -134,11 +139,12 @@
                 <div class="w-full px-0 mb-2 md:mb-1">
 
 
-                    <div class="block font-bold text-xl">Payments</div> 
+                    <div class="block font-bold text-xl">Payments</div>
 
                     <button class="bg-blue-300 hover:bg-blue-500 rounded px-1 mt-3">
-                        <a target="_blank" href="{{ route('printpayments',['loan_id'=>$loan->id]) }}">  <i class="fa-solid fa-print"></i> Print </a>
-                     </button>
+                        <a target="_blank" href="{{ route('printpayments', ['loan_id' => $loan->id]) }}"> <i
+                                class="fa-solid fa-print"></i> Print </a>
+                    </button>
 
 
                     <table class="text-xs w-full">
@@ -152,8 +158,8 @@
                                 <th class="border p-1">Monthly Amortization</th>
                                 <th class="border p-1">Status</th>
                                 <th class="border p-1">Date Paid</th>
-                                @if (  ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated'))
-                                <th class="border p-1">Action</th>
+                                @if ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated')
+                                    <th class="border p-1">Action</th>
                                 @endif
 
                             </tr>
@@ -182,8 +188,8 @@
                                             $this->arr_paymentsched[$i + 1]['interestamount'] = $this->arr_paymentsched[$i + 1]['balance'] * $this->loan->interest; // nextmonth interest = nextmonth balance * interest rate
                                             $this->arr_paymentsched[$i + 1]['monthlyamort'] = $this->arr_paymentsched[$i + 1]['principal'] + $this->arr_paymentsched[$i + 1]['interestamount']; // nextmonth amortization = nextmonth principal (monthly)  + nextmonth nga interest
                                         }
-
-                                        if($i+1 == count($this->arr_paymentsched)){
+                                        
+                                        if ($i + 1 == count($this->arr_paymentsched)) {
                                             $displaypaidbtn = false;
                                         }
                                     @endphp
@@ -217,17 +223,24 @@
                                     <td class="border p-1 py-0 text-right">
                                         {{ $chck->get()->pluck('created_at')->first() != ''? date_format(date_create($chck->get()->pluck('created_at')->first()),'m-d-Y h:i A'): '' }}
                                     </td>
-                                    @if (  ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated'))
+                                    @if ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated')
                                         <td class="border p-1 text-center">
-                                            @if ($chck->count() == 0 && (date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] || ($i+1 == count($this->arr_paymentsched))) && !$displaypaidbtn &&  ($this->loan->status != 'Closed' &&  $this->loan->status != 'Terminated'))
-                                                <x-jet-button class="bg-indigo-700 px-4 py-1" style="text-transform:none"
-                                                    wire:click="showPaidPaymentConfirmation({{ $i }})"><i class="fa-solid fa-check mr-2"></i> Paid
+                                            @if ($chck->count() == 0 &&
+                                                (date('Y-m-d') <= $this->arr_paymentsched[$i]['paymentdate'] || $i + 1 == count($this->arr_paymentsched)) &&
+                                                !$displaypaidbtn &&
+                                                ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated'))
+                                                <x-jet-button class="bg-indigo-700 px-4 py-1"
+                                                    style="text-transform:none"
+                                                    wire:click="showPaidPaymentConfirmation({{ $i }})"><i
+                                                        class="fa-solid fa-check mr-2"></i> Paid
                                                 </x-jet-button>
-                                                <x-jet-button class="bg-indigo-700 px-5 py-1" style="text-transform:none"
+                                                <x-jet-button class="bg-indigo-700 px-5 py-1"
+                                                    style="text-transform:none"
                                                     wire:click="showCashPaymentConfirmation({{ $i }})">
-                                                    
+
                                                     <i class="fa-solid fa-peso-sign mr-2"></i>Cash
-                                                    Payment</x-jet-button>
+                                                    Payment
+                                                </x-jet-button>
                                                 @php
                                                     $displaypaidbtn = true;
                                                 @endphp

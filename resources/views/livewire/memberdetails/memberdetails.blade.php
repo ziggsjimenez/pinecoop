@@ -107,7 +107,7 @@
                                             <td> <button
                                                     class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition bg-indigo-700 px-4 py-1"
                                                     style="text-transform:none" wire:click="">
-                                                   View details
+                                                    View details
                                                 </button></td>
                                         </tr>
                                     </tbody>
@@ -197,6 +197,7 @@
                                         <th class="px-2 py-1">Interest</th>
                                         <th class="px-2 py-1">Interest Type</th>
                                         <th class="px-2 py-1">Payment Terms</th>
+                                        <th class="px-2 py-1">Outstanding Balance</th>
                                         <th class="px-2 py-1">Status</th>
                                         <th class="px-2 py-1">Action</th>
                                     </tr>
@@ -216,6 +217,7 @@
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 {{ $row->terminmonths . ' Months' }}
                                             </td>
+                                            <td class="px-2 py-1 whitespace-nowrap"></td>
                                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->status }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 <a href="{{ route('loan', ['loan_id' => $row->id]) }}">
@@ -223,6 +225,9 @@
                                                         style="text-transform:none" wire:click="">View Details
                                                     </x-jet-button>
                                                 </a>
+
+                                                <x-jet-button class="bg-red-900 px-4 py-1"
+                                                style="text-transform:none">Terminate Account</x-jet-button>
                                             </td>
                                         </tr>
                                     @endforeach

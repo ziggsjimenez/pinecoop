@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('interest',10,2);
             $table->decimal('monthlyamort',10,2);
             $table->decimal('balance',10,2);
+            $table->decimal('actualamount',10,2);
             $table->timestamps();
         });
     }

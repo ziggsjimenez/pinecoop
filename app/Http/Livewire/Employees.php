@@ -14,7 +14,7 @@ class Employees extends Component
     use WithFileUploads;
 
     public $openAddModal=false,$employee_id,$searchToken,$sameaddress; 
-    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem,$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber,$status,$photo,$showAddProfilePhotoModal=false,$selectedemployee;  
+    public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem='Regular',$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber,$status,$photo,$showAddProfilePhotoModal=false,$selectedemployee;  
     
     public $showConfirmChangeStatusModal=false;
 
@@ -144,7 +144,7 @@ class Employees extends Component
             'email'=>'required',
             // 'fbaccount'=>'required',
             'ispinecoopmem'=>'required',
-            // 'dateofmembership'=>'required',
+            'dateofmembership'=>'required',
             // 'pwdid'=>'required',
             'ispersonwithdisability'=>'required',  
        

@@ -25,7 +25,17 @@ class Loantypes extends Component
 
     public function showAddEditModal($type)
     {
-        $this->loantypid = $type == 'add'? null: $this->loantypid;
+        $this->loantypid = $type == 'add' ? null : $this->loantypid;
+
+        $this->name = '';
+        $this->interest = '';
+        $this->minpaymentterms = '';
+        $this->maxpaymentterms = '';
+        $this->minloanamount = '';
+        $this->maxloanamount = '';
+        $this->minlengthofservice = '';
+        $this->type = '';
+
         $this->modaladdloantype = true;
     }
 

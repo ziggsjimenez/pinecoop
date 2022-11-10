@@ -49,7 +49,7 @@ return new class extends Migration
             $table->text('pmailadd')->nullable();
             $table->text('email')->nullable();
             $table->text('fbaccount')->nullable();
-            $table->boolean('ispinecoopmem');
+            $table->text('ispinecoopmem');
             $table->date('dateofmembership')->nullable();
             $table->text('pwdid')->nullable();
             $table->boolean('deleted')->default(false);

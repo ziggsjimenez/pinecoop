@@ -461,29 +461,27 @@
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-1" for="ispinecoopmem">
-                Pinecoop Member ?
+                <span class="text-red-500">*</span> Pinecoop Member Type
             </label>
             <div>
-                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="1"> Yes
+                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="Regular" checked> Regular
 
-                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="0"> Regular
+                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="Associatte"> Associatte
             </div>
             @error('ispinecoopmem')
             <p class="text-red-500 text-xs italic">Please select.</p>
             @enderror
         </div>
 
-        @if($ispinecoopmem)
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1" for="dateofmembership">
-                Date of Membership
+                <span class="text-red-500">*</span> Date of Membership
             </label>
             <input wire:model.defer="dateofmembership" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('dateofmembership') border-red-500  @enderror rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white" type="date">
             @error('dateofmembership')
             <p class="text-red-500 text-xs italic">Please fill out this field.</p>
             @enderror
         </div>
-        @endif
 
         <div class="px-3 mb-2 md:mb-1">
             <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-1" for="ispersonwithdisability">
