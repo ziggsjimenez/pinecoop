@@ -4,12 +4,12 @@
     </x-slot>
 
     <x-slot name="content">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold" for="selectedRowMonthAmor">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold" for="paymentAmount">
             Enter Amount
         </label>
-        <input wire:model="selectedRowMonthAmor" class="appearance-none block w-full bg-gray-100 text-gray-700 border   rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
-        @error('selectedRowMonthAmor')
-        <p class="text-red-500 text-xs italic">Amount must greater than {{ $this->arr_paymentsched[$this->selectedindex]['monthlyamort']}}</p>
+        <input wire:model="paymentAmount" class="appearance-none block w-full bg-gray-100 text-gray-700 border   rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('paymentAmount')
+        <p class="text-red-500 text-xs italic">{{ $message}}</p>
         @enderror
     </x-slot>
 
