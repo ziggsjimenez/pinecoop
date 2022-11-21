@@ -37,9 +37,9 @@
                                 $datetime2 = new DateTime(date('Y-m-d h:i:s'));
                                 
                                 $interval = $datetime1->diff($datetime2);
-                                $diffInDays = $interval->d != 0 ? ($interval->d > 1 ?  $interval->d.' Days' : $interval->d.' Day') : '';
-                                $diffInMonths = $interval->m != 0 ? ($interval->m > 1 ?  $interval->m.' Months' : $interval->m.' Month') : '';
-                                $diffInYears = $interval->y != 0 ? ($interval->y > 1 ?  $interval->y.' Years' : $interval->y.' Year') : '';
+                                $diffInDays = $interval->d != 0 ? ($interval->d > 1 ? $interval->d . ' Days' : $interval->d . ' Day') : '';
+                                $diffInMonths = $interval->m != 0 ? ($interval->m > 1 ? $interval->m . ' Months' : $interval->m . ' Month') : '';
+                                $diffInYears = $interval->y != 0 ? ($interval->y > 1 ? $interval->y . ' Years' : $interval->y . ' Year') : '';
                             @endphp
                             <tr
                                 class="{{ $count % 2 == 0 ? 'bg-gray-100' : 'bg-white' }} transition duration-100 ease-in-out hover:bg-gray-100">
@@ -65,7 +65,11 @@
                                             <button type="button" wire:click="edit({{ $employee->id }})"
                                                 class="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring-0 active:bg-yellow-600 transition duration-150 ease-in-out">Edit</button>
 
-                                            <button type="button" wire:click="confirmChangeStatus({{ $employee->id }})"
+                                            <button type="button"
+                                                wire:click="confirmChangeStatus({{ $employee->id }})"
+                                                class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Add Capital</button>
+                                            <button type="button"
+                                                wire:click="confirmChangeStatus({{ $employee->id }})"
                                                 class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Change
                                                 Status</button>
 

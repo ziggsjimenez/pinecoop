@@ -80,10 +80,10 @@
 
                 <select wire:model.defer="civilstatus" class="block appearance-none w-full bg-gray-100 border border-gray-600 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                     <option value="" selected>Select...</option>
-                    <option value="Jr.">Single</option>
-                    <option value="Sr.">Married</option>
-                    <option value="II">Widowed</option>
-                    <option value="III">Separated</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widowed">Widowed</option>
+                    <option value="Separated">Separated</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
