@@ -12,6 +12,10 @@ table {
   border: 1px solid;
 }
 
+td,th {
+    font-size: 12px;
+}
+
         .border {
             border: 1px solid;
         }
@@ -143,8 +147,8 @@ table {
 
         Prepared by: <br><br><br>
 
-        JUNEL JIG G. JIMENEZ <br>
-        Loan Officer 
+        {{ Auth::user()->name  }} <br>
+        
         <br><br><br>
 
         Approved: <br><br><br>
@@ -161,10 +165,6 @@ table {
         {{ $loan->employee->fullname2() }} <br>
         
 
-
-
-        
-    
 
     </div>
     
