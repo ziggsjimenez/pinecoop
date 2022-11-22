@@ -176,19 +176,20 @@ class Loandetails extends Component
         session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with <b>Paid</b> action.');
 
 
-        $lastIndex = count($this->arr_paymentsched)-1;
-        $chck = $this->checkpaymentdata(
-            $this->arr_paymentsched[$lastIndex]['paymentdate'],
-            number_format($this->arr_paymentsched[$lastIndex]['principal'], '2','.',''),
-            number_format($this->arr_paymentsched[$lastIndex]['interestamount'], '2','.',''),
-            number_format($this->arr_paymentsched[$lastIndex]['monthlyamort'], '2','.',''),
-            number_format($this->arr_paymentsched[$lastIndex]['actualamount'], '2','.',''),
-            number_format($this->arr_paymentsched[$lastIndex]['balance'], '2','.','')
-        );
-        if($chck->count() > 0){
-            $this->loan->status = 'Closed';
-            $this->loan->save();
-        }
+        // $lastIndex = count($this->arr_paymentsched)-1;
+        // $chck = $this->checkpaymentdata(
+        //     $this->arr_paymentsched[$lastIndex]['paymentdate'],
+        //     number_format($this->arr_paymentsched[$lastIndex]['principal'], '2','.',''),
+        //     number_format($this->arr_paymentsched[$lastIndex]['interestamount'], '2','.',''),
+        //     number_format($this->arr_paymentsched[$lastIndex]['monthlyamort'], '2','.',''),
+        //     number_format($this->arr_paymentsched[$lastIndex]['actualamount'], '2','.',''),
+        //     number_format($this->arr_paymentsched[$lastIndex]['balance'], '2','.','')
+        // );
+        // if($chck->count() > 0){
+        //     $this->loan->status = 'Closed';
+        //     $this->loan->save();
+        // }
+        $this->closeLoanAccount();
         $this->paidPaymentConfirmationModal = false;
     }
 
@@ -204,8 +205,13 @@ class Loandetails extends Component
     function cashPaymentAction(){
         $index = $this->selectedindex;
 
+        $max = $this->arr_paymentsched[$index]['balance'];
+        if($this->arr_paymentsched[$index]['monthlyamort'] > $this->arr_paymentsched[$index]['balance']){
+            $max = $this->arr_paymentsched[$index]['monthlyamort'];
+        }
+
         $this->validate([
-            'paymentAmount' => 'required|numeric|min:'. number_format($this->arr_paymentsched[$index]['monthlyamort'], '2', '.', '').'|max:'. number_format($this->arr_paymentsched[$index]['balance'], '2', '.', ''),
+            'paymentAmount' => 'required|numeric|min:'. number_format($this->arr_paymentsched[$index]['monthlyamort'], '2', '.', '').'|max:'. number_format($max, '2', '.', ''),
         ]);
 
         $accounttype = AccountType::where('name',"LIKE", '%capital shares%');
@@ -256,7 +262,20 @@ class Loandetails extends Component
 
         session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with total amount of <b>Php '.number_format($this->paymentAmount,2,'.',',').'</b> with <b>Cash Payment</b> action.'. $tempstr);
       
+
+        $this->closeLoanAccount();
         $this->cashpaymentmodal = false;
+    }
+
+    public function closeLoanAccount(){
+        $totalPaid = Paymentschedule::where([
+            'loan_id' => $this->loan_id,
+        ])->sum('actualamount');
+
+        if($totalPaid >= $this->loan->amount){
+            $this->loan->status = 'Closed';
+            $this->loan->save();
+        }
     }
 
     public function terminateLoanAccount(){

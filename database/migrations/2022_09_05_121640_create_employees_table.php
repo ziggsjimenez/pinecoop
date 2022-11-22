@@ -53,7 +53,8 @@ return new class extends Migration
             $table->date('dateofmembership')->nullable();
             $table->text('pwdid')->nullable();
             $table->boolean('deleted')->default(false);
-            $table->text('status')->default('Active');;
+            // $table->text('Xxstatus')->nullable();
+            $table->text('Xxstatus')->default("Active");
            
             $table->timestamps();
         });

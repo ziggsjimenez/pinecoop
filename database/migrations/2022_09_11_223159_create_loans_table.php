@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('loanofficer')->unsigned()->references('id')->on('employees')->onDelete('restrict');
             $table->text('status');
             $table->boolean('isapproved');
+            $table->text('remarks');
             $table->timestamps();
         });
     }

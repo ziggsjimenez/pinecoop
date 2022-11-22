@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class Accountdetails extends Component
 {
 
-    public $account_id, $account, $openDepositForm = false, $transactiontype, $computationtype, $amount;
+    public $account_id, $account, $openDepositForm = false, $transactiontype, $computationtype, $amount=500;
     
     public function mount(){
         $this->account = Account::find($this->account_id);
@@ -41,7 +41,7 @@ class Accountdetails extends Component
 
         $transaction = new Transaction;
 
-        $transaction->transaction_reference_number = "2022-TJOUWERWER-009";
+        $transaction->transaction_reference_number =  date('Y').'-TJOUWERWER-'.date('mdhis');
         $transaction->amount = ($this->amount * $this->computationtype);
         $transaction->dateoftransaction = date('y-m-d');
         $transaction->account_id = $this->account_id;
@@ -50,7 +50,7 @@ class Accountdetails extends Component
 
         session()->flash('message', 'Transaction posted.');
 
-        $this->amount = '';
+        $this->amount = 500;
         $this->openDepositForm = false;
     }
 }

@@ -71,13 +71,24 @@ class Loantypes extends Component
     {
         $loantypes = Loantype::find($loantypid);
         $this->loantypid = $loantypes->id;
+        
         $this->name = $loantypes->name;
         $this->interest = $loantypes->interest;
-        $this->paymentterms = $loantypes->paymentterms;
+        $this->minpaymentterms = $loantypes->minpaymentterms;
+        $this->maxpaymentterms = $loantypes->maxpaymentterms;
+        $this->minloanamount = $loantypes->minloanamount;
         $this->maxloanamount = $loantypes->maxloanamount;
+        $this->minlengthofservice = $loantypes->minlengthofservice;
         $this->type = $loantypes->type;
+        
 
-        $this->showAddEditModal('edit');
+
+
+
+
+
+        $this->modaladdloantype = true;
+        // $this->showAddEditModal('edit');
     }
 
 

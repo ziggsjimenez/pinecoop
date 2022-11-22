@@ -18,7 +18,7 @@ class Memberdetails extends Component
     public $employee_id, $btnSelected = 'Profile',  $modalmemberaccount = false, $modalmemberloan = false;
     public $EMPLOYEE, $ACCOUNT, $ACCOUNTTYPE, $MEMBERLOAN, $LOANTYPE, $userid; //models
     public $accounttype_id, $selectedloantype; //Account forms
-    public $memberloanid, $loantype_id, $interest, $type, $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $paymentterms, $amount; //Loan forms
+    public $memberloanid, $loantype_id, $interest, $type, $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $paymentterms, $amount, $dateapproved; //Loan forms
     public $showConfirmChangeStatusModal = false, $accountxx;
 
     public function mount()
@@ -99,10 +99,11 @@ class Memberdetails extends Component
             'maxloanamount' => $this->maxloanamount,
             'type' => $this->type,
             'dateapplied' => date('Y-m-d h:i:s'),
-            'dateapproved' => date('Y-m-d h:i:s'),
+            'dateapproved' => $this->dateapproved != ''? $this->dateapproved:date('Y-m-d h:i:s'),
             'loanofficer' => $this->userid,
-            'status' => 'Pending',
-            'isapproved' => false,
+            'status' => $this->dateapproved != ''? 'Approved':'Pending',
+            'isapproved' => $this->dateapproved != ''? 1:0,
+            'remarks' => $this->dateapproved != ''? 'Old':'New',
         ]);
 
         $this->modalmemberloan = false;
@@ -149,13 +150,14 @@ class Memberdetails extends Component
     public function changeStatus($employee_id)
     {
         $employee = Employee::find($employee_id);
+        dd($employee);
         if (!$employee->hasPendingLoans()) {
-            if ($employee->status == "Active") {
+            if ($employee->Xxstatus == "Active") {
                 $status = "Inactive";
             } else
                 $status = "Active";
 
-            $employee->status = $status;
+            $employee->Xxstatus = $status;
             $employee->save();
             $this->showConfirmChangeStatusModal = false;
         } else {
@@ -163,5 +165,9 @@ class Memberdetails extends Component
             session()->flash('message-type', 'danger');
             $this->showConfirmChangeStatusModal = false;
         }
+    }
+
+    public function hideToast(){
+
     }
 }

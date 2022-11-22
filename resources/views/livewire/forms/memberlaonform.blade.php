@@ -37,7 +37,7 @@
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold" for="paymentterms">
         Payment Terms
     </label>
-    <input wire:model="paymentterms" value="{{$paymentterms}}" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('paymentterms') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" min="{{$minpaymentterms}}" max="{{$maxpaymentterms}}">
+    <input wire:model="paymentterms" value="{{$paymentterms}}" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('paymentterms') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number">
     @error('paymentterms')
     <p class="text-red-500 text-xs italic">{{ $message }}</p>
     @enderror
@@ -47,8 +47,18 @@
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold" for="amount">
         Loan Amount
     </label>
-    <input wire:model="amount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('amount') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here..." min="{{$minloanamount}}" max="{{$maxloanamount}}">
+    <input wire:model="amount" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('amount') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here..." >
     @error('amount')
+    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+    @enderror
+</div>
+
+<div class="w-full px-3 mb-6 md:mb-3">
+    <label class="block tracking-wide text-gray-700 text-xs font-bold" for="dateapproved">
+        DATE APPROVED (leave blank if new)
+    </label>
+    <input wire:model="dateapproved" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('dateapproved') border-red-500  @enderror rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white" type="date">
+    @error('dateapproved')
     <p class="text-red-500 text-xs italic">{{ $message }}</p>
     @enderror
 </div>

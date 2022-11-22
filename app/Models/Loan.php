@@ -22,6 +22,7 @@ class Loan extends Model
         'loanofficer',
         'status',
         'isapproved',
+        'remarks',
     ];
 
     public function loantype()

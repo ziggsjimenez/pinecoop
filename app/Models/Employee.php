@@ -93,7 +93,7 @@ class Employee extends Model
     public function isActive()
     {
 
-        if ($this->status == 'Active')
+        if ($this->Xxstatus == 'Active')
             return true;
         else
             return false;

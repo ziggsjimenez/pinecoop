@@ -3,20 +3,24 @@
 namespace App\Http\Livewire;
 
 use App\Models\Employee;
+use App\Models\Transaction;
+use App\Models\AccountType;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Employees extends Component
 {
     use WithPagination;
     use WithFileUploads;
 
-    public $openAddModal=false,$employee_id,$searchToken,$sameaddress; 
+    public $openAddModal=false,$employee_id,$searchToken,$sameaddress, $amount = 500, $account_id; 
     public $lastname,$firstname,$middlename,$extension,$birthdate,$civilstatus,$sex,$religion,$department,$position,$employmentdate,$phonenumber,$educationalattainment,$estimatedannualgross,$tin,$prahouseno,$prabuildingstreet,$prasubdivision,$prabarangay,$pramun,$praprov,$prazipcode,$peahouseno,$peabuildingstreet,$peasubdivision,$peabarangay,$peamun,$peaprov,$peazipcode,$pmailadd,$email,$fbaccount,$ispinecoopmem='Regular',$dateofmembership,$pwdid,$ispersonwithdisability,$chapanumber,$status,$photo,$showAddProfilePhotoModal=false,$selectedemployee;  
     
-    public $showConfirmChangeStatusModal=false;
+    public $showConfirmChangeStatusModal=false, $showAddCapitalShares=false;
 
 
     public function mount(){
@@ -47,18 +51,62 @@ class Employees extends Component
         $this->employee_id = $employee_id; 
     }
 
+    public function showAddCapitalSharesFucntion($employee_id){
+        $this->showAddCapitalShares = true; 
+        $this->employee_id = $employee_id; 
+    }
+
+    public function saveEmplCapitalShare(){
+        $this->validate([
+            'amount' => 'required',
+        ]);
+
+        $accounttype = AccountType::where('name',"LIKE", '%capital shares%');
+        if($accounttype->count() == 0){
+            session()->flash('message', 'No <b>Capital Shares</b> account type has been setup.');
+            session()->flash('message-type', 'danger');
+            $this->cashpaymentmodal = false;
+            return;
+        }
+       
+        $account = DB::table('accounts')
+                ->join('accounttypes','accounts.id', '=', 'accounttypes.id')
+                ->where('employee_id', $this->employee_id)
+                ->where('accounttypes.name', 'LIKE', '%capital shares%');
+        if($account->count() == 0){
+            session()->flash('message', 'No <b>Capital Shares</b> account has been added to this employee.');
+            session()->flash('message-type', 'danger');
+            $this->cashpaymentmodal = false;
+            return;
+        }
+
+        $transaction = new Transaction;
+
+        $transaction->transaction_reference_number =  date('Y').'-TJOUWERWER-'.date('mdhis');
+        $transaction->amount = ($this->amount);
+        $transaction->dateoftransaction = date('y-m-d');
+        $transaction->account_id = $account->get()->pluck('id')->first();
+        $transaction->user_id = Auth::user()->id;
+        $transaction->save();
+
+        session()->flash('message', 'Transaction posted.');
+
+        $this->amount = 500;
+        $this->showAddCapitalShares = false;
+    }
+
 
     public function changeStatus($employee_id){
 
         $employee = Employee::find($employee_id);
 
-        if ($employee->status=="Active"){
+        if ($employee->Xxstatus=="Active"){
             $status = "Inactive";
         }
         else 
             $status = "Active";
 
-            $employee->status=$status; 
+            $employee->Xxstatus=$status; 
             $employee->save(); 
             $this->employee_id = "";
             $this->showConfirmChangeStatusModal = false; 
@@ -189,8 +237,8 @@ class Employees extends Component
             'ispersonwithdisability' => $this->ispersonwithdisability,
             'chapanumber' => $this->chapanumber,
             'dateofmembership' => date('Y-m-d'),
+            'Xxstatus' => "Active",
             // 'status' => 'Inactive',
-            // 'status' => 'Active',
         ]);
 
 
@@ -272,7 +320,7 @@ class Employees extends Component
         $this->pwdid=$employee->pwdid;
         $this->ispersonwithdisability=$employee->ispersonwithdisability;
         $this->chapanumber=$employee->chapanumber;
-        $this->status=$employee->status;
+        $this->status=$employee->Xxstatus;
         $this->showAddModal();
     }
 
@@ -302,5 +350,9 @@ class Employees extends Component
         }
         
         
+    }
+
+    public function hideToast(){
+
     }
 }

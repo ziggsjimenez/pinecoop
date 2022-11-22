@@ -1,3 +1,4 @@
+
 <div class="flex justify-center">
     <div class="block p-6 rounded-lg shadow-lg bg-white w-full" style="margin: 2rem 2rem;">
         <div class="flex items-center justify-between py-2 md:justify-start md:space-x-10">
@@ -66,7 +67,7 @@
                                                 class="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring-0 active:bg-yellow-600 transition duration-150 ease-in-out">Edit</button>
 
                                             <button type="button"
-                                                wire:click="confirmChangeStatus({{ $employee->id }})"
+                                                wire:click="showAddCapitalSharesFucntion({{ $employee->id }})"
                                                 class="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Add Capital</button>
                                             <button type="button"
                                                 wire:click="confirmChangeStatus({{ $employee->id }})"
@@ -92,9 +93,9 @@
             @endif
 
             @include('livewire.employees.modals.addemployeemodal')
-
-
+            @include('livewire.employees.modals.addemployeecapitalshare')
             @include('livewire.employees.modals.confirmChangeStatusModal')
+            @include('livewire.includes.messages')
         </div>
     </div>
 </div>
