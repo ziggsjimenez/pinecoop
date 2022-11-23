@@ -54,7 +54,7 @@ return new class extends Migration
             $table->text('pwdid')->nullable();
             $table->boolean('deleted')->default(false);
             // $table->text('Xxstatus')->nullable();
-            $table->text('Xxstatus')->default("Active");
+            $table->text('status');
            
             $table->timestamps();
         });

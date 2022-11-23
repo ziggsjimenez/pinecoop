@@ -33,12 +33,12 @@
                         <tr class="{{$count %2 ==0? 'bg-gray-100':'bg-white'}} transition duration-100 ease-in-out hover:bg-gray-100">
                             <td class="px-2 py-1 whitespace-nowrap">{{ $count++ }}</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->name }}</td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest }}</td>
+                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest * 100 }} %</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->minlengthofservice }} Months</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->minpaymentterms }} Months</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxpaymentterms }} Months</td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->minloanamount }} </td>
-                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxloanamount }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">Php {{ number_format($row->minloanamount,2,'.',',') }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap">Php {{ number_format($row->maxloanamount,2,'.',',') }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->type }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">
                                 <x-jet-button class="bg-orange-300 px-4 py-1" style="text-transform:none" wire:click="editLoanType({{ $row->id }})">Edit</x-jet-button>

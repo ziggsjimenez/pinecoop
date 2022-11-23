@@ -56,7 +56,7 @@ class EmployeeSeeder extends Seeder
                 'pwdid' =>'',
                 'ispersonwithdisability' => 0,
                 'chapanumber' => '21564',
-                'status' =>'Active',
+                'status' =>'Active'
             ],
         ];
 
