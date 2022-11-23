@@ -12,7 +12,7 @@
             Loan Type: {{ $loan->loantype->name }} <br>
             No. of Terms: {{ $loan->terminmonths }} <br>
             Interest: {{ $loan->interest * 100 }}%<br>
-            No. of years: {{ $loan->employee->monthsInService() }}<br>
+            No. of years: {{ $loan->employee->monthsInService()/12 }}<br>
         </div>
         <a href="{{ route('member', ['employee_id' => $loan->employee->id]) }}">
             <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>

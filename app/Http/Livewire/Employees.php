@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Employee;
 use App\Models\Transaction;
-use App\Models\AccountType;
+use App\Models\Accounttype;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -61,7 +61,7 @@ class Employees extends Component
             'amount' => 'required',
         ]);
 
-        $accounttype = AccountType::where('name',"LIKE", '%capital shares%');
+        $accounttype = Accounttype::where('name',"LIKE", '%capital shares%');
         if($accounttype->count() == 0){
             session()->flash('message', 'No <b>Capital Shares</b> account type has been setup.');
             session()->flash('message-type', 'danger');
