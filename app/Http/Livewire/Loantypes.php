@@ -10,7 +10,7 @@ class Loantypes extends Component
 {
     use withPagination;
     public $loantypes, $loantypid, $modaladdloantype = false;
-    public $name, $interest, $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $minlengthofservice, $type;
+    public $name, $interest, $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $minlengthofservice, $type,$minsharecapital;
 
     public function mount()
     {
@@ -34,6 +34,7 @@ class Loantypes extends Component
         $this->minloanamount = '';
         $this->maxloanamount = '';
         $this->minlengthofservice = '';
+        $this->minsharecapital = '';
         $this->type = '';
 
         $this->modaladdloantype = true;
@@ -49,6 +50,7 @@ class Loantypes extends Component
             'minloanamount' => 'required',
             'maxloanamount' => 'required',
             'minlengthofservice' => 'required',
+            'minsharecapital' => 'required',
             'type' => 'required',
         ]);
 
@@ -60,6 +62,7 @@ class Loantypes extends Component
             'minloanamount' => $this->minloanamount,
             'maxloanamount' => $this->maxloanamount,
             'minlengthofservice' => $this->minlengthofservice,
+            'minsharecapital' => $this->minsharecapital,
             'type' => $this->type,
         ]);
 
@@ -79,6 +82,7 @@ class Loantypes extends Component
         $this->minloanamount = $loantypes->minloanamount;
         $this->maxloanamount = $loantypes->maxloanamount;
         $this->minlengthofservice = $loantypes->minlengthofservice;
+        $this->minsharecapital = $loantypes->minsharecapital;
         $this->type = $loantypes->type;
         
 
@@ -99,6 +103,7 @@ class Loantypes extends Component
         $this->interest = "";
         $this->paymentterms = "";
         $this->maxloanammount = "";
+        $this->minsharecapital = "";
         $this->type = "";
     }
 }

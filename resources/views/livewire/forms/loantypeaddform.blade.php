@@ -18,6 +18,16 @@
         <p class="text-red-500 text-xs italic">Please fill out this field.</p>
         @enderror
     </div>
+
+    <div class="w-1/2 px-3 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="minsharecapital">
+        Minimum Share Capital
+        </label>
+        <input wire:model="minsharecapital" class="appearance-none block w-full bg-gray-100 text-gray-700 border  @error('minsharecapital') border-red-500  @enderror rounded py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Type here...">
+        @error('minsharecapital')
+        <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        @enderror
+    </div>
     
     <div class="w-1/2 px-3 md:mb-0">
         <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="minlengthofservice">

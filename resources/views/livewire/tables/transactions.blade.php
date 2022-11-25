@@ -20,8 +20,8 @@
         <tr>
             <td class="border p-1">{{ $count++ }}</td>
             <td class="border p-1">{{ $transaction->transaction_reference_number }}</td>
-            <td class="border p-1">{{ number_format($transaction->amount,2,'.',',')}}</td>
-            <td class="border p-1">{{ $transaction->dateoftransaction->format('F d, Y')}}</td>
+            <td class="border p-1 text-right">Php {{ number_format($transaction->amount,2,'.',',')}}</td>
+            <td class="border p-1 text-center">{{ $transaction->dateoftransaction->format('F d, Y')}}</td>
            
         </tr>
         @endforeach

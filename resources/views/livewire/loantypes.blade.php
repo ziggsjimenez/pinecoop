@@ -16,6 +16,7 @@
                             <th class="px-2 py-1">#</th>
                             <th class="px-2 py-1">Name</th>
                             <th class="px-2 py-1">Interest</th>
+                            <th class="px-2 py-1">Min Capital Share</th>
                             <th class="px-2 py-1">Min Length of Service</th>
                             <th class="px-2 py-1">Min. Payment Terms</th>
                             <th class="px-2 py-1">Max. Payment Terms</th>
@@ -34,11 +35,12 @@
                             <td class="px-2 py-1 whitespace-nowrap">{{ $count++ }}</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->name }}</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->interest * 100 }} %</td>
+                            <td class="px-2 py-1 whitespace-nowrap text-right"> Php {{number_format($row->minsharecapital,2,'.',',') }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->minlengthofservice }} Months</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->minpaymentterms }} Months</td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->maxpaymentterms }} Months</td>
-                            <td class="px-2 py-1 whitespace-nowrap">Php {{ number_format($row->minloanamount,2,'.',',') }} </td>
-                            <td class="px-2 py-1 whitespace-nowrap">Php {{ number_format($row->maxloanamount,2,'.',',') }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap text-right">Php {{ number_format($row->minloanamount,2,'.',',') }} </td>
+                            <td class="px-2 py-1 whitespace-nowrap text-right">Php {{ number_format($row->maxloanamount,2,'.',',') }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->type }} </td>
                             <td class="px-2 py-1 whitespace-nowrap">
                                 <x-jet-button class="bg-orange-300 px-4 py-1" style="text-transform:none" wire:click="editLoanType({{ $row->id }})">Edit</x-jet-button>

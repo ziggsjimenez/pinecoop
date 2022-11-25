@@ -84,6 +84,12 @@
                                 </td>
                             </tr>
                         @endforeach
+
+                        <tr>
+                            <td colspan="8">
+                                {{ $employees->links() }}
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

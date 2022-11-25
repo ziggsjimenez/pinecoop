@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->double('interest', 20,4);
+            $table->double('minsharecapital', 20,4);
             $table->integer('minpaymentterms');
             $table->integer('maxpaymentterms');
             $table->double('minloanamount', 20,4);

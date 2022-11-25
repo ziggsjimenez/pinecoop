@@ -89,6 +89,31 @@
                                 </table>
                             </div>
                             <div style="width: 40%;">
+
+                                <h5 class="font-bold text-2xl">Accounts </h5>
+
+                                <table class="w-full pb-15">
+                                    <thead>
+                                        <tr>
+                                            <th class="border p-1">Account Type</th>
+                                            <th class="border p-1">Date Opened</th>
+                                            <th class="border p-1">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                        @foreach($EMPLOYEE->accounts as $account)
+                                        <tr>
+                                            <td class="border p-1">{{ $account->accounttype->name }}</td>
+                                            <td class="border p-1">{{ $account->date_opened->format('F d, Y') }}</td>
+                                            <td class="border p-1 text-right">Php {{ number_format($account->balance(),2,'.',',') }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                                <hr>
+
+
                                 <h5>Loan Summary</h5>
                                 <table>
                                     <tbody>
@@ -141,6 +166,7 @@
                                         <th class="px-2 py-1">#</th>
                                         <th class="px-2 py-1">Account Type</th>
                                         <th class="px-2 py-1">Date Opened</th>
+                                        <th class="px-2 py-1">Balance</th>
                                         <th class="px-2 py-1">Action</th>
                                     </tr>
                                 </thead class="border-b">
@@ -154,6 +180,8 @@
                                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->accounttype->name }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 {{ $row->date_opened->format('F d, Y') }}</td>
+
+                                            <td class="px-2 py-1 whitespace-nowrap">Php {{ number_format($row->balance(),2,'.',',') }}</td>    
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 <a href="{{ route('account', ['account_id' => $row->id]) }}">
                                                     <x-jet-button class="bg-indigo-700 px-4 py-1"

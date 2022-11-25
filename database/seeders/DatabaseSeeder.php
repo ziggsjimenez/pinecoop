@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             CapitalShareMar2022::class,
             CapitalShareApr2022::class,
             CapitalShareMay2022::class,
-            // LoantypeSeeder::class,
+            LoantypeSeeder::class,
         ]);
     }
 }
