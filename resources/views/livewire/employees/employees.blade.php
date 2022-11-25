@@ -51,7 +51,13 @@
                                 <td class="px-2 py-1 whitespace-nowrap">{{ $employee->sex }} </td>
                                 <td class="px-2 py-1 whitespace-nowrap">{{ $employee->praddress() }} </td>
                                 <td class="px-2 py-1 whitespace-nowrap">
-                                    {{ $employee->dateofmembership->format('F d, Y') }}</td>
+                                    {{ $employee->dateofmembership->format('F d, Y') }} 
+
+                                    {{ $employee->ispinecoopmem }}
+                                
+                                    @if(!$employee->ispinecoopmem) <button class="bg-orange-400 rounded text-xs px-3">Non-Member</button>@endif
+                                     
+                                </td>
                                 <td class="px-2 py-1 whitespace-nowrap">
                                     {{ $diffInYears . ' ' . $diffInMonths . ' ' . $diffInDays }}
                                 </td>

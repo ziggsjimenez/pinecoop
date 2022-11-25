@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Loan;
 use App\Models\Loantype;
 use App\Models\Memberloan;
+use App\Models\Paymentschedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -88,24 +89,96 @@ class Memberdetails extends Component
             return;
         }
 
-        Loan::updateOrCreate(['id' => $this->memberloanid], [
-            'employee_id' => $this->employee_id,
-            'loantype_id' => $this->loantype_id,
-            'amount' => $this->amount,
-            'interest' => $this->interest,
-            'terminmonths' => $this->paymentterms,
-            'maxloanamount' => $this->maxloanamount,
-            'type' => $this->type,
-            'dateapplied' => date('Y-m-d h:i:s'),
-            'dateapproved' => $this->dateapproved != ''? $this->dateapproved:date('Y-m-d h:i:s'),
-            'loanofficer' => $this->userid,
-            'status' => $this->dateapproved != ''? 'Approved':'Pending',
-            'isapproved' => $this->dateapproved != ''? 1:0,
-            'remarks' => $this->dateapproved != ''? 'Old':'New',
-        ]);
+        // Loan::updateOrCreate(['id' => $this->memberloanid], [
+        //     'employee_id' => $this->employee_id,
+        //     'loantype_id' => $this->loantype_id,
+        //     'amount' => $this->amount,
+        //     'interest' => $this->interest,
+        //     'terminmonths' => $this->paymentterms,
+        //     'maxloanamount' => $this->maxloanamount,
+        //     'type' => $this->type,
+        //     'dateapplied' => date('Y-m-d h:i:s'),
+        //     'dateapproved' => $this->dateapproved != ''? $this->dateapproved:date('Y-m-d h:i:s'),
+        //     'loanofficer' => $this->userid,
+        //     'status' => $this->dateapproved != ''? 'Approved':'Pending',
+        //     'isapproved' => $this->dateapproved != ''? 1:0,
+        //     'remarks' => $this->dateapproved != ''? 'Old':'New',
+        // ]);
+
+        $loan = new Loan; 
+
+        $loan->employee_id = $this->employee_id; 
+        $loan->loantype_id = $this->loantype_id;
+        $loan->amount = $this->amount;
+        $loan->interest = $this->interest;
+        $loan->terminmonths = $this->paymentterms;
+        $loan->maxloanamount  = $this->maxloanamount;
+        $loan->type = $this->type;
+        $loan->dateapplied = date('Y-m-d h:i:s');
+        $loan->dateapproved = $this->dateapproved != ''? $this->dateapproved:date('Y-m-d h:i:s');
+        $loan->loanofficer = $this->userid;
+        $loan->status = $this->dateapproved != ''? 'Approved':'Pending';
+        $loan->isapproved = $this->dateapproved != ''? 1:0;
+        $loan->remarks = $this->dateapproved != ''? 'Old':'New';
+        $loan->save(); 
+
+
+        $this->generatePaymentSchedule($loan->id); 
 
         $this->modalmemberloan = false;
         $this->resetInputFields();
+    }
+
+    public function resetPaymentSchedule($loan_id)
+    {
+        Paymentschedule::where('loan_id', $loan_id)->delete();
+    }
+
+
+    public function generatePaymentSchedule($loan_id)
+    {
+        $loan = Loan::find($loan_id);
+        $this->resetPaymentSchedule($loan->id);
+        $monthly = $loan->amount / $loan->terminmonths;
+        $balance = $loan->amount;
+        // date for end of the month
+        $paymentdate2=date('Y-m-t', strtotime($loan->dateapproved));
+        // date for adding 30 days
+        $paymentdate=date('Y-m-d', strtotime($loan->dateapproved));
+        $endofdayapproved = date('t', strtotime($loan->dateapproved));
+        $dayapproved = date('d', strtotime($loan->dateapproved));
+
+        $diff= intval($endofdayapproved)-intval($dayapproved);
+
+        echo $diff;
+
+        $firstmonthinterest = (($loan->amount*$loan->interest)/30)*$diff;
+        for ($x = 0; $x < $loan->terminmonths; $x++) {
+            if($x==0){
+                $interestamount = $firstmonthinterest;
+            }
+            else{
+                $interestamount = $balance*$loan->interest;
+            }
+            
+            // $interestamount = $balance * $this->loan->interest;
+            $paymentschedule = new Paymentschedule;
+            $paymentschedule->loan_id = $loan->id;
+            $paymentschedule->paymentdate = $paymentdate2;
+            $paymentschedule->principal = $monthly;
+            $paymentschedule->interest = $interestamount;
+            $paymentschedule->monthlyamort = $interestamount + $monthly;
+            $paymentschedule->balance = $balance;
+            $paymentschedule->save();
+            // add 30 days to month
+            $paymentdate = date("Y-m-d", strtotime ( '+1 month' , strtotime ( $paymentdate ) )) ;
+            // get end of the month
+            $paymentdate2 = date("Y-m-t", strtotime ($paymentdate )) ;
+          
+            $balance -= $monthly; 
+          }
+        
+          
     }
 
     public function resetInputFields()
