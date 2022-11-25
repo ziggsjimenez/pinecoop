@@ -13,10 +13,12 @@
             No. of Terms: {{ $loan->terminmonths }} <br>
             Interest: {{ $loan->interest * 100 }}%<br>
             {{-- No. of years: {{ $loan->employee->monthsInService() / 12 }}<br> --}}
-            Outstanding Balance : Php {{ number_format($loan->latestPaymentSchedule()->balance,2,'.',',') }}
+            Outstanding Balance : Php {{ number_format(round($loan->outstandingBalance()),2,'.',',') }}
+            <hr>
         </div>
 
         {{-- <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="generatePaymentSchedule">Generate Payment Schedule</button> --}}
+        <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}"><button class="bg-blue-400 hover:bg-blue-600 rounded px-1 text-sm" >Back</button></a>
         <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="showAddPayment">Payment</button>
     </div>
 

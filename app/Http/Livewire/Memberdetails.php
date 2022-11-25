@@ -123,18 +123,18 @@ class Memberdetails extends Component
         $loan->maxloanamount  = $this->maxloanamount;
         $loan->type = $this->type;
         $loan->dateapplied = date('Y-m-d h:i:s');
-        $loan->dateapproved = $this->dateapproved != ''? $this->dateapproved:date('Y-m-d h:i:s');
+        $loan->dateapproved = $this->dateapproved != ''? $this->dateapproved:date('Y-m-d');
         $loan->loanofficer = $this->userid;
-        $loan->status = $this->dateapproved != ''? 'Approved':'Pending';
-        $loan->isapproved = $this->dateapproved != ''? 1:0;
-        $loan->remarks = $this->dateapproved != ''? 'Old':'New';
+        $loan->status = "Approved";
+        $loan->isapproved = 1;
+        $loan->remarks = "New";
         $loan->save(); 
 
 
         $this->generatePaymentSchedule($loan->id); 
 
-        $this->modalmemberloan = false;
-        $this->resetInputFields();
+        // $this->modalmemberloan = false;
+    //     $this->resetInputFields();
     }
 
     public function resetPaymentSchedule($loan_id)
@@ -146,7 +146,7 @@ class Memberdetails extends Component
     public function generatePaymentSchedule($loan_id)
     {
         $loan = Loan::find($loan_id);
-        $this->resetPaymentSchedule($loan->id);
+        // $this->resetPaymentSchedule($loan->id);
         $monthly = $loan->amount / $loan->terminmonths;
         $balance = $loan->amount;
         // date for end of the month
@@ -157,8 +157,6 @@ class Memberdetails extends Component
         $dayapproved = date('d', strtotime($loan->dateapproved));
 
         $diff= intval($endofdayapproved)-intval($dayapproved);
-
-        echo $diff;
 
         $firstmonthinterest = (($loan->amount*$loan->interest)/30)*$diff;
         for ($x = 0; $x < $loan->terminmonths; $x++) {
@@ -185,7 +183,8 @@ class Memberdetails extends Component
           
             $balance -= $monthly; 
           }
-        
+           $this->modalmemberloan = false;
+          $this->resetInputFields();
           
     }
 

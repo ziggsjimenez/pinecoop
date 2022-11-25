@@ -43,6 +43,12 @@ class Loan extends Model
 
     public function latestMonthlyAmortizaton(){
         $ps = Paymentschedule::where('loan_id',$this->id)->where('ispaid',0)->first();
+
+        if ($ps==null)
+
+        return 0;
+        else 
+
         return $ps->monthlyamort;  
     }
 
@@ -60,6 +66,16 @@ class Loan extends Model
 
         return Payment::where('loan_id',$this->id)->orderBy('id','DESC')->first(); 
 
+    }
+
+    public function outstandingBalance(){
+
+        $payskeds = Paymentschedule::where('loan_id',$this->id)->where('ispaid',0)->get();
+
+        if (count($payskeds)==0)
+        return 0; 
+        else 
+        return $payskeds->sum('monthlyamort');
     }
 
 

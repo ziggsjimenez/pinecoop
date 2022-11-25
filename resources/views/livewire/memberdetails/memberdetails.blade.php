@@ -366,9 +366,16 @@
                                         @foreach($EMPLOYEE->loans as $loan)
                                         <tr>
                                             <td class="border">{{ $loan->loantype->name }}</td>
+
+                                            @if($loan->outstandingBalance()==0)
+
+                                            <td class="border" colspan="3">Paid</td>
+
+                                            @else
                                             <td class="border">{{ $loan->latestPaymentSchedule()->paymentdate->format('Y-m-d') }}</td>
                                             <td class="border">Php {{ number_format($loan->latestPaymentSchedule()->balance,2,'.',',') }}</td>
                                             <td class="border">Php {{ number_format($loan->latestPayment()->amount,2,'.',',') }} - {{ $loan->latestPayment()->paymentdate }}</td>
+                                            @endif
                                             <td class="border"> 
                                                 <a href="{{ route('loan',['loan_id'=>$loan->id]) }}">
                                                 <button
@@ -492,7 +499,7 @@
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 {{ $row->terminmonths . ' Months' }}
                                             </td>
-                                            <td class="px-2 py-1 whitespace-nowrap"></td>
+                                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->outstandingBalance() }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->status }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 <a href="{{ route('loan', ['loan_id' => $row->id]) }}">
