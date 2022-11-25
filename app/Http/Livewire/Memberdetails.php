@@ -82,8 +82,6 @@ class Memberdetails extends Component
 
         $totalActiveLoanAmmount = $this->EMPLOYEE->loans->where('status', 'Approved')->where("loantype_id", $this->loantype_id)->sum('amount');
 
-
-
         if ($totalActiveLoanAmmount + $this->amount >  $this->maxloanamount) {
             session()->flash('message', 'The maximum amount loan for this loan type is <b>Php ' . $this->maxloanamount . '</b>. Employee current allowable loan amount is <b>Php' . ($this->maxloanamount - $totalActiveLoanAmmount) . '</b>');
             session()->flash('message-type', 'danger');

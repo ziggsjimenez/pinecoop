@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('paymentschedules', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('loan_id');
             $table->date('paymentdate');
+            $table->date('paymentdue');
+            $table->foreignId('paymentschedule_id');
+            $table->foreignId('loan_id');
+            $table->decimal('amount',10,2);
             $table->decimal('principal',10,2);
             $table->decimal('interest',10,2);
-            $table->decimal('monthlyamort',10,2);
-            $table->decimal('balance',10,2);
-            $table->boolean('ispaid')->default(false);
+            $table->text('tags');
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paymentschedules');
+        Schema::dropIfExists('payments');
     }
 };
