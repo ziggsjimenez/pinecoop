@@ -20,7 +20,7 @@
         <x-jet-secondary-button wire:click="$toggle('showAddCapitalShares')" wire:loading.attr="disabled">
             Close
         </x-jet-secondary-button>
-        <x-jet-button class="ml-2" wire:click="saveEmplCapitalShare()" wire:loading.attr="disabled">
+        <x-jet-button class="ml-2" wire:click="saveEmplCapitalShare({{ $employee->id }})" wire:loading.attr="disabled">
             Submit
         </x-jet-button>
     </x-slot>

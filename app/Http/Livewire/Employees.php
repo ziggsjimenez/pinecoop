@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Account;
 use App\Models\Employee;
 use App\Models\Transaction;
 use App\Models\Accounttype;
@@ -56,23 +57,25 @@ class Employees extends Component
         $this->employee_id = $employee_id; 
     }
 
-    public function saveEmplCapitalShare(){
+    public function saveEmplCapitalShare($employee_id){
         $this->validate([
             'amount' => 'required',
         ]);
 
-        $accounttype = Accounttype::where('name',"LIKE", '%capital shares%');
+        $accounttype = Accounttype::where('name',"LIKE", '%capital share%');
         if($accounttype->count() == 0){
             session()->flash('message', 'No <b>Capital Shares</b> account type has been setup.');
             session()->flash('message-type', 'danger');
             $this->cashpaymentmodal = false;
             return;
         }
+
+        $account = Account::where('accounttype_id',2)->where('employee_id',$employee_id)->first();
        
-        $account = DB::table('accounts')
-                ->join('accounttypes','accounts.id', '=', 'accounttypes.id')
-                ->where('employee_id', $this->employee_id)
-                ->where('accounttypes.name', 'LIKE', '%capital shares%');
+        // $account = DB::table('accounts')
+        //         ->join('accounttypes','accounts.accounttype_id', '=', 'accounttypes.id')
+        //         ->where('accounts.employee_id', $employee_id)
+        //         ->where('accounttypes.name', 'LIKE', '%capital share%');
         if($account->count() == 0){
             session()->flash('message', 'No <b>Capital Shares</b> account has been added to this employee.');
             session()->flash('message-type', 'danger');

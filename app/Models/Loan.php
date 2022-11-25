@@ -50,8 +50,16 @@ class Loan extends Model
         return Paymentschedule::where('loan_id',$this->id)->where('ispaid',0)->first();
     }
 
+
+
     public function payments(){
         return $this->hasMany('App\Models\Payment');
+    }
+
+    public function latestPayment(){
+
+        return Payment::where('loan_id',$this->id)->orderBy('id','DESC')->first(); 
+
     }
 
 

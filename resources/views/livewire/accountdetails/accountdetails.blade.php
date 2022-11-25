@@ -16,6 +16,11 @@
     Transactions
 
     <x-jet-button wire:click="showTransactionForm('Deposit')">Deposit</x-jet-button>
+
+
+    <a href="{{ route('member',['employee_id'=>$account->employee_id]) }}"><x-jet-button>Back</x-jet-button></a>
+
+
    
     @if($account->employee->isActive() && $account->accounttype->name=="Savings")
     <x-jet-button wire:click="showTransactionForm('Withdraw')">Withdraw</x-jet-button>

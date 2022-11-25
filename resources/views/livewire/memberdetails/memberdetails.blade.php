@@ -322,6 +322,7 @@
                                             <th class="border p-1">Account Type</th>
                                             <th class="border p-1">Date Opened</th>
                                             <th class="border p-1">Balance</th>
+                                            <th class="border p-1">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -332,6 +333,14 @@
                                                 </td>
                                                 <td class="border p-1 text-right">Php
                                                     {{ number_format($account->balance(), 2, '.', ',') }}</td>
+                                                    <td>
+                                                        <a href="{{ route('account',['account_id'=>$account->id]) }}">
+                                                            <button
+                                                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition bg-indigo-700 px-4 py-1"
+                                                                style="text-transform:none" wire:click="">
+                                                                View details
+                                                            </button></a>
+                                                    </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -347,24 +356,28 @@
                                             <td class="border font-bold p-2">Type of Loan</td>
                                             <td class="border font-bold p-2">Due Date</td>
                                             <td class="border font-bold p-2">Balance</td>
-                                            <td class="border font-bold p-2">Monthly Amortization</td>
+                                            <td class="border font-bold p-2">Last Payment</td>
                                             <td class="border font-bold p-2">Actions</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <tbody>
 
+                                        @foreach($EMPLOYEE->loans as $loan)
                                         <tr>
-                                            <td class="border">xxxx</td>
-                                            <td class="border">xxxx</td>
-                                            <td class="border">xxxx</td>
-                                            <td class="border">xxxx</td>
-                                            <td class="border"> <button
+                                            <td class="border">{{ $loan->loantype->name }}</td>
+                                            <td class="border">{{ $loan->latestPaymentSchedule()->paymentdate->format('Y-m-d') }}</td>
+                                            <td class="border">Php {{ number_format($loan->latestPaymentSchedule()->balance,2,'.',',') }}</td>
+                                            <td class="border">Php {{ number_format($loan->latestPayment()->amount,2,'.',',') }} - {{ $loan->latestPayment()->paymentdate }}</td>
+                                            <td class="border"> 
+                                                <a href="{{ route('loan',['loan_id'=>$loan->id]) }}">
+                                                <button
                                                     class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition bg-indigo-700 px-4 py-1"
                                                     style="text-transform:none" wire:click="">
                                                     View details
-                                                </button></td>
+                                                </button></a></td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                     </tbody>
                                 </table>

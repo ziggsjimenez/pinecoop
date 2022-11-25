@@ -11,7 +11,6 @@ class Employee extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'lastname',
         'firstname',
@@ -58,10 +57,13 @@ class Employee extends Model
     public function fullname()
     {
         $badge = "";
+
         if ($this->isActive())
             $badge = '<span class="text-xs py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">Active</span>';
         else
             $badge = '<span class="text-xs py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">Inactive</span>';
+
+
         return  $this->lastname . ", " . $this->firstname . " " . $this->middlename . " " . $this->extension . "  " . $badge;
     }
 
@@ -93,7 +95,7 @@ class Employee extends Model
     public function isActive()
     {
 
-        if ($this->Xxstatus == 'Active')
+        if ($this->status == 'Active')
             return true;
         else
             return false;
