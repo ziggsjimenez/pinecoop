@@ -22,8 +22,15 @@
             </div>
             <!-- ... -->
             <div>
-                <img class="border rounded-full" src="{{ asset('storage/profilephotos/' . $EMPLOYEE->profilephoto) }}"
+
+                @if($EMPLOYEE->profilephoto==NULL)
+               
+                <i class="fa-solid fa-image fa-2x"></i>
+
+                    @else
+                    <img class="border rounded-full" src="{{ asset('storage/profilephotos/' . $EMPLOYEE->profilephoto) }}"
                     alt="Profile Photo" width="150px">
+                    @endif
             </div>
         </div>
 

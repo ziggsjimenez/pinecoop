@@ -4,7 +4,7 @@
     </label>
     <select wire:model.defer="loantype_id" wire:change="changeloantype" class="block appearance-none w-full bg-gray-100 border @error('loantype_id') border-red-500 @enderror text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
         <option value="">Select...</option>
-        @foreach ($LOANTYPE as $row)
+        @foreach ($loantypes as $row)
             <option value="{{$row->id}}">{{$row->name}}</option>
         @endforeach
     </select>

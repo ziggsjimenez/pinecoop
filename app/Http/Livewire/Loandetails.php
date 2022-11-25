@@ -8,6 +8,7 @@ use App\Models\Loantype;
 use App\Models\Paymentschedule;
 use App\Models\AccountType;
 use App\Models\Account;
+use App\Models\Payment;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -18,272 +19,180 @@ use function Termwind\render;
 class Loandetails extends Component
 {
 
-    public $LOANTYPE, $EMPLOYEE;
-    public $loan_id, $modaleditemployeeloan = false,$userid,$approveConfirmationModal = false, $paidPaymentConfirmationModal = false, $terminateConfirmationModal = false, $cashpaymentmodal = false, $paymentschedule, $arr_paymentsched = array(), $selectedindex;
-    public $loan, $loantype_id, $interest, $type, $terminmonths, $amount; //Loan forms
-    public $minpaymentterms, $maxpaymentterms, $minloanamount, $maxloanamount, $paymentterms;
-    public $paymentAmount;
 
-    public function mount()
-    {
-        $this->LOANTYPE = Loantype::all();
-        $this->userid = Auth::id();
+    public $loan_id,$loan,$modaleditemployeeloan=false,
+            $loantype_id,$interest,$loanamount,$paymentterms,$openPaymentModal=false,$paymentAmount,$paymentschedules; 
+
+    
+    public function mount(){
+
         $this->loan = Loan::find($this->loan_id);
-        $this->paymentschedule = Paymentschedule::all();
-        $this->LOANTYPE2 = Loantype::find($this->loan->loantype_id);
-        $this->EMPLOYEE = Employee::find( $this->loan->employee_id);
-
         $this->interest = $this->loan->interest;
         $this->type = $this->loan->type;
-        $this->terminmonths = $this->loan->terminmonths;
-        $this->minpaymentterms = $this->LOANTYPE2->minpaymentterms;
-        $this->maxpaymentterms = $this->LOANTYPE2->maxpaymentterms;
-        $this->minloanamount = $this->LOANTYPE2->minloanamount;
-        $this->maxloanamount = $this->LOANTYPE2->maxloanamount;
-        $this->amount = $this->loan->amount;
-        $this->loantype_id = $this->loan->loantype_id;
+        $this->amount= $this->loan->amount;
+        $this->terminmonths= $this->loan->terminmonths;
+        $this->loantypes = Loantype::all();
+
     }
 
+    public function render(){
 
-    public function render()
-    {
         $this->loan = Loan::find($this->loan_id);
-
-        $this->arr_paymentsched = array();
-        $this->loan = Loan::find($this->loan_id);
+        $this->paymentschedules = $this->loan->paymentschedules;
+        if(count($this->loan->paymentschedules)>0)
+        $this->paymentAmount = $this->loan->latestMonthlyAmortizaton();
 
         return view('livewire.loandetails.index');
-    }
-
-    public function openApproveLoanModal(){
-        $this->showApproveLoanModal = true; 
-    }
-
-    public function approveLoan(){
-        $loan = Loan::find($this->loan_id);
-
-        $loan->status = "Approved"; 
-        $loan->save(); 
-        $this->showApproveLoanModal = false; 
-    }
-
-    public function showEditEmployeeLoanModal()
-    {
-        $this->modaleditemployeeloan = true;
-    }
-
-    public function changeloantype()
-    {
-        if ($this->loantype_id != '') {
-            $this->selectedloantype = Loantype::find($this->loantype_id);
-            $this->interest = $this->selectedloantype->interest;
-            $this->minpaymentterms = $this->selectedloantype->minpaymentterms;
-            $this->maxpaymentterms = $this->selectedloantype->maxpaymentterms;
-            $this->minloanamount = $this->selectedloantype->minloanamount;
-            $this->maxloanamount = $this->selectedloantype->maxloanamount;
-            $this->terminmonths = $this->selectedloantype->paymentterms;
-            $this->type = $this->selectedloantype->type;
-        } else {
-            $this->interest = '';
-            $this->minpaymentterms = '';
-            $this->maxpaymentterms = '';
-            $this->minloanamount = '';
-            $this->maxloanamount = '';
-            $this->terminmonths = '';
-            $this->type = '';
-        }
-    }
-
-    public function saveEditEmployeeLoan()
-    {
-        $this->validate([
-            'loantype_id' => 'required',
-            'terminmonths' => 'required|numeric|min:'. $this->minpaymentterms.'|max:'.$this->maxpaymentterms,
-            'amount' => 'required|numeric|min:'. $this->minloanamount.'|max:'.$this->maxloanamount,
-        ]);
-
-        $totalActiveLoanAmmount = $this->EMPLOYEE->loans->where('status', 'Approved')->where("loantype_id",$this->loantype_id)->sum('amount');
-
-     
         
-        if($totalActiveLoanAmmount+$this->amount >  $this->maxloanamount){
-            session()->flash('message', 'The maximum amount loan for this loan type is <b>Php '.$this->maxloanamount.'</b>. Employee current allowable loan amount is <b>Php'.($this->maxloanamount-$totalActiveLoanAmmount).'</b>');
-            session()->flash('message-type', 'danger');
-            return;
+    }
+
+
+    public function showAddPayment(){
+
+        $this->paymentAmount = $this->loan->latestMonthlyAmortizaton();
+
+        $this->openPaymentModal = true; 
+
+    }
+
+    public function processPayment(){
+
+        $monthlyamort = $this->loan->latestPaymentSchedule()->monthlyamort; 
+
+        if($this->paymentAmount==$monthlyamort){
+
+            $payment = new Payment; 
+            $payment->paymentdate = date('Y-m-d');
+            $payment->paymentdue = $this->loan->latestPaymentSchedule()->paymentdate; 
+            $payment->paymentschedule_id = $this->loan->latestPaymentSchedule()->id; 
+            $payment->amount = $this->loan->latestPaymentSchedule()->monthlyamort;
+            $payment->principal = $this->loan->latestPaymentSchedule()->principal;
+            $payment->interest = $this->loan->latestPaymentSchedule()->interest;
+            $payment->loan_id= $this->loan->id;
+            $payment->tags = "Exact payment.";
+            $payment->save();
+
+            Paymentschedule::find($this->loan->latestPaymentSchedule()->id)->update(['ispaid'=>1]);
         }
 
-        $this->loan->loantype_id = $this->loantype_id;
-        $this->loan->amount = $this->amount;
-        $this->loan->interest = $this->interest;
-        $this->loan->terminmonths = $this->terminmonths;
-        $this->loan->type =  $this->type;
-        $this->loan->loanofficer = $this->userid;
-        $this->loan->save();
-        $this->modaleditemployeeloan = false;
-
-        // $this->generateSchedule();
-    }
-
-    public function showApproveConfirmationModal(){
-        $this->approveConfirmationModal = true;
-    }
-
-    function approveMemberLoan(){
-        $this->loan->status = 'Approved';
-        $this->loan->isapproved = true;
-        $this->loan->save();
-        $this->approveConfirmationModal = false;
-
-        session()->flash('message', 'Member loan approved successfully..');
-        $this->render();
-    }
-
-    function checkpaymentdata($paymentdate,$principal,$interestamount,$monthlyamort,$actualamount,$balance){
-        $temp = Paymentschedule::where([
-                    'loan_id' => $this->loan_id,
-                    'paymentdate' => $paymentdate,
-                    'principal' => $principal,
-                    'interest' => $interestamount,
-                    'monthlyamort' => $monthlyamort,
-                    // 'actualamount' => $actualamount,
-                    'balance' => $balance,
-            ]);
-        return $temp ;
-    }
-
-    // FOR TERMINATE ACTION
-    function showTerminateConfirmation(){
-        $this->terminateConfirmationModal = true;
-    }
-    // FOR PAID ACTION
-    function showPaidPaymentConfirmation($index){
-        $this->selectedindex = $index;
-        $this->paidPaymentConfirmationModal = true;
-    }
-
-    function paidAction(){
-        $index = $this->selectedindex;
-
-        $paymentschedule = new Paymentschedule;
-        $paymentschedule->loan_id = $this->loan->id;
-        $paymentschedule->paymentdate = $this->arr_paymentsched[$index]['paymentdate'];
-        $paymentschedule->principal = $this->arr_paymentsched[$index]['principal'];
-        $paymentschedule->interest = $this->arr_paymentsched[$index]['interestamount'];
-        $paymentschedule->monthlyamort = $this->arr_paymentsched[$index]['monthlyamort'];
-        $paymentschedule->actualamount = $this->arr_paymentsched[$index]['monthlyamort'];
-        $paymentschedule->balance = $this->arr_paymentsched[$index]['balance'];
-        $paymentschedule->save();
-        session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with <b>Paid</b> action.');
+        if($this->paymentAmount<$monthlyamort){
 
 
-        // $lastIndex = count($this->arr_paymentsched)-1;
-        // $chck = $this->checkpaymentdata(
-        //     $this->arr_paymentsched[$lastIndex]['paymentdate'],
-        //     number_format($this->arr_paymentsched[$lastIndex]['principal'], '2','.',''),
-        //     number_format($this->arr_paymentsched[$lastIndex]['interestamount'], '2','.',''),
-        //     number_format($this->arr_paymentsched[$lastIndex]['monthlyamort'], '2','.',''),
-        //     number_format($this->arr_paymentsched[$lastIndex]['actualamount'], '2','.',''),
-        //     number_format($this->arr_paymentsched[$lastIndex]['balance'], '2','.','')
-        // );
-        // if($chck->count() > 0){
-        //     $this->loan->status = 'Closed';
-        //     $this->loan->save();
-        // }
-        $this->closeLoanAccount();
-        $this->paidPaymentConfirmationModal = false;
-    }
+            $diff = $this->paymentAmount - $this->loan->latestPaymentSchedule()->interest;
 
+            $sub = $this->loan->latestPaymentSchedule()->principal - $diff; 
 
+            $payment = new Payment; 
+            $payment->paymentdate = date('Y-m-d');
+            $payment->paymentdue = $this->loan->latestPaymentSchedule()->paymentdate; 
+            $payment->paymentschedule_id = $this->loan->latestPaymentSchedule()->id; 
+            $payment->amount = $this->paymentAmount;
+            $payment->principal = $diff;
+            $payment->interest = $this->loan->latestPaymentSchedule()->interest;
+            $payment->loan_id = $this->loan->id;
+            $payment->tags = "Php ".$sub ." added to principal of succeding month.";
+            $payment->save();
 
-    // FOR CASH PAYMENT ACTION
-    function showCashPaymentConfirmation($index){
-        $this->paymentAmount = number_format($this->arr_paymentsched[$index]['monthlyamort'], '2', '.', '');
-        $this->selectedindex = $index;
-        $this->cashpaymentmodal = true;
-    }
+            Paymentschedule::find($this->loan->latestPaymentSchedule()->id)->update(['ispaid'=>1]);
 
-    function cashPaymentAction(){
-        $index = $this->selectedindex;
+            $paymentschedule = Paymentschedule::find($this->loan->latestPaymentSchedule()->id); 
+            $paymentschedule->principal = $paymentschedule->principal + $sub; 
+            $paymentschedule->balance = $paymentschedule->balance + $sub; 
+            $paymentschedule->interest =  $paymentschedule->balance * .03; 
+            $paymentschedule->monthlyamort=$paymentschedule->interest+$paymentschedule->principal; 
+            $paymentschedule->save(); 
 
-        $max = $this->arr_paymentsched[$index]['balance'];
-        if($this->arr_paymentsched[$index]['monthlyamort'] > $this->arr_paymentsched[$index]['balance']){
-            $max = $this->arr_paymentsched[$index]['monthlyamort'];
         }
 
-        $this->validate([
-            'paymentAmount' => 'required|numeric|min:'. number_format($this->arr_paymentsched[$index]['monthlyamort'], '2', '.', '').'|max:'. number_format($max, '2', '.', ''),
-        ]);
-
-        // $accounttype = AccountType::where('name',"LIKE", '%capital shares%');
-        // if($accounttype->count() == 0){
-        //     session()->flash('message', 'No <b>Capital Shares</b> account type has been setup.');
-        //     session()->flash('message-type', 'danger');
-        //     $this->cashpaymentmodal = false;
-        //     return;
-        // }
-       
-        // $account = DB::table('accounts')
-        //         ->join('accounttypes','accounts.id', '=', 'accounttypes.id')
-        //         ->where('employee_id', $this->loan->employee_id)
-        //         ->where('accounttypes.name', 'LIKE', '%capital shares%');
-        // if($account->count() == 0){
-        //     session()->flash('message', 'No <b>Capital Shares</b> account has been added to this employee.');
-        //     session()->flash('message-type', 'danger');
-        //     $this->cashpaymentmodal = false;
-        //     return;
-        // }
+        if($this->paymentAmount>$monthlyamort){
 
 
-        $tempstr = '';
-        if($this->paymentAmount > $this->arr_paymentsched[$index]['monthlyamort']){
-            $remaining =  $this->paymentAmount - $this->arr_paymentsched[$index]['monthlyamort'];
-            $tempstr = '<br>The remaining <b>Php '.number_format($remaining,2,'.',',').'</b> has been automatically deducted the next due date';
 
-            // $transaction = new Transaction();
-            // $transaction->transaction_reference_number = '2022-TJOUWERWER-009';
-            // $transaction->amount = $remaining;
-            // $transaction->dateoftransaction = date('Y-m-d');
-            // $transaction->account_id =  $account->first()->id;
-            // $transaction->user_id = $this->userid;
-            // $transaction->save();
-        }   
+            $excess = $this->paymentAmount - $this->loan->latestPaymentSchedule()->monthlyamort; 
 
 
-        $paymentschedule = new Paymentschedule;
-        $paymentschedule->loan_id = $this->loan->id;
-        $paymentschedule->paymentdate = $this->arr_paymentsched[$index]['paymentdate'];
-        $paymentschedule->principal = $this->arr_paymentsched[$index]['principal'];
-        $paymentschedule->interest = $this->arr_paymentsched[$index]['interestamount'];
-        $paymentschedule->monthlyamort = $this->arr_paymentsched[$index]['monthlyamort'];
-        $paymentschedule->balance = $this->arr_paymentsched[$index]['balance'];
-        $paymentschedule->actualamount = $this->paymentAmount;
-        $paymentschedule->save();
+            $payment = new Payment; 
+            $payment->paymentdate = date('Y-m-d');
+            $payment->paymentdue = $this->loan->latestPaymentSchedule()->paymentdate; 
+            $payment->paymentschedule_id = $this->loan->latestPaymentSchedule()->id; 
+            $payment->amount = $this->paymentAmount;
+            $payment->principal = $this->loan->latestPaymentSchedule()->principal;;
+            $payment->interest = $this->loan->latestPaymentSchedule()->interest;
+            $payment->loan_id= $this->loan->id;
+            $payment->tags = "Php ".$excess." deducted to princial of succeding month.";
+            $payment->save();
 
+            Paymentschedule::find($this->loan->latestPaymentSchedule()->id)->update(['ispaid'=>1]);
 
-        session()->flash('message', '<b>'.date_format(date_create($this->arr_paymentsched[$index]['paymentdate']), 'F d, Y' ).'</b> with monthly amortization of <b>Php '.$this->arr_paymentsched[$index]['monthlyamort'].'</b> has been paid successfully with total amount of <b>Php '.number_format($this->paymentAmount,2,'.',',').'</b> with <b>Cash Payment</b> action.'. $tempstr);
-      
+            $paymentschedule = Paymentschedule::find($this->loan->latestPaymentSchedule()->id); 
+            $paymentschedule->principal = $paymentschedule->principal - $excess; 
+            $paymentschedule->balance = $paymentschedule->balance - $excess; 
+            $paymentschedule->interest =  $paymentschedule->balance * .03; 
+            $paymentschedule->monthlyamort=$paymentschedule->interest+$paymentschedule->principal; 
+            $paymentschedule->save(); 
 
-        $this->closeLoanAccount();
-        $this->cashpaymentmodal = false;
-    }
-
-    public function closeLoanAccount(){
-        $totalPaid = Paymentschedule::where([
-            'loan_id' => $this->loan_id,
-        ])->sum('actualamount');
-
-        if($totalPaid >= $this->loan->amount){
-            $this->loan->status = 'Closed';
-            $this->loan->save();
         }
+
+
+
+
+
+
     }
 
-    public function terminateLoanAccount(){
-        $this->loan->status = 'Terminated';
-        $this->loan->save();
-        $this->terminateConfirmationModal = false;
+
+
+    public function resetPaymentSchedule()
+    {
+        Paymentschedule::where('loan_id', $this->loan->id)->delete();
     }
 
-    public function hideToast(){
-    } 
+
+    public function generatePaymentSchedule()
+    {
+        $this->resetPaymentSchedule();
+        $monthly = $this->loan->amount / $this->loan->terminmonths;
+        $balance = $this->loan->amount;
+        // date for end of the month
+        $paymentdate2=date('Y-m-t', strtotime($this->loan->dateapproved));
+        // date for adding 30 days
+        $paymentdate=date('Y-m-d', strtotime($this->loan->dateapproved));
+        $endofdayapproved = date('t', strtotime($this->loan->dateapproved));
+        $dayapproved = date('d', strtotime($this->loan->dateapproved));
+
+        $diff= intval($endofdayapproved)-intval($dayapproved);
+
+        echo $diff;
+
+        $firstmonthinterest = (($this->loan->amount*$this->loan->interest)/30)*$diff;
+        for ($x = 0; $x < $this->loan->terminmonths; $x++) {
+            if($x==0){
+                $interestamount = $firstmonthinterest;
+            }
+            else{
+                $interestamount = $balance*$this->loan->interest;
+            }
+            
+            // $interestamount = $balance * $this->loan->interest;
+            $paymentschedule = new Paymentschedule;
+            $paymentschedule->loan_id = $this->loan->id;
+            $paymentschedule->paymentdate = $paymentdate2;
+            $paymentschedule->principal = $monthly;
+            $paymentschedule->interest = $interestamount;
+            $paymentschedule->monthlyamort = $interestamount + $monthly;
+            $paymentschedule->balance = $balance;
+            $paymentschedule->save();
+            // add 30 days to month
+            $paymentdate = date("Y-m-d", strtotime ( '+1 month' , strtotime ( $paymentdate ) )) ;
+            // get end of the month
+            $paymentdate2 = date("Y-m-t", strtotime ($paymentdate )) ;
+          
+            $balance -= $monthly; 
+          }
+          
+
+          return redirect()->route('loan',['loan_id'=>$this->loan->id]);
+          
+    }
+
 }

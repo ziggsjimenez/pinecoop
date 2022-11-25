@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             CapitalShareApr2022::class,
             CapitalShareMay2022::class,
             LoantypeSeeder::class,
+            NonCoopMember::class,
+            NonCoopMemberCapitalShareDec2021::class,
         ]);
     }
 }

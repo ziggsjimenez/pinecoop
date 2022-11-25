@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Loan extends Model
 {
@@ -38,16 +39,19 @@ class Loan extends Model
         return $this->hasMany('App\Models\Paymentschedule');
     }
 
-    public function checkpaymentdata($paymentdate,$principal,$interestamount,$monthlyamort,$balance){
-        $temp = Paymentschedule::where([
-                    'loan_id' => $this->loan_id,
-                    'paymentdate' => $paymentdate,
-                    'principal' => $principal,
-                    'interest' => $interestamount,
-                    'monthlyamort' => $monthlyamort,
-                    'balance' => $balance,
-            ]);
-        return $temp ;
+
+
+    public function latestMonthlyAmortizaton(){
+        $ps = Paymentschedule::where('loan_id',$this->id)->where('ispaid',0)->first();
+        return $ps->monthlyamort;  
+    }
+
+    public function latestPaymentSchedule(){
+        return Paymentschedule::where('loan_id',$this->id)->where('ispaid',0)->first();
+    }
+
+    public function payments(){
+        return $this->hasMany('App\Models\Payment');
     }
 
 

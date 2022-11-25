@@ -7,41 +7,72 @@
         <br>
         {{-- loan details  --}}
 
-        <div>
+        <div>   
             Loan Amount: Php {{ number_format($loan->amount, 2, '.', ',') }} <br>
             Loan Type: {{ $loan->loantype->name }} <br>
             No. of Terms: {{ $loan->terminmonths }} <br>
             Interest: {{ $loan->interest * 100 }}%<br>
+<<<<<<< HEAD
             No. of years: {{ $loan->employee->monthsInService() / 12 }}<br>
+=======
+            No. of years: {{ $loan->employee->monthsInService()/12 }}<br>
+
+>>>>>>> 1122d40ced1870077d49ae2a21b7409cb080e378
         </div>
-        <a href="{{ route('member', ['employee_id' => $loan->employee->id]) }}">
-            <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>
-        </a>
 
-
-        @if ($loan->isapproved == false)
-
-            <x-jet-button class="bg-orange-400" wire:click="showEditEmployeeLoanModal"><i
-                    class="fa-solid fa-pen-to-square fa-2x"></i> Edit</x-jet-button>
-            <x-jet-button class="bg-blue-400" wire:click="showApproveConfirmationModal"><i
-                    class="fa-solid fa-thumbs-up fa-2x"></i>Approve</x-jet-button>
-        @else
-            @if ($this->loan->status != 'Closed' && $this->loan->status != 'Terminated')
-                <x-jet-button wire:click="showTerminateConfirmation();" class="bg-red-900">Terminate Account
-                </x-jet-button>
-            @endif
-        @endif
+        <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="generatePaymentSchedule">Generate Payment Schedule</button>
+        <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="showAddPayment">Payment</button>
     </div>
 
-    <div class="block font-bold text-xl">Payment Schedule</div>
+    <table class="text-xs w-full">
+        <thead>
+            <tr>
+                <th class="border p-1">#</th>
+                <th class="border p-1">Due Date</th>
+                <th class="border p-1">Balance</th>
+                <th class="border p-1">Principal</th>
+                <th class="border p-1">Interest</th>
+                <th class="border p-1">Monthly Amortization</th>
+                <th class="border p-1">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $count=1; 
+            @endphp
+            @foreach($paymentschedules as $paymentschedule)
+            <tr>
+                <td class="border p-1">{{ $count++ }}</td>
+                <td class="border p-1">{{ $paymentschedule->paymentdate->format('F d, Y') }}</td>
+                <td class="border p-1 text-right">Php {{ number_format($paymentschedule->balance,2,'.',',') }}</td>
+                <td class="border p-1 text-right">Php {{ number_format($paymentschedule->principal,2,'.',',') }}</td>
+                <td class="border p-1 text-right">Php {{ number_format($paymentschedule->interest,2,'.',',') }}</td>
+                <td class="border p-1 text-right">Php {{ number_format($paymentschedule->monthlyamort,2,'.',',') }}</td>
+                <td class="border p-1 text-right">
 
-    <button class="bg-blue-300 hover:bg-blue-500 rounded px-1 mt-3">
-        <a target="_blank" href="{{ route('printPaymentSchedule', ['loan_id' => $loan->id]) }}"> <i
-                class="fa-solid fa-print"></i> Print </a>
-    </button>
+                    @if($paymentschedule->ispaid)
+                    Paid
+                    @endif
+                   
+            </tr>
 
-    {{-- payment schedule --}}
+
+            @endforeach
+
+            <tr>
+                <td class="border p-1" colspan="3">TOTAL </td>
+                <td class="border p-1 text-right">Php {{ number_format(round($loan->paymentschedules->sum('principal')),2,'.',',') }}</td>
+                <td class="border p-1 text-right">Php {{ number_format($loan->paymentschedules->sum('interest'),2,'.',',') }}</td>
+                <td class="border p-1 text-right">Php {{ number_format(round($loan->paymentschedules->sum('monthlyamort')),2,'.',',') }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <div>Payments</div>
     <div>
+<<<<<<< HEAD
         <div class="flex flex-wrap mx-0 mb-2">
             <div class="w-full px-0 mb-2 md:mb-4">
                 <table class="text-xs w-full">
@@ -315,10 +346,40 @@
             @endif
         </div>
 
+=======
+        <table class="text-xs">
+            <thead>
+                <tr>
+                    <th class="border p-1">#</th>
+                    <th class="border p-1">Date</th>
+                    <th class="border p-1">Due Date</th>
+                    <th class="border p-1">Amount</th>
+                    <th class="border p-1">Principal</th>
+                    <th class="border p-1">Interest</th>
+                    <th class="border p-1">Tags</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $count=1; 
+                @endphp
+                @foreach ($loan->payments as $payment )
+                    <tr>
+                        <td class="border p-1">{{ $count++ }}</td>
+                        <td class="border p-1">{{ $payment->paymentdate }}</td>
+                        <td class="border p-1">{{ $payment->paymentdue }}</td>
+                        <td class="border p-1">{{ $payment->amount }}</td>
+                        <td class="border p-1">{{ $payment->principal }}</td>
+                        <td class="border p-1">{{ $payment->interest }}</td>
+                        <td class="border p-1">{{ $payment->tags }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+>>>>>>> 1122d40ced1870077d49ae2a21b7409cb080e378
     </div>
-    @include('livewire.loandetails.modal.edit_employeeloan')
-    @include('livewire.loandetails.modal.approveconfirmation_modal')
-    @include('livewire.loandetails.modal.terminateconfirmation_modal')
-    @include('livewire.loandetails.modal.paid_confirmation_modal')
-    @include('livewire.loandetails.modal.cashpayment_modal')
+
+        
+@include('livewire.loandetails.modal.paymentmodal')
+
 </div>
