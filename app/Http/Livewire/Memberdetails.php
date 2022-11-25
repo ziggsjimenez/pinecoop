@@ -33,6 +33,14 @@ class Memberdetails extends Component
         $this->ACCOUNT = Account::where('employee_id', $this->employee_id)->get();
         $this->ACCOUNTTYPE = Accounttype::whereNotIn('id', DB::table('accounts')->select('accounttype_id')->where('employee_id', $this->employee_id))->get();
 
+        // $articles = DB::table('accounts')
+        //     ->select('articles.id as articles_id' )
+        //     ->join('categories', 'articles.categories_id', '=', 'categories.id')
+        //     ->join('users', 'articles.user_id', '=', 'user.id')
+        //     ->where("employee_id", '=', )
+
+        //     ->get();
+
         return view('livewire.memberdetails.memberdetails');
     }
 
@@ -150,7 +158,7 @@ class Memberdetails extends Component
     public function changeStatus($employee_id)
     {
         $employee = Employee::find($employee_id);
-        dd($employee);
+        // dd($employee);
         if (!$employee->hasPendingLoans()) {
             if ($employee->Xxstatus == "Active") {
                 $status = "Inactive";

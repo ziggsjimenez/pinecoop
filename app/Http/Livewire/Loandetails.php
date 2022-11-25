@@ -214,24 +214,24 @@ class Loandetails extends Component
             'paymentAmount' => 'required|numeric|min:'. number_format($this->arr_paymentsched[$index]['monthlyamort'], '2', '.', '').'|max:'. number_format($max, '2', '.', ''),
         ]);
 
-        $accounttype = AccountType::where('name',"LIKE", '%capital shares%');
-        if($accounttype->count() == 0){
-            session()->flash('message', 'No <b>Capital Shares</b> account type has been setup.');
-            session()->flash('message-type', 'danger');
-            $this->cashpaymentmodal = false;
-            return;
-        }
+        // $accounttype = AccountType::where('name',"LIKE", '%capital shares%');
+        // if($accounttype->count() == 0){
+        //     session()->flash('message', 'No <b>Capital Shares</b> account type has been setup.');
+        //     session()->flash('message-type', 'danger');
+        //     $this->cashpaymentmodal = false;
+        //     return;
+        // }
        
-        $account = DB::table('accounts')
-                ->join('accounttypes','accounts.id', '=', 'accounttypes.id')
-                ->where('employee_id', $this->loan->employee_id)
-                ->where('accounttypes.name', 'LIKE', '%capital shares%');
-        if($account->count() == 0){
-            session()->flash('message', 'No <b>Capital Shares</b> account has been added to this employee.');
-            session()->flash('message-type', 'danger');
-            $this->cashpaymentmodal = false;
-            return;
-        }
+        // $account = DB::table('accounts')
+        //         ->join('accounttypes','accounts.id', '=', 'accounttypes.id')
+        //         ->where('employee_id', $this->loan->employee_id)
+        //         ->where('accounttypes.name', 'LIKE', '%capital shares%');
+        // if($account->count() == 0){
+        //     session()->flash('message', 'No <b>Capital Shares</b> account has been added to this employee.');
+        //     session()->flash('message-type', 'danger');
+        //     $this->cashpaymentmodal = false;
+        //     return;
+        // }
 
 
         $tempstr = '';

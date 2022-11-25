@@ -12,7 +12,7 @@
             Loan Type: {{ $loan->loantype->name }} <br>
             No. of Terms: {{ $loan->terminmonths }} <br>
             Interest: {{ $loan->interest * 100 }}%<br>
-            No. of years: {{ $loan->employee->monthsInService()/12 }}<br>
+            No. of years: {{ $loan->employee->monthsInService() / 12 }}<br>
         </div>
         <a href="{{ route('member', ['employee_id' => $loan->employee->id]) }}">
             <x-jet-button class="bg-gray-400"><i class="fa-solid fa-circle-left fa-2x"></i> Back </x-jet-button>
@@ -203,15 +203,17 @@
                                     @php
                                         // $count = 0;
                                         if (isset($this->arr_paymentsched[$i + 1])) {
+                                            $count = 3;
                                             $this->arr_paymentsched[$i + 1]['balance'] = $this->arr_paymentsched[$i]['balance'] - $this->arr_paymentsched[$i]['monthlyamort']; // nextmonth balance = curr balance + curr monthly amortization
                                             $this->arr_paymentsched[$i + 1]['interestamount'] = $this->arr_paymentsched[$i + 1]['balance'] * $this->loan->interest; // nextmonth interest = nextmonth balance * interest rate
                                             $this->arr_paymentsched[$i + 1]['monthlyamort'] = $this->arr_paymentsched[$i + 1]['principal'] + $this->arr_paymentsched[$i + 1]['interestamount']; // nextmonth amortization = nextmonth principal (monthly)  + nextmonth nga interest
+                                        
                                         }
                                     @endphp
                                 @endif
 
                                 @php
-                                    if ($this->arr_paymentsched[$i]['balance'] < 0) {
+                                    if ($this->arr_paymentsched[$i]['balance'] <= 0) {
                                         $this->arr_paymentsched[$i]['balance'] = 0;
                                         $this->arr_paymentsched[$i]['interestamount'] = 0;
                                         $this->arr_paymentsched[$i]['monthlyamort'] = 0;
@@ -224,16 +226,16 @@
                                         {{ date_format(date_create($this->arr_paymentsched[$i]['paymentdate']), ' m-d-Y') }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">
-                                        {{ $this->arr_paymentsched[$i]['balance'] != 0 ? 'Php '.number_format($this->arr_paymentsched[$i]['balance'], 2, '.', ',') : '' }}
+                                        {{ $this->arr_paymentsched[$i]['balance'] != 0 ? 'Php ' . number_format($this->arr_paymentsched[$i]['balance'], 2, '.', ',') : '' }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">
-                                        {{ $this->arr_paymentsched[$i]['principal'] != 0 ? 'Php '.number_format($this->arr_paymentsched[$i]['principal'], 2, '.', ',') : '' }}
+                                        {{ $this->arr_paymentsched[$i]['principal'] != 0 ? 'Php ' . number_format($this->arr_paymentsched[$i]['principal'], 2, '.', ',') : '' }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">
-                                        {{ $this->arr_paymentsched[$i]['interestamount'] != 0 ? 'Php '.number_format($this->arr_paymentsched[$i]['interestamount'], 2, '.', ',') : '' }}
+                                        {{ $this->arr_paymentsched[$i]['interestamount'] != 0 ? 'Php ' . number_format($this->arr_paymentsched[$i]['interestamount'], 2, '.', ',') : '' }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">
-                                        {{ $this->arr_paymentsched[$i]['monthlyamort'] != 0 ? 'Php '.number_format($this->arr_paymentsched[$i]['monthlyamort'], 2, '.', ',') : '' }}
+                                        {{ $this->arr_paymentsched[$i]['monthlyamort'] != 0 ? 'Php ' . number_format($this->arr_paymentsched[$i]['monthlyamort'], 2, '.', ',') : '' }}
                                     </td>
                                     <td class="border p-1 py-0 text-right">
                                         {{ $this->arr_paymentsched[$i]['actualamount'] != 0 ? 'Php ' . number_format($this->arr_paymentsched[$i]['actualamount'], 2, '.', ',') : '' }}
