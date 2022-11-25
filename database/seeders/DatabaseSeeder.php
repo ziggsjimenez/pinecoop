@@ -18,6 +18,12 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             EmployeeSeeder::class,
             AccountType::class,
+            CapitalShareDeposits::class,
+            CapitalShareJan2022::class,
+            CapitalShareFeb2022::class,
+            CapitalShareMar2022::class,
+            CapitalShareApr2022::class,
+            CapitalShareMay2022::class,
             // LoantypeSeeder::class,
         ]);
     }
