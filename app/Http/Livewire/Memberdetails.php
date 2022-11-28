@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination\WithPagination;
+use Illuminate\Support\Str;
 
 class Memberdetails extends Component
 {
@@ -83,6 +84,9 @@ class Memberdetails extends Component
 
     public function saveMemberLoan()
     {
+
+        $count = Loan::all()->count() + 1; 
+
         $this->validate([
             'loantype_id' => 'required',
             'paymentterms' => 'required|numeric|min:' . $this->minpaymentterms . '|max:' . $this->maxpaymentterms,
@@ -125,9 +129,10 @@ class Memberdetails extends Component
         $loan->dateapplied = date('Y-m-d h:i:s');
         $loan->dateapproved = $this->dateapproved != ''? $this->dateapproved:date('Y-m-d');
         $loan->loanofficer = $this->userid;
-        $loan->status = "Approved";
+        $loan->status = "Pending";
         $loan->isapproved = 1;
         $loan->remarks = "New";
+        $loan->refnum = date('Ymd').Str::padLeft($count,5,'0');
         $loan->save(); 
 
 

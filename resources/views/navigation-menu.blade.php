@@ -20,6 +20,10 @@
                         {{ __('EMPLOYEES') }}
                     </x-jet-nav-link>
 
+                    <x-jet-nav-link href="{{ route('loans') }}" :active="request()->routeIs('loans')">
+                        {{ __('LOAN ACCOUNTS') }}
+                    </x-jet-nav-link>
+
                     <div class="hidden sm:flex sm:items-center sm:ml-6 justify-right">
                 
                         <!-- Settings Dropdown -->

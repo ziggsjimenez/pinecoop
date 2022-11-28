@@ -7,19 +7,59 @@
         <br>
         {{-- loan details  --}}
 
-        <div>   
-            Loan Amount: Php {{ number_format($loan->amount, 2, '.', ',') }} <br>
-            Loan Type: {{ $loan->loantype->name }} <br>
-            No. of Terms: {{ $loan->terminmonths }} <br>
-            Interest: {{ $loan->interest * 100 }}%<br>
-            {{-- No. of years: {{ $loan->employee->monthsInService() / 12 }}<br> --}}
-            Outstanding Balance : Php {{ number_format(round($loan->outstandingBalance()),2,'.',',') }}
+        <div>
+            
+            
+            <table class="text-sm">
+                <thead>
+                    <tr>
+                        <th class="border bg-gray-400 px-3">Reference Number</th>
+                        <th class="border bg-gray-400 px-3">Loan Amount</th>
+                        <th class="border bg-gray-400 px-3">Loan Type</th>
+                        <th class="border bg-gray-400 px-3">No. of Terms</th>
+                        <th class="border bg-gray-400 px-3">Interest</th>
+                        <th class="border bg-gray-400 px-3">Outstanding Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center border px-3">{{ $loan->refnum }}</td>
+                    <td class="text-center border px-3">Php {{ number_format($loan->amount, 2, '.', ',') }}</td>
+                    <td class="text-center border px-3">{{ $loan->loantype->name }}</td>
+                    <td class="text-center border px-3">{{ $loan->terminmonths }}</td>
+                    <td class="text-center border px-3">{{ $loan->interest * 100 }}%</td>
+                    <td class="text-center border px-3">Php {{ number_format(round($loan->outstandingBalance()),2,'.',',') }}</td>
+                </tr>
+            </tbody>
+            </table>
             <hr>
         </div>
 
-        {{-- <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="generatePaymentSchedule">Generate Payment Schedule</button> --}}
         <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}"><button class="bg-blue-400 hover:bg-blue-600 rounded px-1 text-sm" >Back</button></a>
-        <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="showAddPayment">Payment</button>
+        
+        @switch($loan->status)
+                @case("Closed")
+                
+                @break
+
+                @case("Approved")
+
+                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="showAddPayment">Payment</button>
+                <button class="bg-orange-400 hover:bg-orange-600 rounded px-1 text-sm" wire:click="openTerminateLoanConfirmation">Terminate</button>
+
+                @break
+
+                @case("Pending")
+
+                <button class="bg-orange-400 hover:bg-orange-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Edit</button>
+                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openApproveLoanModal">Approved</button>
+
+                @break
+        
+            @default
+                
+        @endswitch
+
     </div>
 
     <table class="text-xs w-full">
@@ -94,7 +134,7 @@
                         <td class="border p-1">{{ $payment->amount }}</td>
                         <td class="border p-1">{{ $payment->principal }}</td>
                         <td class="border p-1">{{ $payment->interest }}</td>
-                        <td class="border p-1">{{ $payment->tags }}</td>
+                        <td class="border p-1">{!! $payment->tags !!}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -103,5 +143,13 @@
 
         
 @include('livewire.loandetails.modal.paymentmodal')
+
+
+@include('livewire.loandetails.modal.terminate_loan')
+
+@include('livewire.loandetails.modal.edit_employeeloan')
+
+@include('livewire.loandetails.modal.approveconfirmation_modal')
+
 
 </div>

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('status');
             $table->boolean('isapproved');
             $table->text('remarks');
+            $table->text('refnum');
             $table->timestamps();
         });
     }

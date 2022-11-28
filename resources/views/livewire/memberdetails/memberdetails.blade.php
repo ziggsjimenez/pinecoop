@@ -350,10 +350,11 @@
 
                                 <h5 class="font-bold text-2xl">Loan Summary </h5>
 
-                                <table class="w-full pb-15">
+                                <table class="w-full pb-15 text-xs">
                                     <thead>
                                         <tr>
                                             <td class="border font-bold p-2">Type of Loan</td>
+                                            <td class="border font-bold p-2">Amount</td>
                                             <td class="border font-bold p-2">Due Date</td>
                                             <td class="border font-bold p-2">Balance</td>
                                             <td class="border font-bold p-2">Last Payment</td>
@@ -367,14 +368,25 @@
                                         <tr>
                                             <td class="border">{{ $loan->loantype->name }}</td>
 
+                                            <td class="border">Php {{ number_format($loan->amount,2,'.',',') }}</td>
+
                                             @if($loan->outstandingBalance()==0)
 
                                             <td class="border" colspan="3">Paid</td>
 
                                             @else
                                             <td class="border">{{ $loan->latestPaymentSchedule()->paymentdate->format('Y-m-d') }}</td>
-                                            <td class="border">Php {{ number_format($loan->latestPaymentSchedule()->balance,2,'.',',') }}</td>
-                                            <td class="border">Php {{ number_format($loan->latestPayment()->amount,2,'.',',') }} - {{ $loan->latestPayment()->paymentdate }}</td>
+                                            <td class="border">Php {{ number_format($loan->outstandingBalance(),2,'.',',') }}</td>
+                                            <td class="border">
+                                                @if($loan->payments->count()>0)
+                                                Php {{ number_format($loan->latestPayment()->amount,2,'.',',') }} - {{ $loan->latestPayment()->paymentdate }}
+                                                @else 
+                                                
+                                                No Payment
+
+                                                @endif
+                                            
+                                            </td>
                                             @endif
                                             <td class="border"> 
                                                 <a href="{{ route('loan',['loan_id'=>$loan->id]) }}">

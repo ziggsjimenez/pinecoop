@@ -56,7 +56,7 @@ Route::middleware([
     Route::get('employee/{employee_id}',Employeedetails::class)->name('employee');
     Route::get('member/{employee_id}',Memberdetails::class)->name('member');
     Route::get('account/{account_id}',Accountdetails::class)->name('account');
-    Route::get('loans/{memberloan_id}',Loans::class)->name('loans');
+    Route::get('loans',Loans::class)->name('loans');
     Route::get('loan/{loan_id}',Loandetails::class)->name('loan');
     // Route::get('printpayments/{loan_id}',Printpayments::class)->name('printpayments');
 

@@ -20,10 +20,11 @@ class Loandetails extends Component
 {
 
 
-    public $loan_id,$loan,$modaleditemployeeloan=false,
-            $loantype_id,$interest,$loanamount,$paymentterms,$openPaymentModal=false,$paymentAmount,$paymentschedules; 
+    public $loan_id,$loan,$modaleditemployeeloan=false,$showTerminateLoanConfirmation=false,$terminationInterest,$totalTerminationAmount, 
+            $loantype_id,$interest,$loanamount,$paymentterms,$openPaymentModal=false,$paymentAmount,$paymentschedules;
+            
+    public $showEditLoanModal=false, $showApproveLoanModal=false; 
 
-    
     public function mount(){
 
         $this->loan = Loan::find($this->loan_id);
@@ -45,6 +46,87 @@ class Loandetails extends Component
         return view('livewire.loandetails.index');
         
     }
+
+    public function openEditLoanModal($loan_id){
+
+        $loan = Loan::find($loan_id); 
+
+        $this->interest = $loan->interest;
+        $this->loantype_id = $loan->loantype_id;
+        $this->amount= $loan->amount;
+        $this->terminmonths= $loan->terminmonths;
+        $this->loan_id = $loan_id; 
+        $this->showEditLoanModal=true; 
+    }
+
+    public function editLoan(){
+
+        $this->loan = Loan::find($this->loan_id)->update(['interest'=>$this->interest,'loantype_id'=>$this->loantype_id,'amount'=>$this->amount,'terminmonths'=>$this->terminmonths]);
+
+        $this->generatePaymentSchedule();
+
+        $this->showEditLoanModal=false;
+
+
+    }
+
+    public function openApproveLoanModal(){
+
+        $this->showApproveLoanModal = true; 
+        
+    }
+
+    public function approveLoan(){
+
+
+        Loan::find($this->loan_id)->update(['status'=>"Approved"]);
+
+        $this->showApproveLoanModal = false;
+
+
+    }
+
+    public function openTerminateLoanConfirmation(){
+        $this->loan = Loan::find($this->loan_id);
+
+        $currentday = date('d'); 
+
+        $this->terminationInterest = (($this->loan->latestPaymentSchedule()->balance * $this->loan->loantype->interest)/30)*$currentday; 
+
+        $this->totalTerminationAmount = $this->loan->latestPaymentSchedule()->balance + $this->terminationInterest; 
+
+        $this->showTerminateLoanConfirmation = true; 
+    }
+
+    public function terminateLoan(){
+
+        $payment = new Payment; 
+        $payment->paymentdate = date('Y-m-d');
+        $payment->paymentdue = $this->loan->latestPaymentSchedule()->paymentdate; 
+        $payment->paymentschedule_id = $this->loan->latestPaymentSchedule()->id; 
+        $payment->amount = $this->totalTerminationAmount;
+        $payment->principal = $this->loan->latestPaymentSchedule()->balance;
+        $payment->interest = $this->terminationInterest;
+        $payment->loan_id = $this->loan->id;
+        $payment->tags = "Php ".$this->totalTerminationAmount ." - Termination";
+        $payment->save();
+
+        Loan::find($this->loan->id)->update(['status'=>"Closed"]);
+
+        $ps = Paymentschedule::find($this->loan->latestPaymentSchedule()->id); 
+        $ps->principal = $ps->balance; 
+        $ps->interest =$this->terminationInterest; 
+        $ps->monthlyamort = $this->totalTerminationAmount; 
+        $ps->ispaid = 1;
+        $ps->save(); 
+        
+        Paymentschedule::where('loan_id','=',$this->loan->id)->where('ispaid','=',0)->update(['monthlyamort'=>0,'balance'=>0,'principal'=>0,'interest'=>0,'ispaid'=>1]);
+
+        $this->showTerminateLoanConfirmation = false; 
+
+    }
+
+
 
 
     public function showAddPayment(){
@@ -106,10 +188,9 @@ class Loandetails extends Component
 
         if($this->paymentAmount>$monthlyamort){
 
-
-
             $excess = $this->paymentAmount - $this->loan->latestPaymentSchedule()->monthlyamort; 
-
+            $runningbalance = $excess;
+            $currentid = $this->loan->latestPaymentSchedule()->id;
 
             $payment = new Payment; 
             $payment->paymentdate = date('Y-m-d');
@@ -119,38 +200,47 @@ class Loandetails extends Component
             $payment->principal = $this->loan->latestPaymentSchedule()->principal;;
             $payment->interest = $this->loan->latestPaymentSchedule()->interest;
             $payment->loan_id= $this->loan->id;
-            $payment->tags = "Php ".$excess." deducted to princial of succeding month.";
-            $payment->save();
-
             Paymentschedule::find($this->loan->latestPaymentSchedule()->id)->update(['ispaid'=>1]);
 
-            $paymentschedule = Paymentschedule::find($this->loan->latestPaymentSchedule()->id); 
-            $paymentschedule->principal = $paymentschedule->principal - $excess; 
-            $paymentschedule->balance = $paymentschedule->balance - $excess; 
-            $paymentschedule->interest =  $paymentschedule->balance * .03; 
-            $paymentschedule->monthlyamort=$paymentschedule->interest+$paymentschedule->principal; 
-            $paymentschedule->save(); 
+            $currentid++;
 
+            while($runningbalance>0){
+                $ps = Paymentschedule::find($currentid);
+                $diff = $runningbalance - $ps->principal; 
+                $dummyprincipal = $ps->principal; 
+                $fortags = $ps->principal; 
+                if($runningbalance>$ps->principal)
+                {
+                    $ps->balance = $ps->balance - $ps->principal; 
+                    $ps->principal = 0 ; 
+                }
+                else 
+                {
+                    $ps->balance = $ps->balance - $runningbalance ; 
+                    $ps->principal = $ps->dummyprincipal - $diff; 
+                    $fortags =  $runningbalance;
+                    // $dummyprincipal = $diff;
+                }
+                $ps->interest = $ps->balance * $ps->loan->loantype->interest; 
+                $ps->monthlyamort = $ps->principal + $ps->interest; 
+                $payment->tags = $payment->tags. "Amount - ".$fortags." ".$ps->paymentdate."<br>";
+                $ps->save(); 
+                $runningbalance = $runningbalance - $dummyprincipal;
+                $currentid++;
+            }
+            $payment->save();
         }
-
-
-
-
-
-
     }
-
-
-
-    public function resetPaymentSchedule()
-    {
-        Paymentschedule::where('loan_id', $this->loan->id)->delete();
-    }
-
 
     public function generatePaymentSchedule()
     {
-        $this->resetPaymentSchedule();
+
+        $this->loan = Loan::find($this->loan_id);
+
+        // $this->resetPaymentSchedule($this->loan_id);
+
+        Paymentschedule::where('loan_id', $this->loan_id)->delete();
+
         $monthly = $this->loan->amount / $this->loan->terminmonths;
         $balance = $this->loan->amount;
         // date for end of the month
@@ -161,8 +251,6 @@ class Loandetails extends Component
         $dayapproved = date('d', strtotime($this->loan->dateapproved));
 
         $diff= intval($endofdayapproved)-intval($dayapproved);
-
-        echo $diff;
 
         $firstmonthinterest = (($this->loan->amount*$this->loan->interest)/30)*$diff;
         for ($x = 0; $x < $this->loan->terminmonths; $x++) {
@@ -189,9 +277,7 @@ class Loandetails extends Component
           
             $balance -= $monthly; 
           }
-          
-
-          return redirect()->route('loan',['loan_id'=>$this->loan->id]);
+        
           
     }
 
