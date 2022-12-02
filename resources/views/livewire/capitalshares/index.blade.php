@@ -5,6 +5,11 @@
         <div class="block">
             Posting Date: <input type="date" wire:model="dateapplied">
             <button class="bg-blue-300 hover:bg-blue-400 rounded px-4 py-1 font-bold text-white" wire:click="SaveCapitalShares">Submit</button>
+
+            <div wire:loading>
+                Processing capital shares...<i class="fa-solid fa-spinner"></i>
+            </div>
+
         </div>
 
         <div>
