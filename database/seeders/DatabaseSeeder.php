@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             LoantypeSeeder::class,
             NonCoopMember::class,
             NonCoopMemberCapitalShareDec2021::class,
+            SettingsSeeder::class,
         ]);
     }
 }

@@ -196,10 +196,12 @@ class Loandetails extends Component
             $payment->paymentdate = date('Y-m-d');
             $payment->paymentdue = $this->loan->latestPaymentSchedule()->paymentdate; 
             $payment->paymentschedule_id = $this->loan->latestPaymentSchedule()->id; 
-            $payment->amount = $this->paymentAmount;
+            $payment->amount = $this->loan->latestPaymentSchedule()->monthlyamort;
             $payment->principal = $this->loan->latestPaymentSchedule()->principal;;
             $payment->interest = $this->loan->latestPaymentSchedule()->interest;
             $payment->loan_id= $this->loan->id;
+            $payment->tags = "Amount - ".$this->loan->latestPaymentSchedule()->monthlyamort." ".$payment->paymentdate."<br>";
+            $payment->save();
             Paymentschedule::find($this->loan->latestPaymentSchedule()->id)->update(['ispaid'=>1]);
 
             $currentid++;
@@ -223,12 +225,30 @@ class Loandetails extends Component
                 }
                 $ps->interest = $ps->balance * $ps->loan->loantype->interest; 
                 $ps->monthlyamort = $ps->principal + $ps->interest; 
-                $payment->tags = $payment->tags. "Amount - ".$fortags." ".$ps->paymentdate."<br>";
+                // $payment->tags = $payment->tags. "Amount - ".$fortags." ".$ps->paymentdate."<br>";
+                
+
+                // save payment 
+
+                $payment = new Payment; 
+                $payment->paymentdate = date('Y-m-d');
+                $payment->paymentdue = $ps->paymentdate; 
+                $payment->paymentschedule_id = $ps->id; 
+                $payment->amount = $fortags;
+                $payment->principal = $fortags;
+                $payment->interest = 0;
+                $payment->loan_id= $this->loan->id;
+                $payment->tags = "Amount - ".$fortags." ".$ps->paymentdate."<br>";
+                $payment->save();
+
+
+                // save payment schedule update
                 $ps->save(); 
+
                 $runningbalance = $runningbalance - $dummyprincipal;
                 $currentid++;
             }
-            $payment->save();
+            
         }
     }
 

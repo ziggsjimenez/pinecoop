@@ -24,6 +24,10 @@
                         {{ __('LOAN ACCOUNTS') }}
                     </x-jet-nav-link>
 
+                    <x-jet-nav-link href="{{ route('capitalshares') }}" :active="request()->routeIs('capitalshares')">
+                        {{ __('CAPITAL SHARE') }}
+                    </x-jet-nav-link>
+
                     <div class="hidden sm:flex sm:items-center sm:ml-6 justify-right">
                 
                         <!-- Settings Dropdown -->

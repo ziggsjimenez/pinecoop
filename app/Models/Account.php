@@ -15,13 +15,10 @@ class Account extends Model
         'date_opened',
     ];
 
-
     public function accounttype()
     {
         return $this->belongsTo(Accounttype::class, 'accounttype_id', 'id');
     }
-
-
     
     public function type()
     {
