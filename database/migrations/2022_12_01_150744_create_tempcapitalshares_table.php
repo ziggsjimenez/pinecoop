@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id');
             $table->decimal('amount',10,2);
-            $table->text('remarks')->default("");
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }
