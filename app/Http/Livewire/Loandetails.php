@@ -78,11 +78,9 @@ class Loandetails extends Component
 
     public function approveLoan(){
 
-
         Loan::find($this->loan_id)->update(['status'=>"Approved"]);
 
         $this->showApproveLoanModal = false;
-
 
     }
 
@@ -125,9 +123,6 @@ class Loandetails extends Component
         $this->showTerminateLoanConfirmation = false; 
 
     }
-
-
-
 
     public function showAddPayment(){
 
@@ -188,68 +183,164 @@ class Loandetails extends Component
 
         if($this->paymentAmount>$monthlyamort){
 
-            $excess = $this->paymentAmount - $this->loan->latestPaymentSchedule()->monthlyamort; 
-            $runningbalance = $excess;
-            $currentid = $this->loan->latestPaymentSchedule()->id;
+            $this->processAdvancePayment($this->paymentAmount,$this->loan_id); 
+            
+        }
+    }
+
+    public function advancePayment(){
+        
+
+        $excess = $this->paymentAmount - $this->loan->latestPaymentSchedule()->monthlyamort; 
+            
+        $runningbalance = $excess;
+        
+        $currentid = $this->loan->latestPaymentSchedule()->id;
+
+        $payment = new Payment; 
+
+        $payment->paymentdate = date('Y-m-d');
+        
+        $payment->paymentdue = $this->loan->latestPaymentSchedule()->paymentdate; 
+        
+        $payment->paymentschedule_id = $this->loan->latestPaymentSchedule()->id; 
+        
+        $payment->amount = $this->loan->latestPaymentSchedule()->monthlyamort;
+        
+        $payment->principal = $this->loan->latestPaymentSchedule()->principal;;
+        
+        $payment->interest = $this->loan->latestPaymentSchedule()->interest;
+        
+        $payment->loan_id= $this->loan->id;
+        
+        $payment->tags = "Amount - ".$this->loan->latestPaymentSchedule()->monthlyamort." ".$payment->paymentdate."<br>";
+        
+        $payment->save();
+        
+        Paymentschedule::find($this->loan->latestPaymentSchedule()->id)->update(['ispaid'=>1]);
+
+        $currentid++;
+
+
+
+        while($runningbalance>0){
+            $ps = Paymentschedule::find($currentid);
+            $diff = $runningbalance - $ps->principal; 
+            $dummyprincipal = $ps->principal; 
+            $fortags = $ps->principal; 
+            if($runningbalance>$ps->principal)
+            {
+                $ps->balance = $ps->balance - $ps->principal; 
+                $ps->principal = 0 ; 
+            }
+            else 
+            {
+                $ps->balance = $ps->balance - $runningbalance ; 
+                $ps->principal = $ps->dummyprincipal - $diff; 
+                $fortags =  $runningbalance;
+                // $dummyprincipal = $diff;
+            }
+            $ps->interest = $ps->balance * $ps->loan->loantype->interest; 
+            $ps->monthlyamort = $ps->principal + $ps->interest; 
+            // $payment->tags = $payment->tags. "Amount - ".$fortags." ".$ps->paymentdate."<br>";
+            
+
+            // save payment 
+
+            $payment = new Payment; 
+            $payment->paymentdate = date('Y-m-d');
+            $payment->paymentdue = $ps->paymentdate; 
+            $payment->paymentschedule_id = $ps->id; 
+            $payment->amount = $fortags;
+            $payment->principal = $fortags;
+            $payment->interest = 0;
+            $payment->loan_id= $this->loan->id;
+            $payment->tags = "Amount - ".$fortags." ".$ps->paymentdate."<br>";
+            $payment->save();
+
+
+            // save payment schedule update
+            $ps->save(); 
+
+            $runningbalance = $runningbalance - $dummyprincipal;
+            $currentid++;
+        }
+    }
+
+    public function savePayment($paidAmount,$principal,$interest){
 
             $payment = new Payment; 
             $payment->paymentdate = date('Y-m-d');
             $payment->paymentdue = $this->loan->latestPaymentSchedule()->paymentdate; 
             $payment->paymentschedule_id = $this->loan->latestPaymentSchedule()->id; 
-            $payment->amount = $this->loan->latestPaymentSchedule()->monthlyamort;
-            $payment->principal = $this->loan->latestPaymentSchedule()->principal;;
-            $payment->interest = $this->loan->latestPaymentSchedule()->interest;
-            $payment->loan_id= $this->loan->id;
-            $payment->tags = "Amount - ".$this->loan->latestPaymentSchedule()->monthlyamort." ".$payment->paymentdate."<br>";
+            $payment->amount = $paidAmount;
+            $payment->principal = $principal;
+            $payment->interest = $interest;
+            $payment->loan_id = $this->loan->id;
+            $payment->tags = "Php ".$paidAmount ." for ".$this->loan->latestPaymentSchedule()->paymentdate;
             $payment->save();
-            Paymentschedule::find($this->loan->latestPaymentSchedule()->id)->update(['ispaid'=>1]);
 
-            $currentid++;
+    }
 
-            while($runningbalance>0){
-                $ps = Paymentschedule::find($currentid);
-                $diff = $runningbalance - $ps->principal; 
-                $dummyprincipal = $ps->principal; 
-                $fortags = $ps->principal; 
-                if($runningbalance>$ps->principal)
-                {
-                    $ps->balance = $ps->balance - $ps->principal; 
-                    $ps->principal = 0 ; 
+
+    public function processAdvancePayment($payAmount,$loan_id){
+
+        $firstps = Paymentschedule::where('loan_id',$loan_id)->where('ispaid',0)->first(); 
+        $firstps->ispaid = 1; 
+        $monthlyamort = $firstps->monthlyamort; 
+        $this->savePayment($this->loan->latestPaymentSchedule()->monthlyamort,$firstps->principal,$firstps->interest);
+        $firstps->save(); 
+
+        $payAmount -= $monthlyamort; 
+
+        $pskeds = Paymentschedule::where('loan_id',$loan_id)->where('ispaid',0)->get(); 
+
+        $count=1; 
+
+        $balance=0;
+
+
+
+        foreach($pskeds as $ps){
+
+            $balance = $balance - $ps->principal; 
+
+            if($count==1){
+                $balance = $ps->balance - $payAmount; 
+                $this->savePayment($payAmount,$payAmount,0);
+                
+            }
+            $ps->balance = $balance; 
+            $ps->interest = $balance * $this->loan->interest; 
+            $ps->monthlyamort = $ps->principal + $ps->interest; 
+          
+            if($balance<$ps->principal){
+                
+                if($balance<0){
+                    $ps->balance=0;$ps->principal=0;$ps->interest=0;$ps->monthlyamort=0;
                 }
-                else 
-                {
-                    $ps->balance = $ps->balance - $runningbalance ; 
-                    $ps->principal = $ps->dummyprincipal - $diff; 
-                    $fortags =  $runningbalance;
-                    // $dummyprincipal = $diff;
+                else{
+
+                    $ps->balance = $balance; 
+                    $ps->principal = $balance; 
+                    $ps->interest = $balance * $this->loan->interest; 
+                    $ps->monthlyamort = $ps->principal + $ps->interest; 
+
                 }
-                $ps->interest = $ps->balance * $ps->loan->loantype->interest; 
-                $ps->monthlyamort = $ps->principal + $ps->interest; 
-                // $payment->tags = $payment->tags. "Amount - ".$fortags." ".$ps->paymentdate."<br>";
                 
 
-                // save payment 
-
-                $payment = new Payment; 
-                $payment->paymentdate = date('Y-m-d');
-                $payment->paymentdue = $ps->paymentdate; 
-                $payment->paymentschedule_id = $ps->id; 
-                $payment->amount = $fortags;
-                $payment->principal = $fortags;
-                $payment->interest = 0;
-                $payment->loan_id= $this->loan->id;
-                $payment->tags = "Amount - ".$fortags." ".$ps->paymentdate."<br>";
-                $payment->save();
-
-
-                // save payment schedule update
-                $ps->save(); 
-
-                $runningbalance = $runningbalance - $dummyprincipal;
-                $currentid++;
             }
+
+
+            $ps->save(); 
+
+            $count++;
+
             
-        }
+            
+        }   
+
+        
     }
 
     public function generatePaymentSchedule()

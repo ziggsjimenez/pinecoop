@@ -1,8 +1,6 @@
 <div class="flex justify-center">
     <div class="block p-6 w-full" style="margin: 2rem 2rem;">
 
-
-
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <span class="font-bold text-2xl">
@@ -14,7 +12,7 @@
                 <hr>
                 {{-- back button  --}}
                 <a href="{{ route('employees') }}">
-                    <button class="rounded px-5 py-2 text-sm bg-blue-400 hover:bg-blue-500 font-bold"><i
+                    <button class="rounded px-3 p-1 text-sm bg-blue-400 hover:bg-blue-500 font-bold text-white"><i
                             class="fa-regular fa-circle-left"></i> Back</button>
                 </a>
 
@@ -71,8 +69,8 @@
                             <div class="flex flex-col pr-4" style="width: 60%;">
                                 <div class="flex flex-row w-full">
                                     <div class="border w-1/2 p-4">
-                                        <p class="font-bold text-xl mb-2">Basic Information</p>
-                                        <table class="w-full">
+                                        <p class="font-bold mb-2">Basic Information</p>
+                                        <table class="w-full text-xs">
                                             <col width="39%">
                                             <col width="1%">
                                             <col width="60%">
@@ -134,8 +132,8 @@
 
 
                                     <div class="border w-1/2 p-4">
-                                        <p class="font-bold text-xl mb-2">Other Information</p>
-                                        <table class="w-full">
+                                        <p class="font-bold mb-2">Other Information</p>
+                                        <table class="w-full text-xs">
                                             <col width="49%">
                                             <col width="1%">
                                             <col width="50%">
@@ -193,8 +191,8 @@
 
                                 <div class="flex flex-row w-full mt-2">
                                     <div class="border w-1/2 p-4">
-                                        <p class="font-bold text-xl mb-2">Permanent Residential Address</p>
-                                        <table class="w-full">
+                                        <p class="font-bold mb-2">Permanent Residential Address</p>
+                                        <table class="w-full text-xs">
                                             <col width="34%">
                                             <col width="1%">
                                             <col width="65%">
@@ -243,8 +241,8 @@
 
 
                                     <div class="border w-1/2 p-4">
-                                        <p class="font-bold text-xl mb-2">Permanent Employement Address</p>
-                                        <table class="w-full">
+                                        <p class="font-bold mb-2">Permanent Employement Address</p>
+                                        <table class="w-full text-xs">
                                             <col width="34%">
                                             <col width="1%">
                                             <col width="65%">
@@ -298,7 +296,7 @@
 
 
                             <div style="width: 40%;">
-                                <h5 class="font-bold text-2xl inline">Accounts </h5>
+                                <h5 class="font-bold inline">Accounts </h5>
 
                                 @php
                                     $accountxx = DB::table('accounts as a')
@@ -316,9 +314,9 @@
                                         </button>
                                     </a>
                                 @endif
-                                <table class="w-full pb-15 mt-2">
+                                <table class="w-full pb-15 mt-2 text-xs">
                                     <thead>
-                                        <tr>
+                                        <tr class="bg-blue-200 rounded-top rounded-t-lg">
                                             <th class="border p-1">Account Type</th>
                                             <th class="border p-1">Date Opened</th>
                                             <th class="border p-1">Balance</th>
@@ -333,7 +331,7 @@
                                                 </td>
                                                 <td class="border p-1 text-right">Php
                                                     {{ number_format($account->balance(), 2, '.', ',') }}</td>
-                                                    <td>
+                                                    <td class="border p-1">
                                                         <a href="{{ route('account',['account_id'=>$account->id]) }}">
                                                             <button
                                                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition bg-indigo-700 px-4 py-1"
@@ -348,11 +346,11 @@
 
                                 <br>
 
-                                <h5 class="font-bold text-2xl">Loan Summary </h5>
+                                <h5 class="font-bold">Loan Summary </h5>
 
                                 <table class="w-full pb-15 text-xs">
                                     <thead>
-                                        <tr>
+                                        <tr class="bg-orange-200">
                                             <td class="border font-bold p-2">Type of Loan</td>
                                             <td class="border font-bold p-2">Amount</td>
                                             <td class="border font-bold p-2">Due Date</td>
@@ -481,7 +479,7 @@
                         </div>
 
                         <div class="pb-4" style="overflow: auto;">
-                            <table class="w-full text-left">
+                            <table class="w-full text-left text-xs">
                                 <thead class="border-b bg-white">
                                     <tr>
                                         <th class="px-2 py-1">ID</th>
@@ -511,7 +509,7 @@
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 {{ $row->terminmonths . ' Months' }}
                                             </td>
-                                            <td class="px-2 py-1 whitespace-nowrap">{{ $row->outstandingBalance() }}</td>
+                                            <td class="px-2 py-1 whitespace-nowrap text-right">Php {{ number_format($row->outstandingBalance(),2,'.',',') }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->status }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 <a href="{{ route('loan', ['loan_id' => $row->id]) }}">

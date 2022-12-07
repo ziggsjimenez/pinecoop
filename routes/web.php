@@ -11,7 +11,11 @@ use App\Http\Livewire\Memberdetails;
 use App\Http\Livewire\Members;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
+use App\Http\Livewire\Addcapitalshares;
 use App\Http\Livewire\Capitalshares;
+use App\Http\Livewire\Delinquents;
+use App\Http\Livewire\Monthlydeductions;
+use App\Http\Livewire\Payments;
 use App\Http\Livewire\Printpayments;
 
 /*
@@ -60,6 +64,10 @@ Route::middleware([
     Route::get('loans',Loans::class)->name('loans');
     Route::get('loan/{loan_id}',Loandetails::class)->name('loan');
     Route::get('capitalshares',Capitalshares::class)->name('capitalshares');
+    Route::get('delinquents',Delinquents::class)->name('delinquents');
+    Route::get('payments',Payments::class)->name('payments');
+    Route::get('monthlydeductions',Monthlydeductions::class)->name('monthlydeductions');
+    Route::get('addcapitalshares',Addcapitalshares::class)->name('addcapitalshares');
     // Route::get('printpayments/{loan_id}',Printpayments::class)->name('printpayments');
 
     // pdf controller 

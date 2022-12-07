@@ -1,5 +1,9 @@
 <div class="p-12">
 
+    <div class="block mb-5">
+        <span class="font-bold text-xl">Loan Accounts</span> <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600">Export to Excel</button>
+    </div>
+
 
     <div class="block">
         <input type="text" class="rounded w-full text-sm bg-gray-300" wire:model="searchToken" placeholder="Type loan reference number here...">

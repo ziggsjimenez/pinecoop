@@ -39,9 +39,17 @@ class Loan extends Model
         return $this->hasMany('App\Models\Paymentschedule');
     }
 
+    public function aging(){
 
+        $start = strtotime($this->latestPayment()->paymentdate);
+        $end = strtotime(now());
+
+        return ceil(abs($end - $start) / 86400);
+
+    }
 
     public function latestMonthlyAmortizaton(){
+
         $ps = Paymentschedule::where('loan_id',$this->id)->where('ispaid',0)->first();
 
         if ($ps==null)
@@ -50,6 +58,7 @@ class Loan extends Model
         else 
 
         return $ps->monthlyamort;  
+
     }
 
     public function latestPaymentSchedule(){

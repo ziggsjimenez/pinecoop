@@ -101,6 +101,10 @@ class Employee extends Model
             return false;
     }
 
+    public function capitalShare(){
+        return $this->hasOne('App\Models\Account')->where('accounttype_id',2);
+    }
+
     public function hasPendingLoans()
     {
 
