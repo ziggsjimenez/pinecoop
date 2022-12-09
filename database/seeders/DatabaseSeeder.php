@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             EmployeeSeeder::class,
-            // AccountType::class,
+            AccountType::class,
             // CapitalShareDeposits::class,
             // CapitalShareJan2022::class,
             // CapitalShareFeb2022::class,
