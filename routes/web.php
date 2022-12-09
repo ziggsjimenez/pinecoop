@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Livewire\Addcapitalshares;
 use App\Http\Livewire\Capitalshares;
+use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Delinquents;
 use App\Http\Livewire\Monthlydeductions;
 use App\Http\Livewire\Payments;
@@ -49,9 +50,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
 
 
     Route::get('employees',Employees::class)->name('employees');
@@ -68,6 +69,7 @@ Route::middleware([
     Route::get('payments',Payments::class)->name('payments');
     Route::get('monthlydeductions',Monthlydeductions::class)->name('monthlydeductions');
     Route::get('addcapitalshares',Addcapitalshares::class)->name('addcapitalshares');
+    Route::get('dashboard',Dashboard::class)->name('dashboard');
     // Route::get('printpayments/{loan_id}',Printpayments::class)->name('printpayments');
 
     // pdf controller 
