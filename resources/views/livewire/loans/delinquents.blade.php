@@ -40,7 +40,7 @@
                         @if($loan->latestPaymentSchedule()!=null){{ $loan->latestPaymentSchedule()->paymentdate->format('Y-m-d') }}@endif
                     </td>
                     <td class="border text-right">{{ number_format($loan->outstandingBalance(),2,'.',',') }}</td>
-                    <td class="border">{{ $loan->latestPayment()->paymentdate }}</td>
+                    <td class="border">@if($loan->latestPayment()!=null){{ $loan->latestPayment()->paymentdate }}@endif</td>
                     <td class="border">{{ $loan->aging() }}</td>
                     <td class="border"></td>
                     

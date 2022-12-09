@@ -374,7 +374,7 @@
 
                                             @else
                                             <td class="border">{{ $loan->latestPaymentSchedule()->paymentdate->format('Y-m-d') }}</td>
-                                            <td class="border">Php {{ number_format($loan->outstandingBalance(),2,'.',',') }}</td>
+                                            <td class="border">Php {{ number_format(round($loan->outstandingBalance()),2,'.',',') }}</td>
                                             <td class="border">
                                                 @if($loan->payments->count()>0)
                                                 Php {{ number_format($loan->latestPayment()->amount,2,'.',',') }} - {{ $loan->latestPayment()->paymentdate }}
@@ -499,7 +499,7 @@
                                         <tr class="transition duration-100 ease-in-out hover:bg-gray-100">
                                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->id }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">
-                                                {{ $row->dateapplied->format('F d, Y') }}</td>
+                                                {{ $row->dateapproved->format('F d, Y') }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->loantype->name }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">Php
                                                 {{ number_format($row->amount, 2, '.', ',') }}</td>
