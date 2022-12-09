@@ -13,12 +13,18 @@
     
     </div>
     
-    Transactions
+    <div class="font-bold text-xl">Transactions</div>
+    
 
-    <x-jet-button wire:click="showTransactionForm('Deposit')">Deposit</x-jet-button>
+    {{-- BUTTONS --}}
+    <div class="hide">
+        <x-jet-button wire:click="showTransactionForm('Deposit')">Deposit</x-jet-button>
 
 
-    <a href="{{ route('member',['employee_id'=>$account->employee_id]) }}"><x-jet-button>Back</x-jet-button></a>
+        <a href="{{ route('member',['employee_id'=>$account->employee_id]) }}"><x-jet-button>Back</x-jet-button></a>
+    </div>
+    {{-- END OF BUTTONS --}}
+
 
 
    

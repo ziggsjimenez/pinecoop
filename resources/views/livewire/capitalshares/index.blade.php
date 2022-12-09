@@ -15,6 +15,7 @@
                     <th class="border p-1">#</th>
                     <th class="border p-1">Name</th>
                     <th class="border p-1">Share Capital</th>
+                    <th class="border p-1">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,11 @@
                         <td class="border p-1">{{ $count++ }}</td>
                         <td class="border p-1">{{ $employee->fullname2() }}</td>
                         <td class="border p-1 text-right">Php {{ number_format($employee->capitalShare->transactions->sum('amount'),2,'.',',')}}</td>
+                        <td class="border p-1">
+                            <a href="{{ route('account',['account_id'=>$employee->capitalShare->id]) }}">
+                            <button class="rounded px-3 py-1 bg-green-300 hover:bg-green-500 text-white font-bold"> View </button>
+                        </a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -35,7 +35,10 @@
             <hr>
         </div>
 
-        <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}"><button class="bg-blue-400 hover:bg-blue-600 rounded px-1 text-sm" >Back</button></a>
+        {{-- buttons --}}
+        <div class="hide">
+
+            <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}"><button class="bg-blue-400 hover:bg-blue-600 rounded px-1 text-sm" >Back</button></a>
         
         @switch($loan->status)
                 @case("Closed")
@@ -59,6 +62,10 @@
             @default
                 
         @endswitch
+
+        </div>
+
+        
 
     </div>
 

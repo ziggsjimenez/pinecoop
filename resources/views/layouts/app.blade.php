@@ -21,6 +21,15 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        <style>
+            @media print {
+                .hide {
+                    display: none; 
+                }
+            }
+        </style>
+
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

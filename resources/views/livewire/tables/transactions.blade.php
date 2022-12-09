@@ -28,4 +28,4 @@
     </tbody>
 </table>
 
-<a href="{{ route('printAccount',['account_id'=>$account->id]) }}"> <button class="bg-blue-400 rounded px-3 font-bold text-sm">Print</button></a>
+<a href="{{ route('printAccount',['account_id'=>$account->id]) }}"> <button class="bg-blue-400 rounded px-3 font-bold text-sm">Print</button></a>   
