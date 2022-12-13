@@ -509,7 +509,7 @@
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 {{ $row->terminmonths . ' Months' }}
                                             </td>
-                                            <td class="px-2 py-1 whitespace-nowrap text-right">Php {{ number_format($row->outstandingBalance(),2,'.',',') }}</td>
+                                            <td class="px-2 py-1 whitespace-nowrap text-right">Php {{ number_format(round($row->outstandingBalance()),2,'.',',') }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">{{ $row->status }}</td>
                                             <td class="px-2 py-1 whitespace-nowrap">
                                                 <a href="{{ route('loan', ['loan_id' => $row->id]) }}">
