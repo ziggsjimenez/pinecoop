@@ -33,5 +33,6 @@ class Loans extends Component
 
         Payment::where('loan_id',$this->loan_id)->delete();
         Loan::find($this->loan_id)->delete(); 
+        $this->showDeleteConfirmation = false;
     }
 }
