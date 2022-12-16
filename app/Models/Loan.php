@@ -41,10 +41,18 @@ class Loan extends Model
 
     public function aging(){
 
-        $start = strtotime($this->latestPayment()->paymentdate);
-        $end = strtotime(now());
+        if($this->latestPayment()!=null){
+            $start = strtotime($this->latestPayment()->paymentdate);
+            $end = strtotime(now());
+    
+            return ceil(abs($end - $start) / 86400);
+        }
 
-        return ceil(abs($end - $start) / 86400);
+        else {
+            return 0; 
+        }
+
+     
 
     }
 
