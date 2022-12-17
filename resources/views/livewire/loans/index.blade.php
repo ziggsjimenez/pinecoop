@@ -71,8 +71,12 @@
                     </td>
                 </tr>
                 @endforeach
+
+                <tr>
+                    <td colspan="8">{{ $loans->links() }}</td>
+                </tr>
             </tbody>
-            </tbody>
+            
         </table>
     </div>
 
