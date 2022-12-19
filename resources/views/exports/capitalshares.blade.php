@@ -4,7 +4,6 @@
         <th>#</th>
         <th>Name</th>
         <th>Share Capital</th>
-
     </tr>
 </thead>
 <tbody>
@@ -16,7 +15,6 @@
             <td>{{ $count++ }}</td>
             <td>{{ $employee->fullname2() }}</td>
             <td>{{ number_format($employee->capitalShare->transactions->sum('amount'),2,'.',',')}}</td>
-
         </tr>
     @endforeach
 </tbody>

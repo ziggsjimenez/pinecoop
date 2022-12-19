@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class Accountdetails extends Component
 {
 
-    public $account_id, $account, $openDepositForm = false, $transactiontype, $computationtype, $amount=500;
+    public $account_id, $account, $openDepositForm = false, $transactiontype, $computationtype, $amount=500,$depositdate;
     
     public function mount(){
         $this->account = Account::find($this->account_id);
@@ -39,11 +39,18 @@ class Accountdetails extends Component
             'amount' => 'required',
         ]);
 
+        if($this->depositdate==null){
+            $savedate = date('y-m-d');
+        }
+        else{
+            $savedate = $this->depositdate; 
+        }
+
         $transaction = new Transaction;
 
         $transaction->transaction_reference_number =  date('Y').'-TJOUWERWER-'.date('mdhis');
         $transaction->amount = ($this->amount * $this->computationtype);
-        $transaction->dateoftransaction = date('y-m-d');
+        $transaction->dateoftransaction = $savedate;
         $transaction->account_id = $this->account_id;
         $transaction->user_id = Auth::user()->id;
         $transaction->save();
