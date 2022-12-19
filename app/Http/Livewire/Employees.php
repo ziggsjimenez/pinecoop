@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\EmployeesExport;
 use App\Models\Account;
 use App\Models\Employee;
 use App\Models\Transaction;
@@ -12,6 +13,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Employees extends Component
 {
@@ -357,5 +359,10 @@ class Employees extends Component
 
     public function hideToast(){
 
+    }
+
+    public function export() 
+    {
+        return Excel::download(new EmployeesExport, 'employees.xlsx');
     }
 }

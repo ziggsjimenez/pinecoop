@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\LoansExport;
 use App\Models\Loan;
 use App\Models\Memberloan;
 use App\Models\Payment;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Loans extends Component
 {
@@ -34,5 +36,10 @@ class Loans extends Component
         Payment::where('loan_id',$this->loan_id)->delete();
         Loan::find($this->loan_id)->delete(); 
         $this->showDeleteConfirmation = false;
+    }
+
+    public function export() 
+    {
+        return Excel::download(new LoansExport, 'loans.xlsx');
     }
 }

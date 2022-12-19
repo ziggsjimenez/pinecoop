@@ -3,7 +3,8 @@
     <div class="block p-6 rounded-lg shadow-lg bg-white w-full" style="margin: 2rem 2rem;">
         <div class="flex items-center justify-between py-2 md:justify-start md:space-x-10">
             <div class="flex justify-start lg:w-0 lg:flex-1">
-                <span class="tracking-wide text-gray-700 text-xl font-bold">ACCOUNT EMPLOYEES</span>
+                <span class="tracking-wide text-gray-700 text-xl font-bold">EMPLOYEES</span>
+                <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
             </div>
             <div class="items-center justify-end md:flex md:flex-1 lg:w-0">
                 <x-jet-button wire:click="showAddModal" class="pl-5" style="text-transform:none">Add employee
