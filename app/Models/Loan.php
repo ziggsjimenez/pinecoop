@@ -51,9 +51,6 @@ class Loan extends Model
         else {
             return 0; 
         }
-
-     
-
     }
 
     public function latestMonthlyAmortizaton(){

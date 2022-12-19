@@ -25,6 +25,8 @@ class Employees extends Component
     
     public $showConfirmChangeStatusModal=false, $showAddCapitalShares=false;
 
+    public $displayoption,$option; 
+
 
     public function mount(){
         $this->searchToken = "";
@@ -33,7 +35,26 @@ class Employees extends Component
     public function render()
     {
 
-        return view('livewire.employees.employees', ['employees' => Employee::where('lastname', 'LIKE', '%' . $this->searchToken . '%')->orWhere('firstname', 'LIKE', '%' . $this->searchToken . '%')->orderBy('lastname','ASC')->paginate(10),]);
+        switch($this->displayoption){
+
+            case "member": 
+                $this->option="MEMBER";
+                return view('livewire.employees.employees', ['employees' => Employee::where('ispinecoopmem',1)->orderBy('lastname','ASC')->paginate(1000)]);
+                break; 
+            case "nonmember":
+                $this->option="NON-MEMBER";
+                return view('livewire.employees.employees', ['employees' => Employee::where('ispinecoopmem',0)->orderBy('lastname','ASC')->paginate(1000)]);
+                break;
+            case "allmember":
+                $this->option="ALL";
+                return view('livewire.employees.employees', ['employees' => Employee::where('id','>',0)->orderBy('lastname','ASC')->paginate(1000)]);
+
+                break; 
+            default: return view('livewire.employees.employees', ['employees' => Employee::where('lastname', 'LIKE', '%' . $this->searchToken . '%')->orWhere('firstname', 'LIKE', '%' . $this->searchToken . '%')->orderBy('lastname','ASC')->paginate(10)]);
+
+        }
+
+       
 
     }
 
@@ -361,8 +382,20 @@ class Employees extends Component
 
     }
 
+    public function showMember(){
+        $this->displayoption="member";
+    }
+
+    public function showNonMember(){
+        $this->displayoption="nonmember";
+    }
+
+    public function showAllMember(){
+        $this->displayoption="allmember";
+    }
+
     public function export() 
     {
-        return Excel::download(new EmployeesExport, 'employees.xlsx');
+        return Excel::download(new EmployeesExport($this->displayoption), $this->displayoption.'employees.xlsx');
     }
 }

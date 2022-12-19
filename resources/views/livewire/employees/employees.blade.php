@@ -3,19 +3,22 @@
     <div class="block p-6 rounded-lg shadow-lg bg-white w-full" style="margin: 2rem 2rem;">
         <div class="flex items-center justify-between py-2 md:justify-start md:space-x-10">
             <div class="flex justify-start lg:w-0 lg:flex-1">
-                <span class="tracking-wide text-gray-700 text-xl font-bold">EMPLOYEES</span>
+                <span class="tracking-wide text-gray-700 text-xl font-bold">{{ $option }} EMPLOYEES</span>
                 <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
             </div>
             <div class="items-center justify-end md:flex md:flex-1 lg:w-0">
-                <x-jet-button wire:click="showAddModal" class="pl-5" style="text-transform:none">Add employee
-                </x-jet-button>
+
+                <x-jet-button wire:click="showMember" class="pl-5 mx-5" style="text-transform:none">Member</x-jet-button>
+                <x-jet-button wire:click="showNonMember" class="pl-5 mx-5" style="text-transform:none">Non-Member</x-jet-button>
+                <x-jet-button wire:click="showAllMember" class="pl-5 mx-5" style="text-transform:none">All</x-jet-button>
+                <x-jet-button wire:click="showAddModal" class="pl-5 mx-5" style="text-transform:none">Add employee</x-jet-button>
             </div>
         </div>
         <input wire:model="searchToken"
             class="appearance-none block w-full text-gray-700 border rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             type="text" placeholder="Type here to search...">
         <div>
-            <div class="pb-4" style="overflow: auto;">
+            <div class="pb-4" style="overflow: auto;">  
                 <table class="w-full text-left">
                     <thead class="border-b bg-white">
                         <tr>
@@ -30,6 +33,17 @@
                         </tr>
                     </thead class="border-b">
                     <tbody>
+
+                        @if(count($employees)==0)
+
+                        <tr>
+                            <td colspan="8">
+                                No Record ... 
+                            </td>
+                        </tr>
+
+                        @else
+
                         @php
                             $count = 1;
                         @endphp
@@ -64,10 +78,12 @@
                                     <div class="flex items-center justify-center">
                                         <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg"
                                             role="group">
+                                            @if($employees->count()>0)
                                             <a href="{{ route('member', ['employee_id' => $employee->id]) }}">
                                                 <button type="button"
                                                     class="rounded-l inline-block px-4 py-1.5 bg-green-500 text-white font-medium text-xs leading-tight hover:bg-green-600 focus:bg-green-600 focus:outline-none focus:ring-0 active:bg-green-700 transition duration-150 ease-in-out">View</button>
                                             </a>
+                                            
                                             <button type="button" wire:click="edit({{ $employee->id }})"
                                                 class="inline-block px-4 py-1.5 bg-yellow-500 text-white font-medium text-xs leading-tight hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring-0 active:bg-yellow-600 transition duration-150 ease-in-out">Edit</button>
 
@@ -83,6 +99,7 @@
                                                 wire:click="openAddProfilePhotoModal({{ $employee->id }})"
                                                 class="rounded-r inline-block px-4 py-1.5 bg-purple-600 text-white font-medium text-xs leading-tight hover:bg-purple-700 focus:bg-purple-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out">Upload
                                                 Photo</button>
+                                                @endif
                                         </div>
                                     </div>
 
@@ -95,6 +112,13 @@
                                 {{ $employees->links() }}
                             </td>
                         </tr>
+
+                        @endif
+
+
+                        
+
+
                     </tbody>
                 </table>
             </div>
@@ -103,9 +127,13 @@
                 @include('livewire.employees.modals.addprofilephoto')
             @endif
 
+            @if($employees->count()>0)
+
             @include('livewire.employees.modals.addemployeemodal')
             @include('livewire.employees.modals.addemployeecapitalshare')
             @include('livewire.employees.modals.confirmChangeStatusModal')
+            @endif
+
             @include('livewire.includes.messages')
         </div>
     </div>

@@ -1,7 +1,8 @@
 <div class="p-12">
 
     <div class="block mb-5">
-        <span class="font-bold text-xl">Days from Last Payment</span> <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600">Export to Excel</button>
+        <span class="font-bold text-xl">Days from Last Payment</span> 
+        <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
     </div>
 
 
