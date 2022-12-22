@@ -46,6 +46,10 @@
 
                                 <x-slot name="content">
 
+                                    <x-jet-dropdown-link href="{{ route('loansummary') }}">
+                                        {{ __('Dashboard') }}
+                                    </x-jet-nav-link>
+
                                     <x-jet-dropdown-link href="{{ route('loans') }}">
                                         {{ __('Loan Accounts') }}
                                     </x-jet-nav-link>

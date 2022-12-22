@@ -15,6 +15,7 @@ use App\Http\Livewire\Addcapitalshares;
 use App\Http\Livewire\Capitalshares;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Delinquents;
+use App\Http\Livewire\Loansummary;
 use App\Http\Livewire\Monthlydeductions;
 use App\Http\Livewire\Payments;
 use App\Http\Livewire\Printpayments;
@@ -70,6 +71,7 @@ Route::middleware([
     Route::get('monthlydeductions',Monthlydeductions::class)->name('monthlydeductions');
     Route::get('addcapitalshares',Addcapitalshares::class)->name('addcapitalshares');
     Route::get('dashboard',Dashboard::class)->name('dashboard');
+    Route::get('loansummary',Loansummary::class)->name('loansummary');
     // Route::get('printpayments/{loan_id}',Printpayments::class)->name('printpayments');
 
     // pdf controller 

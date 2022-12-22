@@ -48,7 +48,7 @@ class Accountdetails extends Component
 
         $transaction = new Transaction;
 
-        $transaction->transaction_reference_number =  date('Y').'-TJOUWERWER-'.date('mdhis');
+        $transaction->transaction_reference_number =  date('Y').'-'.date('mdhis');
         $transaction->amount = ($this->amount * $this->computationtype);
         $transaction->dateoftransaction = $savedate;
         $transaction->account_id = $this->account_id;
