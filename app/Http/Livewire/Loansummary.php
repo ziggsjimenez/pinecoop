@@ -10,12 +10,13 @@ use Livewire\Component;
 class Loansummary extends Component
 {
 
-    public $loans, $payments,$projectedInterestIncome; 
+    public $loans, $payments,$projectedInterestIncome,$interestCollect,$collectibles; 
 
     public function mount(){
         $this->loans = Loan::all(); 
         $this->payments = Payment::all(); 
         $this->projectedInterestIncome = $this->CalculateProjectedInterestIncome();
+        $this->collectibles = $this->getCollectibles(); 
 
         
     }
@@ -26,6 +27,10 @@ class Loansummary extends Component
 
         return $ps->sum('interest');
 
+    }
+
+    private function getCollectibles(){
+        return Paymentschedule::where('ispaid',0)->get();
     }
 
 
