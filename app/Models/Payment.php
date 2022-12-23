@@ -10,4 +10,8 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = ['paymentdate'];
+
+    public function loan(){
+        return $this->belongsTo('App\Models\Loan');
+    }
 }

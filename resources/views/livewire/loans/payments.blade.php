@@ -15,6 +15,8 @@
             <thead>
                 <tr>
                     <th class="border p-1">#</th>
+                    <th class="border p-1">Loan Ref.</th>
+                    <th class="border p-1">Name</th>
                     <th class="border p-1">Payment Date</th>
                     <th class="border p-1">Due Date</th>
                     <th class="border p-1">Amount</th>
@@ -30,6 +32,13 @@
                 @foreach ($payments as $payment )
                     <tr>
                         <td class="border p-1">{{ $count++ }}</td>
+                        <td class="border p-1 text-blue underline">
+                            <a href="{{ route('loan',['loan_id'=>$payment->loan->id]) }}">
+                                {{ $payment->loan->refnum }}
+                            </a>
+                        </td>
+                        <td class="border p-1">{{ $payment->loan->employee->fullname2() }}</td>
+
                         <td class="border p-1">{{ $payment->paymentdate }}</td>
                         <td class="border p-1">{{ $payment->paymentdue }}</td>
                         <td class="border p-1 text-right">Php {{ number_format($payment->amount,2,'.',',') }}</td>
@@ -52,9 +61,7 @@
                     <td class="border p-1"></td>
                 </tr>
 
-                <tr>
-                    <td colspan="7">{{ $payments->links() }}</td>
-                </tr>
+
             </tbody>
         </table>
     </div>

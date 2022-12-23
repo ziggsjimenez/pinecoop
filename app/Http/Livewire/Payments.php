@@ -20,6 +20,6 @@ class Payments extends Component
     }
     public function render()
     {
-        return view('livewire.loans.payments',['payments'=>Payment::whereBetween('paymentdate',[$this->fromdate,$this->todate])->paginate(50)]);
+        return view('livewire.loans.payments',['payments'=>Payment::whereBetween('paymentdate',[$this->fromdate,$this->todate])->get()]);
     }
 }
