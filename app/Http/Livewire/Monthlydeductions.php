@@ -17,7 +17,7 @@ class Monthlydeductions extends Component
 
     public function show(){
 
-        $this->paymentschedules = Paymentschedule::whereYear('paymentdate','=',$this->year)->whereMonth('paymentdate','=',$this->month)->where('ispaid',0)->get(); 
+        $this->paymentschedules = Paymentschedule::whereYear('paymentdate','=',$this->year)->whereMonth('paymentdate','=',$this->month)->where('ispaid',0)->where('monthlyamort','<>',0)->get(); 
 
     }
 }

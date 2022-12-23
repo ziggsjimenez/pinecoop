@@ -2,8 +2,6 @@
     
     <div class="block">
 
-        {{ $year }} -- {{ $month }}
-
         <select wire:model="year">
             <option value="">Select year...</option>
             @php    
