@@ -20,7 +20,7 @@
 
         @endforeach
         
-        Projected Interest Income: {{ number_format($loans->sum('interest'),2,'.',',') }} <br>
+        Projected Interest Income: {{ number_format($projectedInterestIncome,2,'.',',') }} <br>
     </div>
 
 

@@ -132,15 +132,15 @@ class Memberdetails extends Component
         $loan->loanofficer = $this->userid;
         $loan->status = "Pending";
         $loan->isapproved = 1;
-        $loan->remarks = "New";
+        $loan->remarks = "New"; 
+        $loan->netamount = 0; 
         $loan->refnum = date('Ymd').Str::padLeft($count,5,'0');
         $loan->save(); 
 
 
         $this->generatePaymentSchedule($loan->id); 
 
-        // $this->modalmemberloan = false;
-    //     $this->resetInputFields();
+    
     }
 
     public function resetPaymentSchedule($loan_id)

@@ -14,6 +14,7 @@ class Loan extends Model
         'employee_id',
         'loantype_id',
         'amount',
+        'netamount',
         'interest',
         'terminmonths',
         'maxloanamount',
@@ -90,6 +91,18 @@ class Loan extends Model
         return 0; 
         else 
         return $payskeds->sum('monthlyamort');
+    }
+
+    public function processingfee(){
+        return intdiv($this->amount,1000)*2;
+    }
+
+    public function insurance(){
+        return intdiv($this->amount,1000)*2; 
+    }
+
+    public function netamount(){
+        return $this->amount-$this->processingfee()-$this->insurance();
     }
 
 

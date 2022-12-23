@@ -1,13 +1,17 @@
 <div class="p-12">
 
     @include('livewire.includes.messages')
+
+    <div class="font-bold text-2xl">
+        LOAN RELEASE
+    </div>
     <div class="block pb-5">
         {!! $loan->employee->fullname() !!}
 
         <br>
         {{-- loan details  --}}
 
-        <div>
+        <div class="my-5">
             
             
             <table class="text-sm">
@@ -18,7 +22,7 @@
                         <th class="border bg-gray-400 px-3">Loan Type</th>
                         <th class="border bg-gray-400 px-3">No. of Terms</th>
                         <th class="border bg-gray-400 px-3">Interest</th>
-                        <th class="border bg-gray-400 px-3">Outstanding Balance</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +32,7 @@
                     <td class="text-center border px-3">{{ $loan->loantype->name }}</td>
                     <td class="text-center border px-3">{{ $loan->terminmonths }}</td>
                     <td class="text-center border px-3">{{ $loan->interest * 100 }}%</td>
-                    <td class="text-center border px-3">Php {{ number_format(round($loan->outstandingBalance()),2,'.',',') }}</td>
+
                 </tr>
             </tbody>
             </table>
@@ -38,35 +42,9 @@
         {{-- buttons --}}
         <div class="hide">
 
-            <a href="{{ route('member',['employee_id'=>$loan->employee->id]) }}"><button class="bg-blue-400 hover:bg-blue-600 rounded px-1 text-sm" >Back</button></a>
-        
-        @switch($loan->status)
-                @case("Closed")
-                
-                @break
-
-                @case("Approved")
-
-                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="showAddPayment">Payment</button>
-                <button class="bg-orange-400 hover:bg-orange-600 rounded px-1 text-sm" wire:click="openTerminateLoanConfirmation">Terminate</button>
-
-                @break
-
-                @case("Pending")
-
-                <button class="bg-orange-400 hover:bg-orange-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Edit</button>
-
-                <a href="{{ route('loanrelease',['loan_id'=>$loan_id]) }}">
-                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Release</button>
-                </a>
-
-                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openApproveLoanModal">Approved</button>
-
-                @break
-        
-            @default
-                
-        @endswitch
+            <a href="{{ route('loan',['loan_id'=>$loan->id]) }}"><button class="bg-blue-400 hover:bg-blue-600 rounded px-1 text-sm" >Back</button></a>
+    
+           
 
         </div>
 
@@ -90,7 +68,7 @@
             @php
                 $count=1; 
             @endphp
-            @foreach($paymentschedules as $paymentschedule)
+            @foreach($loan->paymentschedules as $paymentschedule)
             <tr>
                 <td class="border p-1">{{ $count++ }}</td>
                 <td class="border p-1">{{ $paymentschedule->paymentdate->format('F d, Y') }}</td>
@@ -120,46 +98,31 @@
     </table>
 
 
-    <div>Payments</div>
     <div>
-        <table class="text-xs">
-            <thead>
-                <tr>
-                    <th class="border p-1">#</th>
-                    <th class="border p-1">Date</th>
-                    <th class="border p-1">Due Date</th>
-                    <th class="border p-1">Amount</th>
-                    <th class="border p-1">Principal</th>
-                    <th class="border p-1">Interest</th>
-                    <th class="border p-1">Tags</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $count=1; 
-                @endphp
-                @foreach ($loan->payments as $payment )
-                    <tr>
-                        <td class="border p-1">{{ $count++ }}</td>
-                        <td class="border p-1">{{ $payment->paymentdate }}</td>
-                        <td class="border p-1">{{ $payment->paymentdue }}</td>
-                        <td class="border p-1">{{ $payment->amount }}</td>
-                        <td class="border p-1">{{ $payment->principal }}</td>
-                        <td class="border p-1">{{ $payment->interest }}</td>
-                        <td class="border p-1">{!! $payment->tags !!}</td>
-                    </tr>
-                @endforeach
-            </tbody>
+        <table class="text-sm">
+            <tr class="font-bold">
+                <td>Loan Amount:</td><td class="text-right">Php {{ number_format($loan->amount,2,'.',',') }}</td>
+            </tr>
+            <tr>
+                <td>LESS: </td>
+            </tr>
+            <tr>
+                <td>Processing Fee: </td><td class="text-right">Php {{ number_format($loan->processingfee(),2,'.',',') }}</td>
+            </tr>
+            <tr>
+                <td>Insurance</td><td class="text-right">Php {{ number_format($loan->insurance(),2,'.',',') }}</td>
+            </tr>
+            <tr class="font-bold">
+                <td>NET Amount</td> <td class="text-right">Php {{ number_format($loan->netamount(),2,'.',',') }}</td>
+            </tr>
         </table>
     </div>
 
-        
-@include('livewire.loandetails.modal.paymentmodal')
+    <div class="hide">
+        <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openApproveLoanModal">Approved</button>
+    </div>
 
 
-@include('livewire.loandetails.modal.terminate_loan')
-
-@include('livewire.loandetails.modal.edit_employeeloan')
 
 @include('livewire.loandetails.modal.approveconfirmation_modal')
 
