@@ -6,6 +6,7 @@ use App\Exports\LoansExport;
 use App\Models\Loan;
 use App\Models\Memberloan;
 use App\Models\Payment;
+use App\Models\Paymentschedule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,6 +35,7 @@ class Loans extends Component
     public function delete(){
 
         Payment::where('loan_id',$this->loan_id)->delete();
+        Paymentschedule::where('loan_id',$this->loan_id)->delete();
         Loan::find($this->loan_id)->delete(); 
         $this->showDeleteConfirmation = false;
     }
