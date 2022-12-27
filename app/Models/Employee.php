@@ -50,6 +50,7 @@ class Employee extends Model
         'ispersonwithdisability',
         'chapanumber',
         'profilephoto',
+        'status'
     ];
 
     protected $dates = ['birthdate', 'dateofmembership','employmentdate','dateofmembership'];
