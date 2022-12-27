@@ -4,6 +4,8 @@
         Select Range ... From <input class="text-sm" wire:model="fromdate" type="date"> To <input class="text-sm"  wire:model="todate" type="date">
     </div>
 
+    <div class="mb-10">For the period {{ $fromdate }} - {{ $todate }}</div>
+
 
     <div class="block">
 
@@ -33,6 +35,26 @@
 
             <tr>
                 <td class="border p-1">Total:</td><td class="border p-1 text-right">{{ number_format($payments->sum('interest')+$payments->sum('principal'),2,'.',',') }}</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    
+    <div class="block">
+        <span class="font-bold text-xl">Processing Income</span>     <br>
+
+        <table class="w-1/4">
+            <tr>
+                <td class="border p-1">Insurance: </td><td class="border p-1 text-right">{{ number_format($processingincome->sum('insurance'),2,'.',',') }}</td>
+            </tr>
+            <tr>
+                <td class="border p-1">Processing Fee:</td><td class="border p-1 text-right">{{ number_format($processingincome->sum('fee'),2,'.',',') }}</td>
+            </tr>
+
+            <tr>
+                <td class="border p-1">Total:</td><td class="border p-1 text-right">{{ number_format($processingincome->sum('insurance')+$processingincome->sum('fee'),2,'.',',') }}</td>
             </tr>
 
         </table>
