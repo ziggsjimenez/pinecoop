@@ -79,15 +79,18 @@
                 @endforeach
     
                 <tr>
-                    <td class="border p-1" colspan="3">TOTAL </td>
-                    <td class="border p-1 text-right">Php {{ number_format(round($paymentschedules->sum('principal')),2,'.',',') }}</td>
-                    <td class="border p-1 text-right">Php {{ number_format($paymentschedules->sum('interest'),2,'.',',') }}</td>
-                    <td class="border p-1 text-right">Php {{ number_format(round($paymentschedules->sum('monthlyamort')),2,'.',',') }}</td>
+                    <td class="border p-1 font-bold" colspan="5">TOTAL </td>
+                    <td class="border p-1 font-bold text-right">Php {{ number_format(round($paymentschedules->sum('principal')),2,'.',',') }}</td>
+                    <td class="border p-1 font-bold text-right">Php {{ number_format($paymentschedules->sum('interest'),2,'.',',') }}</td>
+                    <td class="border p-1 font-bold text-right">Php {{ number_format(round($paymentschedules->sum('monthlyamort')),2,'.',',') }}</td>
+                    <td class="border p-1"></td>
                 </tr>
                 @endif
     
             </tbody>
         </table>
+
+        <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
 
 
 
