@@ -263,7 +263,7 @@ class Employees extends Component
             'ispersonwithdisability' => $this->ispersonwithdisability,
             'chapanumber' => $this->chapanumber,
             'dateofmembership' => date('Y-m-d'),
-            'Xxstatus' => "Active",
+            'status' => "Active",
             // 'status' => 'Inactive',
         ]);
 
