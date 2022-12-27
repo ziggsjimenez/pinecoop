@@ -4,6 +4,9 @@
         Select Range ... From <input class="text-sm" wire:model="fromdate" type="date"> To <input class="text-sm"  wire:model="todate" type="date">
     </div>
 
+    @include('livewire.includes.loading')
+    
+
     <div class="mb-10">For the period {{ $fromdate }} - {{ $todate }}</div>
 
 

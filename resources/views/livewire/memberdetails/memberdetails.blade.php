@@ -10,6 +10,10 @@
                     class="px-6 py-1 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Change
                     Status</button>
                 <hr>
+
+                @include('livewire.includes.loading')
+
+                
                 {{-- back button  --}}
                 <a href="{{ route('employees') }}">
                     <button class="rounded px-3 p-1 text-sm bg-blue-400 hover:bg-blue-500 font-bold text-white"><i

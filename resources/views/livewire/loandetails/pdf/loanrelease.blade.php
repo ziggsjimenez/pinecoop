@@ -3,6 +3,10 @@
     <div class="font-bold text-2xl">
         LOAN RELEASE
     </div>
+
+    
+
+
     <div class="block pb-5">
         {!! $loan->employee->fullname() !!}
 

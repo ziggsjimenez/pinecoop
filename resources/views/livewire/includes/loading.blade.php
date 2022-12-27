@@ -1,0 +1,1 @@
+<span wire:loading><i class="fa-solid fa-spinner fa-spin"></i> Processing...</span>

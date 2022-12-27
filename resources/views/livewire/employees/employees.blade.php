@@ -5,7 +5,12 @@
             <div class="flex justify-start lg:w-0 lg:flex-1">
                 <span class="tracking-wide text-gray-700 text-xl font-bold">{{ $option }} EMPLOYEES</span>
                 <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
+          
+                @include('livewire.includes.loading')
+          
             </div>
+
+
             <div class="items-center justify-end md:flex md:flex-1 lg:w-0">
 
                 <x-jet-button wire:click="showMember" class="pl-5 mx-5" style="text-transform:none">Member</x-jet-button>

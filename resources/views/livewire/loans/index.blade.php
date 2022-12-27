@@ -9,6 +9,8 @@
         <input type="text" class="rounded w-full text-sm bg-gray-300" wire:model="searchToken" placeholder="Type loan reference number here...">
     </div>
 
+    @include('livewire.includes.loading')
+
 
     <div>
         <table class="w-full pb-15 text-xs">

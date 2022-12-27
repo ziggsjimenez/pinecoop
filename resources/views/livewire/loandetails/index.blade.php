@@ -7,6 +7,8 @@
         <br>
         {{-- loan details  --}}
 
+        @include('livewire.includes.loading')
+
         <div>
             
             

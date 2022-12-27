@@ -14,6 +14,8 @@
     </div>
     
     <div class="font-bold text-xl">Transactions</div>
+
+    @include('livewire.includes.loading')
     
 
     {{-- BUTTONS --}}

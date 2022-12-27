@@ -10,7 +10,7 @@
     </div>
 
 
-     <span wire:loading><i class="fa-solid fa-spinner fa-spin"></i> Processing...</span>
+    <span wire:loading><i class="fa-solid fa-spinner fa-spin"></i> Processing...</span>
 
     <div>
         <table class="text-xs w-full">
