@@ -464,9 +464,9 @@
                 <span class="text-red-500">*</span> Pinecoop Member Type
             </label>
             <div>
-                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="Regular" checked> Regular
+                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="1" checked> Regular
 
-                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="Associatte"> Associatte
+                <input wire:model="ispinecoopmem" name="ispinecoopmem" class="bg-gray-100 text-gray-700 border" type="radio" value="0"> Associatte
             </div>
             @error('ispinecoopmem')
             <p class="text-red-500 text-xs italic">Please select.</p>
