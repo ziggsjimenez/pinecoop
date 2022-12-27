@@ -33,7 +33,8 @@
 
                
                 <tr>
-                    <td class="border">{{ $loan->refnum }}</td>
+                    <td class="border text-blue-800 underline">
+                        <a href="{{ route('loan',['loan_id'=>$loan->id]) }}">{{ $loan->refnum }}</a></td>
                     <td class="border">{{ $loan->employee->fullname2() }}</td>
                     <td class="border">{{ $loan->loantype->name}}</td>
                     <td class="border text-right">{{ number_format($loan->amount,2,'.',',') }}</td>
