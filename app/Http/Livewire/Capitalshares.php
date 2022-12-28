@@ -18,7 +18,7 @@ class Capitalshares extends Component
    
     public function render()
     {
-        return view('livewire.capitalshares.index',['employees'=>Employee::all()]);
+        return view('livewire.capitalshares.index',['employees'=>Employee::where('ispinecoopmem',1)->get()]);
     }
 
     public function export() 
