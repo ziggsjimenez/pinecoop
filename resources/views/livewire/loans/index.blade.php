@@ -4,6 +4,12 @@
         <span class="font-bold text-xl">Loan Accounts</span> <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
     </div>
 
+    <div class="block mb-5">
+        <button wire:click="updateRegular" class="@if($isMember==1) bg-gray-800 @else bg-gray-500 @endif hover:bg-gray-800 rounded p-2 px-3 mx-5 text-white">Regular</button>
+        <button wire:click="updateAssociate" class="@if($isMember==0) bg-gray-800 @else bg-gray-500 @endif hover:bg-gray-800 rounded p-2 px-3 text-white">Associate</button>
+        <button wire:click="updateAll"  class="@if($isMember==2) bg-gray-800 @else bg-gray-500 @endif hover:bg-gray-800 rounded p-2 px-3 mx-5 text-white">All</button>
+    </div>
+
 
     <div class="block">
         <input type="text" class="rounded w-full text-sm bg-gray-300" wire:model="searchToken" placeholder="Type loan reference number here...">

@@ -19,9 +19,41 @@ class Loans extends Component
 
     public $searchToken, $loan_id,$showDeleteConfirmation=false; 
 
+    public $isMember; 
+
+    public function mount(){
+        $this->isMember=2;
+    }
+
     public function render()
     {
-        return view('livewire.loans.index',['loans'=>Loan::where('refnum','LIKE','%'.$this->searchToken.'%')->paginate(25)]);
+
+        if($this->isMember==2){
+            return view('livewire.loans.index',['loans'=>Loan::where('loans.refnum','LIKE','%'.$this->searchToken.'%')->paginate(25)]);
+        }
+
+        else{
+            return view('livewire.loans.index',['loans'=>Loan::join('employees','employees.id','loans.employee_id')->where('employees.ispinecoopmem',$this->isMember)
+            ->where('loans.refnum','LIKE','%'.$this->searchToken.'%')
+            ->paginate(25)]);
+        }
+
+
+    }
+
+    public function updateRegular(){
+
+        $this->isMember=1; 
+
+    }
+
+    public function updateAssociate(){
+
+        $this->isMember=0;
+    }
+
+    public function updateAll(){
+        $this->isMember=2;
     }
 
     public function deleteLoan($id){
@@ -42,6 +74,11 @@ class Loans extends Component
 
     public function export() 
     {
-        return Excel::download(new LoansExport, 'loans.xlsx');
+        switch($this->isMember){
+            case 0: $temp="Associate";break;
+            case 1: $temp="Regular"; break;
+            case 2: $temp="All";break;
+        }
+        return Excel::download(new LoansExport($this->isMember), $temp.'_loans.xlsx');
     }
 }
