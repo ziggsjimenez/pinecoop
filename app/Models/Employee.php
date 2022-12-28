@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Livewire\Capitalshares;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -127,5 +128,36 @@ class Employee extends Model
   
         return  $now->diffInMonths($this->employmentdate);
         
+    }
+
+    public function capitalShareBeginningBalance(){
+
+        $year = date('Y'); 
+
+        // return $this->capitalShare->transactions->whereYear('dateoftransaction','2022')->sum('amount');
+
+        $transactions = Transaction::select('transactions.amount as amount')->join('accounts','accounts.id','transactions.account_id')
+                                    ->join('accounttypes','accounttypes.id','accounts.accounttype_id')
+                                    ->join('employees','employees.id','accounts.employee_id')
+                                    ->where('employees.id','=',$this->id)
+                                    ->where('accounts.accounttype_id','=',2)
+                                    ->whereYear('dateoftransaction','<>',$year)->get(); 
+
+        return $transactions->sum('amount');
+    }
+
+    public function getAmountYearMonth($year,$month){
+
+        $transactions = Transaction::select('transactions.amount as amount')->join('accounts','accounts.id','transactions.account_id')
+        ->join('accounttypes','accounttypes.id','accounts.accounttype_id')
+        ->join('employees','employees.id','accounts.employee_id')
+        ->where('employees.id','=',$this->id)
+        ->where('accounts.accounttype_id','=',2)
+        ->whereYear('dateoftransaction','=',$year)
+        ->whereMonth('dateoftransaction','=',$month)
+        ->get(); 
+
+        return $transactions->sum('amount');
+
     }
 }

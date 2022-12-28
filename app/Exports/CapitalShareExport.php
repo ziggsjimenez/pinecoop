@@ -10,7 +10,7 @@ class CapitalShareExport implements FromView
     public function view(): View
     {
         return view('exports.capitalshares', [
-            'employees' => Employee::all()
+            'employees' => Employee::where('ispinecoopmem',1)->get()
         ]);
     }
 }
