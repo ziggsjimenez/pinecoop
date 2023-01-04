@@ -10,7 +10,11 @@ use Maatwebsite\Excel\Facades\Excel;
 class Monthlydeductions extends Component
 {
 
-    public $year, $month, $paymentschedules; 
+    public $year, $month, $paymentschedules, $tempyear; 
+
+    public function mount(){
+        $this->tempyear = date('Y');
+    }
 
     public function render()
     {

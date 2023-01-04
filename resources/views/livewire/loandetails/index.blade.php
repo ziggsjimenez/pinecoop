@@ -59,10 +59,10 @@
                 <button class="bg-orange-400 hover:bg-orange-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Edit</button>
 
                 <a href="{{ route('loanrelease',['loan_id'=>$loan_id]) }}">
-                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Release</button>
+                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Process</button>
                 </a>
 
-                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openApproveLoanModal">Approved</button>
+                {{-- <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openApproveLoanModal">Approved</button> --}}
 
                 @break
         

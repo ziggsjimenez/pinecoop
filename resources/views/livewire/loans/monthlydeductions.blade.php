@@ -4,9 +4,7 @@
 
         <select wire:model="year">
             <option value="">Select year...</option>
-            @php    
-                $tempyear=2022;
-            @endphp
+        
             @for ($x = 0; $x < 10; $x++)
                 <option value="{{ $tempyear-$x }}">{{ $tempyear-$x }}</option>
             @endfor
@@ -39,6 +37,8 @@
                     <th class="border p-1">#</th>
                     <th class="border p-1">Loan Ref</th>
                     <th class="border p-1">Name</th>
+                    <th class="border p-1">Loan Type</th>
+                    <th class="border p-1">Loan Amount</th>
                     <th class="border p-1">Due Date</th>
                     <th class="border p-1">Balance</th>
                     <th class="border p-1">Principal</th>
@@ -62,6 +62,8 @@
                     </a>
                     </td>
                     <td class="border p-1">{{ $paymentschedule->loan->employee->fullname2() }}</td>
+                    <td class="border p-1">{{ $paymentschedule->loan->loantype->name }}</td>
+                    <td class="border p-1 text-right">Php {{ number_format($paymentschedule->loan->amount,2,'.',',') }}</td>
                     <td class="border p-1">{{ $paymentschedule->paymentdate->format('F d, Y') }}</td>
                     <td class="border p-1 text-right">Php {{ number_format($paymentschedule->balance,2,'.',',') }}</td>
                     <td class="border p-1 text-right">Php {{ number_format($paymentschedule->principal,2,'.',',') }}</td>
