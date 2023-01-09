@@ -58,9 +58,16 @@
 
                 <button class="bg-orange-400 hover:bg-orange-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Edit</button>
 
+
+                @if($loan->loantype->name=="Extended")
+                <a href="{{ route('loanreleaseextended',['loan_id'=>$loan_id]) }}">
+                    <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm">Process</button>
+                    </a>
+                @else
                 <a href="{{ route('loanrelease',['loan_id'=>$loan_id]) }}">
-                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openEditLoanModal({{ $this->loan->id }})">Process</button>
+                <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm">Process</button>
                 </a>
+                @endif
 
                 {{-- <button class="bg-green-400 hover:bg-green-600 rounded px-1 text-sm" wire:click="openApproveLoanModal">Approved</button> --}}
 

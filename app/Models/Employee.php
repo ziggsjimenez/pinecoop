@@ -160,4 +160,8 @@ class Employee extends Model
         return $transactions->sum('amount');
 
     }
+
+    public function activeLoans(){
+        return Loan::where('employee_id','=',$this->id)->where('status','=',"Approved")->get(); 
+    }
 }

@@ -31,6 +31,8 @@
 
         <span wire:loading><i class="fa-solid fa-spinner fa-spin"></i> Processing...</span>
 
+        <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
+
         <table class="text-xs w-full">
             <thead>
                 <tr>
@@ -92,12 +94,7 @@
             </tbody>
         </table>
 
-        <button class="rounded font-bold ml-5 text-xs text-white px-2 p-1 bg-teal-300 hover:bg-teal-600" wire:click="export">Export to Excel</button>
-
-
-
-
-
+       
     </div>
 
 

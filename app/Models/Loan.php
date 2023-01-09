@@ -105,5 +105,9 @@ class Loan extends Model
         return $this->amount-$this->processingfee()-$this->insurance();
     }
 
+    public function guarantors(){
+        return $this->hasMany('App\Models\Loanguarantor');
+    }
+
 
 }

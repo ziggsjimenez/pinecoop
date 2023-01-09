@@ -9,16 +9,25 @@ use App\Models\Processingincome;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class Loanrelease extends Component
+class LoanReleaseExtended extends Component
 {
+
     public $loan_id,$loan,$showApproveLoanModal=false, $showGuarantor=false,$regularmembers,$searchToken; 
 
     public function mount(){
         $this->loan = Loan::find($this->loan_id);
+
+        if($this->loan->status=="Approved"){
+            return redirect()->route('loan',['loan_id'=>$this->loan->id]);
+        }
     }
     public function render()
     {
-        return view('livewire.loanrelease.loanrelease');
+        $this->loan = Loan::find($this->loan_id);
+
+            return view('livewire.loanrelease.extended');
+        
+      
     }
 
     public function openApproveLoanModal(){
@@ -31,7 +40,7 @@ class Loanrelease extends Component
 
         Loan::find($this->loan_id)->update(['status'=>"Approved",'netamount'=>$this->loan->netamount()]);
 
-        $processingincome = new Processingincome;
+        $processingincome = new Processingincome();
         $processingincome->loan_id = $this->loan->id;
         $processingincome->fee = $this->loan->processingfee();
         $processingincome->insurance = $this->loan->insurance();
@@ -52,6 +61,8 @@ return response()->streamDownload(
      fn () => print($pdfContent),
      $loan->refnum."_paymentschedule.pdf"
 );
+
+
 
     }
 
@@ -77,4 +88,11 @@ return response()->streamDownload(
 
     }
 
-}   
+    public function removeGuarantor($id){
+
+        Loanguarantor::find($id)->delete(); 
+
+    }
+
+    
+}

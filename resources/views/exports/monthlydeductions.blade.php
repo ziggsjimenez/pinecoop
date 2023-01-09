@@ -23,15 +23,15 @@
             <td>{{ $count++ }}</td>
             <td>
                 
-                {{ $paymentschedule->loan->refnum }}
+                {{ strval("'".$paymentschedule->loan->refnum) }}
             
             </td>
             <td>{{ $paymentschedule->loan->employee->fullname2() }}</td>
             <td>{{ $paymentschedule->paymentdate->format('F d, Y') }}</td>
-            <td>Php {{ number_format($paymentschedule->balance,2,'.',',') }}</td>
-            <td>Php {{ number_format($paymentschedule->principal,2,'.',',') }}</td>
-            <td>Php {{ number_format($paymentschedule->interest,2,'.',',') }}</td>
-            <td>Php {{ number_format($paymentschedule->monthlyamort,2,'.',',') }}</td>
+            <td>{{ $paymentschedule->balance }}</td>
+            <td>{{ $paymentschedule->principal }}</td>
+            <td>{{ $paymentschedule->interest }}</td>
+            <td>{{ $paymentschedule->monthlyamort }}</td>
                
         </tr>
 
